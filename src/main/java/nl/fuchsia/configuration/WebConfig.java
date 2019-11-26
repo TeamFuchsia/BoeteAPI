@@ -20,9 +20,4 @@ public class WebConfig implements WebMvcConfigurer {
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").setCachePeriod(0);
-    }
-
 }

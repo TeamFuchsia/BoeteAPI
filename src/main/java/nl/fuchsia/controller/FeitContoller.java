@@ -2,7 +2,6 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -23,7 +23,7 @@ public class FeitService {
         return feitRepository.getFeiten();
     }
 
-    public Long getNieuwFeitnummer(){
+    public Long getNieuwFeitnummer() {
         return feitRepository.getNieuwFeitnummer();
     }
 }

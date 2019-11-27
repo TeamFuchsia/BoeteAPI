@@ -15,7 +15,7 @@ public class FeitRepository {
 
     public void addFeit(Feit feit) {
         feitList.add(feit);
-        eersteNieuweFeitnummer +=1;
+        eersteNieuweFeitnummer += 1;
     }
 
     public List<Feit> getFeiten() {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersoonService {
@@ -21,7 +22,7 @@ public class PersoonService {
         return persoonRepository.getAllePersonen();
     }
 
-    public Persoon addPersoon() {
-        return null;
+    public void addPersoon(Persoon persoon) {
+        persoonRepository.addPersoonById(persoon);
     }
 }

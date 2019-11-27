@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -21,4 +23,11 @@ public class PersoonRepository {
         return personen;
     }
 
+
+    public void addPersoonById(Persoon persoon){
+        Persoon klantMaxId = Collections.max(personen, Comparator.comparing(Persoon::getPersoonId));
+        Integer newId = klantMaxId.getPersoonId() + 1;
+        persoon.setPersoonId(newId);
+        personen.add(persoon);
+    }
 }

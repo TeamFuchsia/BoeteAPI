@@ -1,5 +1,6 @@
 package nl.fuchsia.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +26,11 @@ public class Persoon {
     //@Pattern(regexp = "$")
     private String Bsn;
     //@DateTimeFormat
+    @JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate geboortedatum;
 
+    public Persoon() {
+    }
 
     public Persoon(Integer persoonId) {
         this.persoonId = persoonId;

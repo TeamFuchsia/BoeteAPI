@@ -28,6 +28,7 @@ public class PersoonController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<Persoon> addPersoon (@RequestBody Persoon persoon){
-        return ResponseEntity.ok(persoonService.addPersoon());
+        persoonService.addPersoon(persoon);
+       return ResponseEntity.ok(persoon);
     }
 }

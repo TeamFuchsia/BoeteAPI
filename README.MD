@@ -8,3 +8,4 @@ Dit is de BoeteAPI.
 - De code is gereviewed door een mede-developer
 - De code is gemerged naar de master branch
 - De code is gedocumenteerd
+

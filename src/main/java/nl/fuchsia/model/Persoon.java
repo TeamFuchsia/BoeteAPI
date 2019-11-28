@@ -1,6 +1,10 @@
 package nl.fuchsia.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -12,21 +16,21 @@ import java.util.Date;
 
 public class Persoon {
 
-    //@NotNull
-    //@Size(min = 0)
     private Integer persoonId;
-
     private String voornaam;
     private String achternaam;
     private String straat;
     private String huisnummer;
-    //@Pattern("$")  //4 cijfers + 2 hoofdletters
+    @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]")
     private String postcode;
     private String woonplaats;
-    //@Pattern(regexp = "$")
+    @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d")
     private String Bsn;
-    //@DateTimeFormat
-    @JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    //@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    //@JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate geboortedatum;
 
     public Persoon() {

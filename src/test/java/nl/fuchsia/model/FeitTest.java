@@ -1,36 +1,14 @@
 package nl.fuchsia.model;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-class FeitTest {
-
+public class FeitTest {
     @Test
-    void getFeitcode() {
-    }
+    public void testToString() {
+        Feit feit = new Feit(1, "VBF-000", "Omschrijving van strafbaar feit.", 100.00);
 
-    @Test
-    void setFeitcode() {
-    }
-
-    @Test
-    void getOmschrijving() {
-    }
-
-    @Test
-    void setOmschrijving() {
-    }
-
-    @Test
-    void getBedrag() {
-    }
-
-    @Test
-    void setBedrag() {
-    }
-
-    @Test
-    void testToString() {
+        assertThat(feit.toString()).isEqualTo("Feit{feitNr=1, feitcode=VBF-000, omschrijving=Omschrijving van strafbaar feit., bedrag=100.0}");
     }
 }

@@ -2,11 +2,12 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/feiten")
@@ -23,13 +24,5 @@ public class FeitContoller {
 
         feit.setFeitNr(feitService.getNieuwFeitnummer());
         feitService.addFeit(feit);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Feit>> getFeiten() {
-
-        return ResponseEntity
-                .ok()
-                .body(feitService.getFeiten());
     }
 }

@@ -10,7 +10,5 @@ class FeitServiceTest {
     void addFeit() {
     }
 
-    @Test
-    void getFeiten() {
-    }
+
 }

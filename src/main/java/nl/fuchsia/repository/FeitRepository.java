@@ -18,11 +18,6 @@ public class FeitRepository {
         eersteNieuweFeitnummer += 1;
     }
 
-    public List<Feit> getFeiten() {
-
-        return feitList;
-    }
-
     public Long getNieuwFeitnummer() {
         return eersteNieuweFeitnummer;
     }

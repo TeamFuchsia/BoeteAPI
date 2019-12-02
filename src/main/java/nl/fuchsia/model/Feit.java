@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 public class Feit {
     /*
      * Feitnr is de unieke code voor de database, deze wordt later door de database gegenereerd, nu is er een counter voor in de Repository.
-     * Geen validatie op uniek,, omdat dit later in de database ingesteld kan worden.
+     * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
     private long feitNr;
 

@@ -9,18 +9,19 @@ import java.util.List;
 
 @Repository
 public class FeitRepository {
-    /**
+    /*
      * List is de tijdelijke vervanger van de database.
      */
     private List<Feit> feitList = new ArrayList<>();
 
-    /**
+    /*
      * eersteNieuweFeitnummer is tijdelijke counter voor het feitnummer, deze sleutel gaat later door de database worden bijgehouden.
      */
     private long eersteNieuweFeitnummer = 1;
 
     /**
-     * AddFeit haalt het nieuwe feitnummer op, daarna plust hij de counter voor het feitnummer op. Als laatste voegt de methode @param feit toe aan de database(list)
+     * AddFeit haalt het nieuwe feitnummer op, daarna plust hij de counter voor het feitnummer op.
+     * Als laatste voegt de methode @param feit toe aan de database(list)
      */
     public void addFeit(Feit feit) {
         feit.setFeitNr(eersteNieuweFeitnummer);
@@ -29,7 +30,7 @@ public class FeitRepository {
     }
 
     /**
-     * Methode haalt de feiten op, zodat je kan testen of de add heeft gewerkt.
+     * Methode haalt de feiten op.
      */
     List<Feit> getfeiten() {
         return Collections.unmodifiableList(feitList);

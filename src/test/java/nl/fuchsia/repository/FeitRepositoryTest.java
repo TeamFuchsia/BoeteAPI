@@ -23,7 +23,7 @@ public class FeitRepositoryTest {
         feitRepository.addFeit(tweedeFeit);
         List<Feit> feitList = feitRepository.getfeiten();
 
-        assertThat(feitList.get(0).toString()).isEqualTo("Feit{feitNr=1, feitcode=VBF-001, omschrijving=Omschrijving eerste Feit, bedrag=10.0}");
-        assertThat(feitList.get(1).toString()).isEqualTo("Feit{feitNr=2, feitcode=VBF-002, omschrijving=Omschrijving tweede Feit, bedrag=20.0}");
+        assertThat(feitList.get(0)).isEqualTo(eersteFeit);
+        assertThat(feitList.get(1)).isEqualTo(tweedeFeit);
     }
 }

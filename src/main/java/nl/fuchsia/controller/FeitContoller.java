@@ -19,9 +19,13 @@ public class FeitContoller {
     }
 
     /**
-     * Deze methode vangt de geposte json @param feit op. Vervolgens haalt hij een nieuw feitnummer op en set deze in de @param feit.
-     * Dit feit word daarna doorgezet naar de service, zodat deze in de database(list) kan worden opgeslagen.
+     * Deze methode voegt een feit aan de database toe
+     * @param feit wordt uit een Json post opgehaald
+     * Dit feit word daarna doorgezet naar de service
      */
+
+    // Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
+
     @PostMapping
     public void addFeit(@Valid @RequestBody Feit feit) {
         feitService.addFeit(feit);

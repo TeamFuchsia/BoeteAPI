@@ -16,15 +16,14 @@ public class PersoonRepository {
     private List<Persoon> personen = new ArrayList<>();
 
     public PersoonRepository() {
-        personen.add(new Persoon(1, "Rense", "Houwing", "Voltawerk", "36", "8401 EN", "Gorredijk", "bsn-3-4-5", LocalDate.of(1967, 10, 12)));
+        personen.add(new Persoon(1, "Rense1", "Houwing", "Voltawerk", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12)));
     }
 
     public List<Persoon> getAllePersonen() {
         return personen;
     }
 
-
-    public void addPersoonById(Persoon persoon){
+    public void addPersoonById(Persoon persoon) {
         Persoon klantMaxId = Collections.max(personen, Comparator.comparing(Persoon::getPersoonId));
         Integer newId = klantMaxId.getPersoonId() + 1;
         persoon.setPersoonId(newId);

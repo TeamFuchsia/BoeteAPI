@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,8 +27,8 @@ public class PersoonController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Persoon> addPersoon (@RequestBody Persoon persoon){
-        persoonService.addPersoon(persoon);
-       return ResponseEntity.ok(persoon);
+    public ResponseEntity<Persoon> addPersoon(@Valid @RequestBody Persoon persoon) {
+        persoonService.addPersoonService(persoon);
+        return ResponseEntity.ok(persoon);
     }
 }

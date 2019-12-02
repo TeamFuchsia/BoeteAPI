@@ -1,17 +1,19 @@
 package nl.fuchsia.exceptionhandlers;
 
-public class ErrorResponse {
-    private String error;
+import java.util.List;
 
-    ErrorResponse(String error) {
+public class ErrorResponse {
+    private List error;
+
+    ErrorResponse(List error) {
         this.error = error;
     }
 
-    public String getError() {
+    public List getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(List error) {
         this.error = error;
     }
 }

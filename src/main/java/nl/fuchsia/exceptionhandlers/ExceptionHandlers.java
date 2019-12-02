@@ -22,12 +22,12 @@ public class ExceptionHandlers {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<String> invoerException (MethodArgumentNotValidException exception) {
+    public ErrorResponse invoerException (MethodArgumentNotValidException exception) {
         List<String> list = new ArrayList<>();
         for (ObjectError objectError : exception.getBindingResult().getAllErrors()) {
             String defaultMessage = objectError.getDefaultMessage();
             list.add(defaultMessage);
         }
-        return list;
+        return new ErrorResponse(list);
     }
 }

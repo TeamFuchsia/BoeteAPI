@@ -1,6 +1,7 @@
 package nl.fuchsia.model;
 
 import javax.validation.constraints.*;
+import java.util.Objects;
 
 /**
  * Class Feit is de class over de strafbare feiten.
@@ -84,5 +85,21 @@ public class Feit {
                 ", omschrijving=" + omschrijving +
                 ", bedrag=" + bedrag +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feit feit = (Feit) o;
+        return feitNr == feit.feitNr &&
+                Double.compare(feit.bedrag, bedrag) == 0 &&
+                Objects.equals(feitcode, feit.feitcode) &&
+                Objects.equals(omschrijving, feit.omschrijving);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(feitNr, feitcode, omschrijving, bedrag);
     }
 }

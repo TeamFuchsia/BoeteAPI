@@ -25,7 +25,7 @@ public class PersoonController {
      *
      * @return - Roept de methode getPersonen aan in persoonService.
      */
-    // hoort niet in de user story 1-RH.
+    // Hoort niet in de user story 1-RH.
     @GetMapping
     public ResponseEntity<List<Persoon>> getPersonen() {
         return ResponseEntity.ok(persoonService.getPersonen());

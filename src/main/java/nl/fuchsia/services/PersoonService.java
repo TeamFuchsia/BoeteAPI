@@ -22,7 +22,7 @@ public class PersoonService {
      *
      * @return - Roept de methode getPersonen aan in persoonRepository.
      */
-    //  hoort niet in de user story 1-RH.
+    //  Hoort niet in de user story 1-RH.
     public List<Persoon> getPersonen() {
         return persoonRepository.getPersonen();
     }

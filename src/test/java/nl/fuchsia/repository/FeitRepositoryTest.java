@@ -15,15 +15,18 @@ public class FeitRepositoryTest {
         eersteFeit.setFeitcode("VBF-001");
         eersteFeit.setOmschrijving("Omschrijving eerste Feit");
         eersteFeit.setBedrag(10.00);
-        tweedeFeit.setFeitcode("VBF-002");
-        tweedeFeit.setOmschrijving("Omschrijving tweede Feit");
-        tweedeFeit.setBedrag(20.00);
+        tweedeFeit.setFeitcode("VBF-001");
+        tweedeFeit.setOmschrijving("Omschrijving eerste Feit");
+        tweedeFeit.setBedrag(10.00);
 
         feitRepository.addFeit(eersteFeit);
         feitRepository.addFeit(tweedeFeit);
         List<Feit> feitList = feitRepository.getfeiten();
 
-        assertThat(feitList.get(0)).isEqualTo(eersteFeit);
-        assertThat(feitList.get(1)).isEqualTo(tweedeFeit);
+        assertThat(feitList.get(0)).isNotEqualTo(tweedeFeit);
+
+        eersteFeit.setFeitNr(2);
+
+        assertThat(feitList.get(1)).isEqualTo(eersteFeit);
     }
 }

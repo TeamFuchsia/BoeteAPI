@@ -39,7 +39,5 @@ public class PersoonControllerTest {
         Persoon persoon = new Persoon();
         persoonController.addPersoon(persoon);
         verify(persoonService).addPersoon(persoon);
-
-
     }
 }

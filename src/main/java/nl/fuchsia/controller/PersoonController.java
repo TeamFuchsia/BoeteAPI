@@ -21,10 +21,11 @@ public class PersoonController {
     }
 
     /**
-     * Wordt gebruikt om te checken of er records in de List staan via de persoonService. (hoort niet in de user story 1-RH.)
+     * Wordt gebruikt om te checken of er records in de List staan via de persoonService.
      *
      * @return - Roept de methode getPersonen aan in persoonService.
      */
+    // hoort niet in de user story 1-RH.
     @GetMapping
     public ResponseEntity<List<Persoon>> getPersonen() {
         return ResponseEntity.ok(persoonService.getPersonen());

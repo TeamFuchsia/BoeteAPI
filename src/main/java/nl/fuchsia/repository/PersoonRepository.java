@@ -14,13 +14,6 @@ public class PersoonRepository {
 
     private List<Persoon> personen = new ArrayList<>();
 
-    /**
-     * Vult de personen repository met 1 record bij constructie.
-     */
-    public PersoonRepository() {
-        personen.add(new Persoon(1, "Rense1", "Houwing", "Voltawerk", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12)));
-    }
-
     public List<Persoon> getPersonen() {
         return personen;
     }
@@ -32,9 +25,13 @@ public class PersoonRepository {
      */
     // persoonId wordt automatisch gegenereerd.
     public void addPersoon(Persoon persoon) {
-        Persoon klantMaxId = Collections.max(personen, Comparator.comparing(Persoon::getPersoonId));
-        Integer newId = klantMaxId.getPersoonId() + 1;
-        persoon.setPersoonId(newId);
-        personen.add(persoon);
+        if (!personen.isEmpty()) {
+            persoon.setPersoonId(Collections.max(personen, Comparator.comparing(Persoon::getPersoonId))
+                    .getPersoonId() + 1);
+            personen.add(persoon);
+        }else{
+            persoon.setPersoonId(1);
+            personen.add(persoon);
+        }
     }
 }

@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -16,18 +16,18 @@ import java.util.Objects;
 public class Persoon {
 
     private Integer persoonId;
-    @NotEmpty(message = ("Voornaam moet ingevuld zijn"))
+    @NotBlank(message = ("Voornaam moet ingevuld zijn"))
     private String voornaam;
-    @NotEmpty(message = ("Achternaam moet ingevuld zijn"))
+    @NotBlank(message = ("Achternaam moet ingevuld zijn"))
     private String achternaam;
-    @NotEmpty(message = ("Straat moet ingevuld zijn"))
+    @NotBlank(message = ("Straat moet ingevuld zijn"))
     private String straat;
-    @NotEmpty(message = ("Huisnummer moet ingevuld zijn"))
+    @NotBlank(message = ("Huisnummer moet ingevuld zijn"))
     private String huisnummer;
-    @NotEmpty(message = ("Postcode moet ingevuld zijn"))
+    @NotBlank(message = ("Postcode moet ingevuld zijn"))
     @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
     private String postcode;
-    @NotEmpty(message = ("Woonplaats moet ingevuld zijn"))
+    @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
     private String woonplaats;
     @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
     private String Bsn;

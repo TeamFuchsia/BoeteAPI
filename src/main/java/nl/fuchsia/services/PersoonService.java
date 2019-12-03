@@ -18,10 +18,11 @@ public class PersoonService {
     }
 
     /**
-     * Roept de lijst van personen op via de persoonRepository. (hoort niet in de user story 1-RH.)
+     * Roept de lijst van personen op via de persoonRepository.
      *
      * @return - Roept de methode getPersonen aan in persoonRepository.
      */
+    //  hoort niet in de user story 1-RH.
     public List<Persoon> getPersonen() {
         return persoonRepository.getPersonen();
     }

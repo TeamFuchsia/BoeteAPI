@@ -42,11 +42,11 @@ public class PersoonRepositoryTest {
      */
     @Test
     public void testAddPersoon() {
-        assertThat(persoonRepository.getPersonen()).hasSize(1);
+        assertThat(persoonRepository.getPersonen()).hasSize(0);
         Persoon persoon = new Persoon(6, "Rense", "Houwing", "Voltawerk", "36"
                 , "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
         persoonRepository.addPersoon(persoon);
-        assertThat(persoonRepository.getPersonen()).hasSize(2);
+        assertThat(persoonRepository.getPersonen()).hasSize(1);
     }
 
     /**

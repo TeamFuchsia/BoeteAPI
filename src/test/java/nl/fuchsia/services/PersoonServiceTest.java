@@ -7,13 +7,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PersoonServiceTest {
@@ -22,35 +16,28 @@ public class PersoonServiceTest {
     PersoonRepository persoonRepository;
     @InjectMocks
     PersoonService persoonService;
-    private List<Persoon> personenLijst = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        personenLijst.add(new Persoon(1, "Rense", "Houwing", "Voltawerk", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12)));
     }
 
+    /**
+     * Test of de methode getPersonen in de persoonRepository wordt aangeroepen.
+     */
     @Test
     public void testGetPersonen() {
-        /**
-         * Test de methode getPersonen
-         */
-        when(persoonService.getPersonen())
-                .thenReturn(Collections.emptyList());
-        /**
-         * Test de mock persoonRepository
-         */
-        when(persoonRepository.getAllePersonen())
-                .thenReturn(personenLijst);
+        persoonService.getPersonen();
+        verify(persoonRepository).getPersonen();
     }
 
+    /**
+     * Test of de methode addPersoon in de persoonRepository wordt aangeroepen.
+     */
     @Test
     public void testAddPersoon() {
-        /**
-         * Test de methode addPersoonService
-         */
         Persoon persoon = new Persoon();
-        persoonService.addPersoonService(persoon);
-        verify(persoonRepository).addPersoonById(persoon);
+        persoonService.addPersoon(persoon);
+        verify(persoonRepository).addPersoon(persoon);
     }
 }

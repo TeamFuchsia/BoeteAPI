@@ -6,47 +6,40 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-
-//@Ignore
 public class PersoonControllerTest {
 
     @Mock
     PersoonService persoonService;
     @InjectMocks
     PersoonController persoonController;
-    private List<Persoon> personenLijst = new ArrayList<>();
 
     @Before
-    public void setUp()  {
+    public void setUp() {
         initMocks(this);
-        personenLijst.add(new Persoon(1, "Rense", "Houwing", "Voltawerk", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12)));
     }
 
+    /**
+     * Test of de methode getPersonen in de persoonService wordt aangeroepen.
+     */
     @Test
-    public void testPersonen() {
-
+    public void testGetPersonen() {
+        persoonController.getPersonen();
+        verify(persoonService).getPersonen();
     }
 
+    /**
+     * Test of de methode addPersoon in de persoonService wordt aangeroepen.
+     */
     @Test
     public void testAddPersoon() {
-        when(persoonService.getPersonen())
-                .thenReturn(personenLijst);
-        Persoon persoon = new Persoon(2, "Rense2", "Houwing2", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
-        Persoon persoon2 = new Persoon(2, "Rense2", "Houwing2", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
+        Persoon persoon = new Persoon();
+        persoonController.addPersoon(persoon);
+        verify(persoonService).addPersoon(persoon);
 
-        ResponseEntity responsPersoon = ResponseEntity.ok(persoon);
-        assertEquals(responsPersoon, persoonController.addPersoon(persoon));
-        assertEquals(responsPersoon.getBody(), persoonController.addPersoon(persoon).getBody());
 
     }
 }

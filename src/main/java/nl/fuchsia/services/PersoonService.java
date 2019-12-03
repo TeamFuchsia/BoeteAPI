@@ -17,11 +17,21 @@ public class PersoonService {
         this.persoonRepository = persoonRepository;
     }
 
+    /**
+     * Roept de lijst van personen op via de persoonRepository. (hoort niet in de user story 1-RH.)
+     *
+     * @return - Roept de methode getPersonen aan in persoonRepository.
+     */
     public List<Persoon> getPersonen() {
-        return persoonRepository.getAllePersonen();
+        return persoonRepository.getPersonen();
     }
 
-    public void addPersoonService(Persoon persoon) {
-        persoonRepository.addPersoonById(persoon);
+    /**
+     * Voegt de persoon toe via de persoonRepository.
+     *
+     * @param persoon - De toe te voegen persoon.
+     */
+    public void addPersoon(Persoon persoon) {
+        persoonRepository.addPersoon(persoon);
     }
 }

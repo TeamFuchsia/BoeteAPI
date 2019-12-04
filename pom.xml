@@ -106,5 +106,10 @@
             <version>2.2.6</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.8</version>
+        </dependency>
     </dependencies>
 </project>

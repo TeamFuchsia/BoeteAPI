@@ -23,7 +23,8 @@ private int zaakNr;
 
 
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
-    private String pleegLocatie;    // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
+    // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
+    private String pleegLocatie;
 
 
     public Zaak() {

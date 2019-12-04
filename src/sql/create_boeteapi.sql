@@ -36,4 +36,3 @@ CREATE TABLE ZAAKREGEL (
                            FOREIGN KEY (zaakNr) REFERENCES zaak(zaakNr),
                            FOREIGN KEY (feitNr) REFERENCES feit(feitNr)
 );
-

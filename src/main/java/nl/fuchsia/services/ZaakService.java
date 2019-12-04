@@ -15,12 +15,12 @@ public class ZaakService {
         this.zaakReposistory = zaakReposistory;
     }
 
-    public void addZaak(Zaak newZaak){
-    zaakReposistory.addZaak(newZaak);
-}
+    public void addZaak(Zaak newZaak) {
+        zaakReposistory.addZaak(newZaak);
+    }
 
-public List<Zaak> getZaken(){
-       return zaakReposistory.getZaken();
-
+    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
+    public List<Zaak> getZaken() {
+        return zaakReposistory.getZaken();
+    }
 }
-  }

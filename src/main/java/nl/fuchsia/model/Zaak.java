@@ -19,6 +19,7 @@ private int zaakNr;
     @JsonFormat(pattern = "dd-MM-yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    //ToDo datum formatter (wordt opgepakt door Sander)
     private LocalDate overtredingsDatum;
 
 

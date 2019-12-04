@@ -13,12 +13,14 @@ public class ZaakReposistory {
 
     private int nieuweZaakNr = 1;
 
-    public void addZaak(Zaak zaak){
+    public void addZaak(Zaak zaak) {
         zaak.setZaakNr(nieuweZaakNr);
         nieuweZaakNr += 1;
         zaakList.add(zaak);
     }
 
-public List<Zaak> getZaken() {return zaakList;}
-
+    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
+    public List<Zaak> getZaken() {
+        return zaakList;
+    }
 }

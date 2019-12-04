@@ -19,20 +19,23 @@ public class ZaakServiceTest {
     private ZaakService zaakService;
 
     @Before
-    public void setup() {initMocks(this);}
+    public void setup() {
+        initMocks(this);
+    }
 
     @Test
     public void testAddZaak() {
         Zaak zaak = new Zaak();
+
         zaakService.addZaak(zaak);
+
         verify(zaakReposistory).addZaak(zaak);
     }
 
     @Test
     public void testGetZaken() {
         zaakService.getZaken();
+
         verify(zaakReposistory).getZaken();
     }
-
-
 }

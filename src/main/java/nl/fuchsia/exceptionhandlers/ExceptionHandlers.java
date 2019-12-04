@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Deze klasse handelt de validatie exceptions af.
  */
@@ -23,12 +22,11 @@ public class ExceptionHandlers {
      * @param exception - de exception klasse die de invoer validate afhandelt.
      * @return - de holder {@link ErrorResponse} van de exception.
      */
-
-    // per error wordt de defaultMessage eruit gefilterd.
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse invoerException(MethodArgumentNotValidException exception) {
         List<String> list = new ArrayList<>();
+        // per error wordt de defaultMessage eruit gefilterd.
         for (ObjectError objectError : exception.getBindingResult().getAllErrors()) {
             String defaultMessage = objectError.getDefaultMessage();
             list.add(defaultMessage);

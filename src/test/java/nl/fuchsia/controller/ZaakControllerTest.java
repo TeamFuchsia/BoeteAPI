@@ -18,20 +18,23 @@ public class ZaakControllerTest {
     ZaakController zaakController;
 
     @Before
-    public void setup() { initMocks(this);}
+    public void setup() {
+        initMocks(this);
+    }
 
     @Test
     public void testGetZaken() {
         zaakController.getZaken();
+
         verify(zaakService).getZaken();
     }
 
     @Test
-    public void testAddZaak(){
+    public void testAddZaak() {
         Zaak zaak = new Zaak();
+
         zaakController.addZaak(zaak);
+
         verify(zaakService).addZaak(zaak);
-
     }
-
 }

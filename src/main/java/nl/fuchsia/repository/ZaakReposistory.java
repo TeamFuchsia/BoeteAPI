@@ -10,7 +10,6 @@ import java.util.List;
 public class ZaakReposistory {
 
     private List<Zaak> zaakList = new ArrayList<>();
-
     private int nieuweZaakNr = 1;
 
     public void addZaak(Zaak zaak) {

@@ -22,11 +22,9 @@ private int zaakNr;
     //ToDo datum formatter (wordt opgepakt door Sander)
     private LocalDate overtredingsDatum;
 
-
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
     // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
     private String pleegLocatie;
-
 
     public Zaak() {
     }
@@ -36,7 +34,6 @@ private int zaakNr;
         this.overtredingsDatum = overtredingsDatum;
         this.pleegLocatie = pleegLocatie;
     }
-
 
     public int getZaakNr() {
         return zaakNr;

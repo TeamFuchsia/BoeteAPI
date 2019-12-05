@@ -1,4 +1,3 @@
-
 package nl.fuchsia.exceptionhandlers;
 
 import java.util.List;

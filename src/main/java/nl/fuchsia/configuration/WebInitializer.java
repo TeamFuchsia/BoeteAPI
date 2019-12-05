@@ -2,7 +2,9 @@ package nl.fuchsia.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-
+/**
+ * Initialseert de WebApplicationInitializer
+ */
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

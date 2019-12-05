@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 public class ZaakTest {
 
@@ -30,7 +29,7 @@ public class ZaakTest {
 
         Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
 
-        assertEquals(0, constraintViolations.size());
+        assertThat(constraintViolations.size()).isEqualTo(0);
     }
 
     @Test
@@ -44,5 +43,3 @@ public class ZaakTest {
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten");
     }
 }
-
-

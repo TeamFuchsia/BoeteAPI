@@ -44,7 +44,7 @@ public class PersoonController {
     }
 
     /**
-     * Wordt gebruikt om te checken of er personen in de database staan via de persoonService
+     * Geeft een lijst van personen die in de database staan via de persoonService.
      *
      * @return lijst van personen.
      */

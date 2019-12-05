@@ -1,11 +1,14 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.model.Persoon;
+import nl.fuchsia.repository.JdbcPersoonRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -14,6 +17,8 @@ public class PersoonServiceTest {
 
     @Mock
     PersoonRepository persoonRepository;
+    @Mock
+    JdbcPersoonRepository jdbcPersoonRepository;
     @InjectMocks
     PersoonService persoonService;
 
@@ -39,5 +44,11 @@ public class PersoonServiceTest {
         Persoon persoon = new Persoon();
         persoonService.addPersoon(persoon);
         verify(persoonRepository).addPersoon(persoon);
+    }
+
+    @Test
+    public void testGetJdbcPersonen(){
+        persoonService.getJdbcPersonen();
+        verify(jdbcPersoonRepository).getJdbcPersonen();
     }
 }

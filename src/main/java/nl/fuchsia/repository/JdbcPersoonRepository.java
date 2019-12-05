@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public class JdbcPersoonRepository {
 
-    private static final String GET_PERSOON_BY_NR = "SELECT * FROM PERSOON WHERE persoonnr = ?";
     private static final String GET_PERSONEN = "SELECT * FROM PERSOON";
 
     private JdbcTemplate jdbcOperations;
@@ -23,8 +22,13 @@ public class JdbcPersoonRepository {
         this.jdbcOperations = jdbcOperations;
     }
 
-    public Persoon getByPersoonNr(Integer persoonnr) {
-        return jdbcOperations.queryForObject(GET_PERSOON_BY_NR, this::rowMapper, persoonnr);
+    /**
+     * Haalt een lijst van alle personen uit de database m.b.v. jdbc.
+     *
+     * @return Lijst van personen.
+     */
+    public List<Persoon> getJdbcPersonen(){
+        return jdbcOperations.query(GET_PERSONEN, this::rowMapper);
     }
 
     private Persoon rowMapper(ResultSet rs, int rowNum) throws SQLException {
@@ -37,9 +41,5 @@ public class JdbcPersoonRepository {
                 rs.getString("woonplaats"),
                 rs.getString("bsn"),
                 rs.getObject("geboortedatum", LocalDate.class));
-    }
-
-    public List<Persoon> getJdbcPersonen(){
-        return jdbcOperations.query(GET_PERSONEN, this::rowMapper);
     }
 }

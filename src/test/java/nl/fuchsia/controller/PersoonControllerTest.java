@@ -6,6 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -39,5 +42,11 @@ public class PersoonControllerTest {
         Persoon persoon = new Persoon();
         persoonController.addPersoon(persoon);
         verify(persoonService).addPersoon(persoon);
+    }
+
+    @Test
+    public void testGetJdbcPersonen(){
+        persoonController.getJdbcPersonen();
+        verify(persoonService).getJdbcPersonen();
     }
 }

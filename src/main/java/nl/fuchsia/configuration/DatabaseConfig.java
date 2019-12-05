@@ -11,9 +11,8 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
 
     /**
-     * The {@link DataSource} representing the database connection.
-     * In our case we're creating an local postgres database,
-     * so the setup is simple.
+     * De {@link DataSource} representeert de database connectie.
+     * In dit geval maken we gebruik van een lokale postgres installatie.
      *
      * @return The connection to the database
      */

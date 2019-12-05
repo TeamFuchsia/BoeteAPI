@@ -42,4 +42,15 @@ public class PersoonController {
         persoonService.addPersoon(persoon);
         return ResponseEntity.ok(persoon);
     }
+
+    /**
+     * Haal een persoon op uit de database
+     *
+     * @param persoonnr persoonnr van de op te vragen persoon
+     * @return de opgehaalde persoon
+     */
+    @GetMapping(value = "/{id}")
+    public Persoon getTemplateJdbcPersoon (@PathVariable("id") Integer persoonnr){
+       return persoonService.getTemplateJdbcPersoon(persoonnr);
+    }
 }

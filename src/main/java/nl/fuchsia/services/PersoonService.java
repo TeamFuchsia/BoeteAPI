@@ -1,5 +1,6 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.repository.JdbcPersoonRepository;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import java.util.List;
 public class PersoonService {
 
     private PersoonRepository persoonRepository;
+    private final JdbcPersoonRepository jdbcPersoonRepository;
 
     @Autowired
-    public PersoonService(PersoonRepository persoonRepository) {
+    public PersoonService(PersoonRepository persoonRepository, JdbcPersoonRepository jdbcPersoonRepository) {
         this.persoonRepository = persoonRepository;
+        this.jdbcPersoonRepository = jdbcPersoonRepository;
     }
 
     /**
@@ -34,5 +37,15 @@ public class PersoonService {
      */
     public void addPersoon(Persoon persoon) {
         persoonRepository.addPersoon(persoon);
+    }
+
+    /**
+     * Vraagt de persoon op via de jdbcTemplateRepository.
+     *
+     * @param persoonnr persoonnr van de op te vragen persoon
+     * @return de opgevraagde persoon
+     */
+    public Persoon getTemplateJdbcPersoon(Integer persoonnr) {
+        return jdbcPersoonRepository.getByPersoonNr(persoonnr);
     }
 }

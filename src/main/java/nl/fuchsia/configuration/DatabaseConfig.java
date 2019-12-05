@@ -14,7 +14,7 @@ public class DatabaseConfig {
      * De {@link DataSource} representeert de database connectie.
      * In dit geval maken we gebruik van een lokale postgres installatie.
      *
-     * @return The connection to the database
+     * @return De connectie naar de database
      */
     @Bean
     public DataSource dataSource() {
@@ -34,7 +34,7 @@ public class DatabaseConfig {
      * Think of having to make very complex queries for very specific situations.
      *
      * @param dataSource
-     * @return
+     * @return The Jdbc template from Spring.
      */
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {

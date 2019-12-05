@@ -48,4 +48,14 @@ public class PersoonService {
     public Persoon getTemplateJdbcPersoon(Integer persoonnr) {
         return jdbcPersoonRepository.getByPersoonNr(persoonnr);
     }
+
+    /**
+     * Roept de lijst van personen op via de persoonRepository.
+     *
+     * @return - Roept de methode getPersonen aan in persoonRepository.
+     */
+    //  Hoort niet in de user story 1-RH.
+    public List<Persoon> getJdbcPersonen() {
+        return jdbcPersoonRepository.getJdbcPersonen();
+    }
 }

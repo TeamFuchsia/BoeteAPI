@@ -44,13 +44,12 @@ public class PersoonController {
     }
 
     /**
-     * Haal een persoon op uit de database
+     * Wordt gebruikt om te checken of er personen in de database staan via de persoonService
      *
-     * @param persoonnr persoonnr van de op te vragen persoon
-     * @return de opgehaalde persoon
+     * @return lijst van personen.
      */
-    @GetMapping(value = "/{id}")
-    public Persoon getTemplateJdbcPersoon (@PathVariable("id") Integer persoonnr){
-       return persoonService.getTemplateJdbcPersoon(persoonnr);
+    @GetMapping(value = "/jdbc")
+    public ResponseEntity<List<Persoon>> getJdbcPersonen() {
+        return ResponseEntity.ok(persoonService.getJdbcPersonen());
     }
 }

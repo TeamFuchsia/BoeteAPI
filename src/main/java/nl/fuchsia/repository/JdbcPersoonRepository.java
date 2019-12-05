@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public class JdbcPersoonRepository {
 
     private static final String GET_PERSOON_BY_NR = "SELECT * FROM PERSOON WHERE persoonnr = ?";
+    private static final String GET_PERSONEN = "SELECT * FROM PERSOON";
 
     private JdbcTemplate jdbcOperations;
 
@@ -35,5 +37,9 @@ public class JdbcPersoonRepository {
                 rs.getString("woonplaats"),
                 rs.getString("bsn"),
                 rs.getObject("geboortedatum", LocalDate.class));
+    }
+
+    public List<Persoon> getJdbcPersonen(){
+        return jdbcOperations.query(GET_PERSONEN, this::rowMapper);
     }
 }

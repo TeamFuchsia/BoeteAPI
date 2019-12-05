@@ -42,5 +42,4 @@ public class PersoonController {
         persoonService.addPersoon(persoon);
         return ResponseEntity.ok(persoon);
     }
-
 }

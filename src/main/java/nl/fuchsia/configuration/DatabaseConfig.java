@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Configuration
 public class DatabaseConfig {
@@ -20,6 +23,7 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.postgresql.Driver");
+        // TODO  niet hardcoded maar via properties
         basicDataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("postgres");
@@ -40,4 +44,5 @@ public class DatabaseConfig {
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
 }

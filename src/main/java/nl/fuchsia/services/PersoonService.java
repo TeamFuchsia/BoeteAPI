@@ -1,6 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.model.Persoon;
+import nl.fuchsia.repository.JdbcPersoonRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,10 +12,12 @@ import java.util.List;
 public class PersoonService {
 
     private PersoonRepository persoonRepository;
+    private JdbcPersoonRepository jdbcPersoonRepository;
 
     @Autowired
-    public PersoonService(PersoonRepository persoonRepository) {
+    public PersoonService(PersoonRepository persoonRepository, JdbcPersoonRepository jdbcPersoonRepository) {
         this.persoonRepository = persoonRepository;
+        this.jdbcPersoonRepository = jdbcPersoonRepository;
     }
 
     /**
@@ -33,6 +36,6 @@ public class PersoonService {
      * @param persoon - De toe te voegen persoon.
      */
     public void addPersoon(Persoon persoon) {
-        persoonRepository.addPersoon(persoon);
+        jdbcPersoonRepository.addPersoon(persoon);
     }
 }

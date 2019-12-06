@@ -18,6 +18,7 @@ public class Feit {
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
+    // TODO regex kan ook repeterend element hebben
     @Pattern(regexp = "VBF-\\d\\d\\d$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
 

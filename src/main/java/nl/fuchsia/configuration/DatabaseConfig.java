@@ -20,7 +20,7 @@ public class DatabaseConfig {
      * @return De connectie naar de database
      */
     @Bean
-    public DataSource dataSource() {
+        public DataSource dataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         // TODO  niet hardcoded maar via properties

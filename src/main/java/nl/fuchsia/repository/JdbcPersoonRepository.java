@@ -1,30 +1,40 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Persoon;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.Objects;
 
 @Repository
 public class JdbcPersoonRepository {
+
+    private JdbcTemplate jdbcOperations;
+
+    @Autowired
+    public JdbcPersoonRepository(JdbcTemplate jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
 
     public void addPersoon(Persoon persoon) {
         String SQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
                 + "VALUES(?,?,?,?,?,?,?,?)";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/boeteapi/personen");
-             PreparedStatement pstmt = conn.prepareStatement(SQL,
-                     Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = Objects.requireNonNull(jdbcOperations.getDataSource()).getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 
-            pstmt.setInt(1, persoon.getPersoonnr());
-            pstmt.setString(2, persoon.getVoornaam());
-            pstmt.setString(3, persoon.getAchternaam());
-            pstmt.setString(4, persoon.getStraat());
-            pstmt.setString(5, persoon.getHuisnummer());
-            pstmt.setString(6, persoon.getPostcode());
-            pstmt.setString(7, persoon.getWoonplaats());
-            pstmt.setObject(8, persoon.getGeboortedatum());
-            pstmt.setString(9, persoon.getBsn());
+
+            pstmt.setString(1, persoon.getVoornaam());
+            pstmt.setString(2, persoon.getAchternaam());
+            pstmt.setString(3, persoon.getStraat());
+            pstmt.setString(4, persoon.getHuisnummer());
+            pstmt.setString(5, persoon.getPostcode());
+            pstmt.setString(6, persoon.getWoonplaats());
+            pstmt.setObject(7, persoon.getGeboortedatum());
+            pstmt.setString(8, persoon.getBsn());
+            pstmt.executeUpdate();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

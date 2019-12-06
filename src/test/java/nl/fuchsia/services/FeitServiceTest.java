@@ -2,6 +2,7 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.repository.FeitRepository;
+import nl.fuchsia.repository.JDBCFeitRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +14,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class FeitServiceTest {
     @Mock
     private FeitRepository feitRepository;
+    @Mock
+    private JDBCFeitRepository jdbcFeitRepository;
     @InjectMocks
     private FeitService feitService;
 
@@ -28,5 +31,12 @@ public class FeitServiceTest {
         feitService.addFeit(feit);
 
         verify(feitRepository).addFeit(feit);
+    }
+
+    @Test
+    public void testGetFeiten() {
+       feitService.getFeiten();
+
+        verify(jdbcFeitRepository).getFeiten();
     }
 }

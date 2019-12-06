@@ -29,4 +29,11 @@ public class FeitContollerTest {
 
         verify(feitService).addFeit(feit);
     }
+
+    @Test
+    public void testGetFeiten() {
+        feitContoller.getFeiten();
+
+        verify(feitService).getFeiten();
+    }
 }

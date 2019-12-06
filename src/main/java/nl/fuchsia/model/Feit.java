@@ -18,7 +18,7 @@ public class Feit {
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
-    @Pattern(regexp = "VBF-\\d\\d\\d$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
+    @Pattern(regexp = "VBF-\\d{3}$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
 
     /*
@@ -38,7 +38,7 @@ public class Feit {
     public Feit() {
     }
 
-    Feit(long feitNr, String feitcode, String omschrijving, double bedrag) {
+    public Feit(long feitNr, String feitcode, String omschrijving, double bedrag) {
         this.feitNr = feitNr;
         this.feitcode = feitcode;
         this.omschrijving = omschrijving;

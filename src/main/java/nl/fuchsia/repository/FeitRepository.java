@@ -32,7 +32,7 @@ public class FeitRepository {
     /**
      * Methode haalt de feiten op.
      */
-    List<Feit> getfeiten() {
+    public List<Feit> getfeiten() {
         return Collections.unmodifiableList(feitList);
     }
 }

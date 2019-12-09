@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FeitService {
-    private FeitRepository feitRepository;
     private JDBCFeitRepository jdbcFeitRepository;
 
 
-    public FeitService(FeitRepository feitRepository, JDBCFeitRepository jdbcFeitRepository) {
-        this.feitRepository = feitRepository;
+    public FeitService(JDBCFeitRepository jdbcFeitRepository) {
         this.jdbcFeitRepository = jdbcFeitRepository;
     }
 

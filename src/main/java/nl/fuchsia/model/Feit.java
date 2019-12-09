@@ -1,22 +1,28 @@
 package nl.fuchsia.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
 /**
  * Class Feit is de class over de strafbare feiten.
  */
+@Entity
+@Table(name = "feit")
 public class Feit {
     /*
      * Feitnr is de unieke code voor de database, deze wordt later door de database gegenereerd, nu is er een counter voor in de Repository.
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long feitNr;
 
     /*
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
+    @Column
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
     @Pattern(regexp = "VBF-\\d\\d\\d$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
@@ -24,6 +30,7 @@ public class Feit {
     /*
      * Omschrijving bevat een zo sumier mogelijke omschrijving van het feit, deze moet ingevuld zijn en is momenteel beperkt tot 5000 characters.
      */
+    @Column
     @NotBlank(message = "Omschrijving mist, voeg deze nog toe")
     @Size(max = 5000, message = "Omschrijving mag niet meer dan 5000 tekens bevatten")
     private String omschrijving;
@@ -31,6 +38,7 @@ public class Feit {
     /*
      * Het bedrag gekoppeld aan de feit moet ingevuld worden, mag niet kleiner of gelijk aan 0 zijn en moet kleiner dan 100.000.000.000 zijn.
      */
+    @Column
     @DecimalMin(value = "0.01", message = "Bedrag mag niet 0.00 of negatief zijn")
     @Digits(integer = 10, fraction = 2, message = "Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000")
     private double bedrag;

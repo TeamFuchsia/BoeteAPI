@@ -2,6 +2,7 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,8 @@ public class FeitContoller {
     // Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
 
     @PostMapping
-    public void addFeit(@Valid @RequestBody Feit feit) {
+    public ResponseEntity<Feit> addFeit(@Valid @RequestBody Feit feit) {
         feitService.addFeit(feit);
+        return ResponseEntity.ok(feit);
     }
 }

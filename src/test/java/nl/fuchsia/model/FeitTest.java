@@ -99,7 +99,7 @@ public class FeitTest {
 
     @Test
     public void omschrijvingIsToLong() {
-        Feit feit = new Feit(1, "VBF-000", new String(new byte[5001]), 4.00);
+        Feit feit =  new Feit(1, "VBF-000", new String(new char[5001]).replace('\0','F'), 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
 

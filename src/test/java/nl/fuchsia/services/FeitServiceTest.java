@@ -10,23 +10,23 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class FeitServiceTest {
-    @Mock
-    private FeitRepository feitRepository;
-    @InjectMocks
-    private FeitService feitService;
-
-    @Before
-    public void setUp() {
-        initMocks(this);
-    }
-
-    @Test
-    public void testAddFeit() {
-        Feit feit = new Feit();
-
-        feitService.addFeit(feit);
-
-        verify(feitRepository).addFeit(feit);
-    }
-}
+//public class FeitServiceTest {
+//    @Mock
+//    private FeitRepository feitRepository;
+//    @InjectMocks
+//    private FeitService feitService;
+//
+//    @Before
+//    public void setUp() {
+//        initMocks(this);
+//    }
+//
+//    @Test
+//    public void testAddFeit() {
+//        Feit feit = new Feit();
+//
+//        feitService.addFeit(feit);
+//
+//        verify(feitRepository).addFeit(feit);
+//    }
+//}

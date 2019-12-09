@@ -11,19 +11,22 @@ import java.util.Objects;
 @Repository
 public class JdbcPersoonRepository {
 
-    private JdbcTemplate jdbcOperations;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JdbcPersoonRepository(JdbcTemplate jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
+    public JdbcPersoonRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    // Voegt personen toe aan de localdatabase BoeteAPI
+    // Persoon ID hoeft niet gemaakt, deze wordt gegenereerd door de Database.
     public void addPersoon(Persoon persoon) {
-        String SQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
+        String addPersoonSQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
                 + "VALUES(?,?,?,?,?,?,?,?)";
 
-        try (Connection conn = Objects.requireNonNull(jdbcOperations.getDataSource()).getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+        try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(addPersoonSQL)) {
 
 
             pstmt.setString(1, persoon.getVoornaam());

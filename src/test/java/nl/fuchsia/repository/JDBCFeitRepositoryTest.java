@@ -6,11 +6,15 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class JDBCFeitRepositoryTest {
@@ -34,9 +38,7 @@ public class JDBCFeitRepositoryTest {
 
         List<Feit> feiten = jdbcFeitRepository.getFeiten();
 
-        System.out.println(feiten);
-
         assertThat(feiten).isEmpty();
-//        verify(jdbcTemplate.query(Mockito.anyList()), times(1));
+        verify(jdbcTemplate, times(1)).query(anyString(),isA(RowMapper.class));
     }
 }

@@ -42,6 +42,11 @@ public class PersoonService {
         return jdbcPersoonRepository.getJdbcPersonen();
     }
 
+    /**
+     * Geeft een lijst van personen die in de database staan via de ormPersoonRepository.
+     *
+     * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
+     */
     public List<Persoon> getOrmPersonen(){
         return ormPersoonRepository.getOrmPersonen();
     }

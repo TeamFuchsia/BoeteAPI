@@ -1,29 +1,42 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Persoon;
-import org.assertj.core.api.ListAssert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-//import static org.junit.Assert.*;
 import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class JdbcPersoonRepositoryTest {
 
+    @Mock
+    JdbcTemplate jdbcTemplate;
 
-    DataSource dataSource;
-    JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    JdbcPersoonRepository jdbcPersoonRepository = new JdbcPersoonRepository(jdbcTemplate);
+    @InjectMocks
+    JdbcPersoonRepository jdbcPersoonRepository;
+
+    @Before
+    public void setUp() {
+        initMocks(this);
+    }
 
     @Test
     public void getJdbcPersonen() {
 
-//        List<Persoon> jdbcPersonen = jdbcPersoonRepository.getJdbcPersonen();
-//        jdbcPersonen.get(0).getVoornaam();
-//        assertThat(jdbcPersoonRepository.getJdbcPersonen().get(0).getVoornaam()).contains("Rense");
+        List<Persoon> personen = jdbcPersoonRepository.getJdbcPersonen();
 
+        assertThat(personen).isEmpty();
+        verify(jdbcTemplate, times(1)).query(anyString(), isA(RowMapper.class));
     }
 }

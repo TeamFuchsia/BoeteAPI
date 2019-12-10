@@ -12,7 +12,11 @@ import java.util.List;
 @Repository
 public class OrmPersoonRepository {
 
-    @PersistenceContext(unitName = "entityManagerFactory")  //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
+    /**
+     * maakt een entityManager t.b.v. de persistenceContext.
+     */
+    //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
+    @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
     /**
@@ -22,15 +26,26 @@ public class OrmPersoonRepository {
      */
     @Transactional
     public List<Persoon> getOrmPersonen() {
-        TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT a FROM Persoon a", Persoon.class);
+        TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
         return getAllPersonen.getResultList();
     }
 
+    /**
+     * Haalt de persoon op op basis van het persoonnr.
+     *
+     * @param persoonnr het persoonnr van de op te halen persoon.
+     * @return de opgehaalde persoon.
+     */
     @Transactional
     public Persoon getPersoonById(Integer persoonnr) {
         return entityManager.find(Persoon.class, persoonnr);
     }
 
+    /**
+     * Voegt een nieuwe persoon toe.
+     *
+     * @param persoon de toe te voegen persoon.
+     */
     @Transactional
     public void addPersoon(Persoon persoon) {
         entityManager.persist(persoon);

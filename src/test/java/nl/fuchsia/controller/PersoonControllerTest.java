@@ -25,14 +25,14 @@ public class PersoonControllerTest {
         initMocks(this);
     }
 
-    /**
-     * Test of de methode getPersonen in de persoonService wordt aangeroepen.
-     */
-    @Test
-    public void testGetPersonen() {
-        persoonController.getPersonen();
-        verify(persoonService).getPersonen();
-    }
+//    /**
+//     * Test of de methode getPersonen in de persoonService wordt aangeroepen.
+//     */
+//    @Test
+//    public void testGetPersonen() {
+//        persoonController.getPersonen();
+//        verify(persoonService).getPersonen();
+//    }
 
     /**
      * Test of de methode addPersoon in de persoonService wordt aangeroepen.

@@ -44,11 +44,11 @@ public class JdbcPersoonRepository {
     // Voegt personen toe aan de localdatabase BoeteAPI
     // Persoon ID hoeft niet gemaakt, deze wordt gegenereerd door de Database.
     public void addPersoon(Persoon persoon) {
-        String addPersoonSQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
+        String SQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
                 + "VALUES(?,?,?,?,?,?,?,?)";
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(addPersoonSQL)) {
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 
 
             pstmt.setString(1, persoon.getVoornaam());

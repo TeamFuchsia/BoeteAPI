@@ -25,4 +25,14 @@ public class OrmPersoonRepository {
         TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT a FROM Persoon a", Persoon.class);
         return getAllPersonen.getResultList();
     }
+
+    @Transactional
+    public Persoon getPersoonById(Integer persoonnr) {
+        return entityManager.find(Persoon.class, persoonnr);
+    }
+
+    @Transactional
+    public void addPersoon(Persoon persoon) {
+        entityManager.persist(persoon);
+    }
 }

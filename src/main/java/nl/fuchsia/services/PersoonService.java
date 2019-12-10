@@ -13,7 +13,7 @@ import java.util.List;
 public class PersoonService {
 
     private PersoonRepository persoonRepository;
-    private final JdbcPersoonRepository jdbcPersoonRepository;
+    private JdbcPersoonRepository jdbcPersoonRepository;
     private OrmPersoonRepository ormPersoonRepository;
 
     @Autowired
@@ -53,5 +53,14 @@ public class PersoonService {
      */
     public void addPersoon(Persoon persoon) {
         jdbcPersoonRepository.addPersoon(persoon);
+    }
+
+    /**
+     * haalt de persoon per ID (persoonnr) via de OrmPersoonRepository.
+     *
+     * @param persoonnr - ID de op te halen persoon.
+     */
+    public Persoon getPersoonById(Integer persoonnr) {
+        return ormPersoonRepository.getPersoonById(persoonnr);
     }
 }

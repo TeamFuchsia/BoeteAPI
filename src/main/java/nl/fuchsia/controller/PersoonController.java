@@ -26,10 +26,9 @@ public class PersoonController {
      * @return - Roept de methode getPersonen aan in persoonService.
      */
     // Hoort niet in de user story 1-RH.
-    @GetMapping
-    public ResponseEntity<List<Persoon>> getPersonen() {
-        return ResponseEntity.ok(persoonService.getPersonen());
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Persoon>> getPersonen() {
+//        return ResponseEntity.ok(persoonService.getPersonen());}
 
     /**
      * Valideert de ingevoerde persoon op basis van een Json object en voegt deze persoon toe via de persoonService.
@@ -56,5 +55,10 @@ public class PersoonController {
     @GetMapping(value = "/orm")
     public ResponseEntity<List<Persoon>> getOrmPersonen() {
         return ResponseEntity.ok(persoonService.getOrmPersonen());
+    }
+
+    @GetMapping(value = "/{persoonnr}")
+    public Persoon getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
+        return persoonService.getPersoonById(persoonnr);
     }
 }

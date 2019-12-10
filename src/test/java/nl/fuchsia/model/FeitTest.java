@@ -99,12 +99,12 @@ public class FeitTest {
 
     @Test
     public void omschrijvingIsToLong() {
-        Feit feit = new Feit(1, "VBF-000", new String(new char[5001]).replace('\0', 'f'), 4.00);
+        Feit feit = new Feit(1, "VBF-000", new String(new char[5001]).replace('\0','P'), 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
 
         assertThat(constraintViolations.size()).isEqualTo(1);
-        //assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Omschrijving mag niet meer dan 5000 tekens bevatten");
+        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Omschrijving mag niet meer dan 5000 tekens bevatten");
     }
 
     @Test

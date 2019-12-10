@@ -1,14 +1,13 @@
 package nl.fuchsia.repository;
-
 import nl.fuchsia.model.Persoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.sql.*;
+import java.util.Objects;
 
 @Repository
 public class JdbcPersoonRepository {
@@ -41,5 +40,29 @@ public class JdbcPersoonRepository {
                 rs.getString("woonplaats"),
                 rs.getString("bsn"),
                 rs.getObject("geboortedatum", LocalDate.class));
+    }
+    // Voegt personen toe aan de localdatabase BoeteAPI
+    // Persoon ID hoeft niet gemaakt, deze wordt gegenereerd door de Database.
+    public void addPersoon(Persoon persoon) {
+        String addPersoonSQL = "INSERT INTO Persoon(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,geboortedatum,bsn) "
+                + "VALUES(?,?,?,?,?,?,?,?)";
+
+        try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(addPersoonSQL)) {
+
+
+            pstmt.setString(1, persoon.getVoornaam());
+            pstmt.setString(2, persoon.getAchternaam());
+            pstmt.setString(3, persoon.getStraat());
+            pstmt.setString(4, persoon.getHuisnummer());
+            pstmt.setString(5, persoon.getPostcode());
+            pstmt.setString(6, persoon.getWoonplaats());
+            pstmt.setObject(7, persoon.getGeboortedatum());
+            pstmt.setString(8, persoon.getBsn());
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

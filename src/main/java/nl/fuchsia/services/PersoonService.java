@@ -34,15 +34,6 @@ public class PersoonService {
     }
 
     /**
-     * Voegt de persoon toe via de persoonRepository.
-     *
-     * @param persoon - De toe te voegen persoon.
-     */
-    public void addPersoon(Persoon persoon) {
-        persoonRepository.addPersoon(persoon);
-    }
-
-    /**
      * Geeft een lijst van personen die in de database staan via de jdbcPersoonRepository.
      *
      * @return - Roept de methode getJdbcPersonen aan in jdbcPersoonRepository.
@@ -53,5 +44,14 @@ public class PersoonService {
 
     public List<Persoon> getOrmPersonen(){
         return ormPersoonRepository.getOrmPersonen();
+    }
+
+    /**
+     * Voegt de persoon toe via de persoonRepository.
+     *
+     * @param persoon - De toe te voegen persoon.
+     */
+    public void addPersoon(Persoon persoon) {
+        jdbcPersoonRepository.addPersoon(persoon);
     }
 }

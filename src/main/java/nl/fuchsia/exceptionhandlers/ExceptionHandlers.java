@@ -27,6 +27,7 @@ public class ExceptionHandlers {
     public ErrorResponse invoerException(MethodArgumentNotValidException exception) {
         List<String> list = new ArrayList<>();
         // per error wordt de defaultMessage eruit gefilterd.
+       // uitdaging, gebruik eens een stream met een lambda
         for (ObjectError objectError : exception.getBindingResult().getAllErrors()) {
             String defaultMessage = objectError.getDefaultMessage();
             list.add(defaultMessage);

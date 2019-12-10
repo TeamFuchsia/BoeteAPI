@@ -14,10 +14,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "persoon", schema = "public")
+@Table(name = "persoon")
 public class Persoon {
 
-    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer persoonnr;

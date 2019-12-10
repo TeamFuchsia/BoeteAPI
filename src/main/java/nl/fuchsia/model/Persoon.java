@@ -7,33 +7,43 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "persoon")
 public class Persoon {
 
-    private Integer persoonId;
+    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer persoonnr;
+    @Column
     @NotBlank(message = ("Voornaam moet ingevuld zijn"))
     private String voornaam;
+    @Column
     @NotBlank(message = ("Achternaam moet ingevuld zijn"))
     private String achternaam;
+    @Column
     @NotBlank(message = ("Straat moet ingevuld zijn"))
     private String straat;
+    @Column
     @NotBlank(message = ("Huisnummer moet ingevuld zijn"))
     private String huisnummer;
+    @Column
     @NotBlank(message = ("Postcode moet ingevuld zijn"))
     @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
     private String postcode;
+    @Column
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
     private String woonplaats;
+    @Column
     @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
     private String Bsn;
-    //   @Past(message = "Geboortedatum moet in het verleden liggen.")
-    //    @Pattern(regexp = "^(?:(?:31(-)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(-)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"
-    //    , message = ("Voor een geldige datum in: dd-mm-jjjj"))
+    @Column
     @JsonProperty("geboortedatum")
     @JsonFormat(pattern = "dd-MM-yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -43,12 +53,12 @@ public class Persoon {
     public Persoon() {
     }
 
-    public Persoon(Integer persoonId) {
-        this.persoonId = persoonId;
+    public Persoon(Integer persoonnr) {
+        this.persoonnr = persoonnr;
     }
 
-    public Persoon(Integer persoonId, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-        this.persoonId = persoonId;
+    public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
+        this.persoonnr = persoonnr;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.straat = straat;
@@ -59,12 +69,12 @@ public class Persoon {
         this.geboortedatum = geboortedatum;
     }
 
-    public Integer getPersoonId() {
-        return persoonId;
+    public Integer getPersoonnr() {
+        return persoonnr;
     }
 
-    public void setPersoonId(Integer persoonId) {
-        this.persoonId = persoonId;
+    public void setPersoonnr(Integer persoonId) {
+        this.persoonnr = persoonId;
     }
 
     public String getVoornaam() {
@@ -136,7 +146,7 @@ public class Persoon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persoon persoon = (Persoon) o;
-        return getPersoonId().equals(persoon.getPersoonId()) &&
+        return getPersoonnr().equals(persoon.getPersoonnr()) &&
                 Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
                 Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
                 Objects.equals(getStraat(), persoon.getStraat()) &&
@@ -149,6 +159,6 @@ public class Persoon {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPersoonId(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
+        return Objects.hash(getPersoonnr(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
     }
 }

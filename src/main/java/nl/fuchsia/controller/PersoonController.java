@@ -37,7 +37,7 @@ public class PersoonController {
      * @param persoon - De toe te voegen persoons gegevens.
      * @return - Geeft de toegevoegde persoon terug in het formaat van een Json object.
      */
-    @PostMapping(path = "/add")
+    @PostMapping
     public ResponseEntity<Persoon> addPersoon(@Valid @RequestBody Persoon persoon) {
         persoonService.addPersoon(persoon);
         return ResponseEntity.ok(persoon);
@@ -51,5 +51,10 @@ public class PersoonController {
     @GetMapping(value = "/jdbc")
     public ResponseEntity<List<Persoon>> getJdbcPersonen() {
         return ResponseEntity.ok(persoonService.getJdbcPersonen());
+    }
+
+    @GetMapping(value = "/orm")
+    public ResponseEntity<List<Persoon>> getOrmPersonen() {
+        return ResponseEntity.ok(persoonService.getOrmPersonen());
     }
 }

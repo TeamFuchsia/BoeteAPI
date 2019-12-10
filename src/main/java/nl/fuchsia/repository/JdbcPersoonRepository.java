@@ -15,11 +15,11 @@ public class JdbcPersoonRepository {
 
     private static final String GET_PERSONEN = "SELECT * FROM PERSOON";
 
-    private JdbcTemplate jdbcOperations;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JdbcPersoonRepository(JdbcTemplate jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
+    public JdbcPersoonRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
@@ -28,7 +28,7 @@ public class JdbcPersoonRepository {
      * @return Lijst van personen.
      */
     public List<Persoon> getJdbcPersonen(){
-        return jdbcOperations.query(GET_PERSONEN, this::rowMapper);
+        return jdbcTemplate.query(GET_PERSONEN, this::rowMapper);
     }
 
     private Persoon rowMapper(ResultSet rs, int rowNum) throws SQLException {

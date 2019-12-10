@@ -3,7 +3,6 @@ package nl.fuchsia.repository;
 import nl.fuchsia.model.Persoon;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,11 +25,11 @@ public class PersoonRepository {
     // persoonId wordt automatisch gegenereerd.
     public void addPersoon(Persoon persoon) {
         if (!personen.isEmpty()) {
-            persoon.setPersoonId(Collections.max(personen, Comparator.comparing(Persoon::getPersoonId))
-                    .getPersoonId() + 1);
+            persoon.setPersoonnr(Collections.max(personen, Comparator.comparing(Persoon::getPersoonnr))
+                    .getPersoonnr() + 1);
             personen.add(persoon);
         }else{
-            persoon.setPersoonId(1);
+            persoon.setPersoonnr(1);
             personen.add(persoon);
         }
     }

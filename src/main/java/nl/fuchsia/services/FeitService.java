@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class FeitService {
     private ORMFeitRepository ormFeitRepository;
 
-
     public FeitService(ORMFeitRepository ormFeitRepository) {
         this.ormFeitRepository = ormFeitRepository;
     }

@@ -13,11 +13,8 @@ public class ORMFeitRepository {
     @PersistenceContext(unitName = "Database_BoeteAPI")
     private EntityManager em;
 
-
     @Transactional
     public void addFeit(Feit feit){
         em.persist(feit);
     }
-
-
 }

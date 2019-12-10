@@ -7,39 +7,57 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "persoon")
+
 public class Persoon {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer persoonnr;
+
     @NotBlank(message = ("Voornaam moet ingevuld zijn"))
+    @Column
     private String voornaam;
+
     @NotBlank(message = ("Achternaam moet ingevuld zijn"))
+    @Column
     private String achternaam;
+
     @NotBlank(message = ("Straat moet ingevuld zijn"))
+    @Column
     private String straat;
+
     @NotBlank(message = ("Huisnummer moet ingevuld zijn"))
+    @Column
     private String huisnummer;
+
     @NotBlank(message = ("Postcode moet ingevuld zijn"))
     @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
+    @Column
     private String postcode;
+
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
+    @Column
     private String woonplaats;
-    @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
-    private String Bsn;
-    // pas op voor code rot.
-    //   @Past(message = "Geboortedatum moet in het verleden liggen.")
-    //    @Pattern(regexp = "^(?:(?:31(-)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(-)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"
-    //    , message = ("Voor een geldige datum in: dd-mm-jjjj"))
+
     @JsonProperty("geboortedatum")
     // die datum kon je ook een keer in code als public static final opgeven.
     @JsonFormat(pattern = "dd-MM-yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @Column
     private LocalDate geboortedatum;
+
+    @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
+    @Column
+    private String bsn;
 
     public Persoon() {
     }
@@ -56,7 +74,7 @@ public class Persoon {
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
-        this.Bsn = bsn;
+        this.bsn = bsn;
         this.geboortedatum = geboortedatum;
     }
 
@@ -118,11 +136,11 @@ public class Persoon {
     }
 
     public String getBsn() {
-        return Bsn;
+        return bsn;
     }
 
     void setBsn(String bsn) {
-        Bsn = bsn;
+        this.bsn = bsn;
     }
 
     public LocalDate getGeboortedatum() {

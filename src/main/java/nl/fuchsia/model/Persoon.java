@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "persoon")
+@Table(name = "persoon", schema = "public")
 public class Persoon {
 
     @Column

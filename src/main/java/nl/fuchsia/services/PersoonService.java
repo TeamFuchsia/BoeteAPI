@@ -52,7 +52,7 @@ public class PersoonService {
      * @param persoon - De toe te voegen persoon.
      */
     public void addPersoon(Persoon persoon) {
-        jdbcPersoonRepository.addPersoon(persoon);
+        ormPersoonRepository.addPersoon(persoon);
     }
 
     /**

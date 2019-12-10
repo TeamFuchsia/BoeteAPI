@@ -13,7 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class FeitServiceTest {
     @Mock
-    private FeitRepository feitRepository;
+    private ORMFeitRepository ormFeitRepository;
     @Mock
     private JDBCFeitRepository jdbcFeitRepository;
     @InjectMocks
@@ -30,7 +30,7 @@ public class FeitServiceTest {
 
         feitService.addFeit(feit);
 
-        verify(feitRepository).addFeit(feit);
+        verify(ormFeitRepository).addFeit(feit);
     }
 
     @Test

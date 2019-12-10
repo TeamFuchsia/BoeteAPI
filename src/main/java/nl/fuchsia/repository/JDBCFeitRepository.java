@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.Objects;
 import java.util.List;
 
 @Repository
@@ -24,6 +25,7 @@ public class JDBCFeitRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     public List<Feit> getFeiten() {
         return jdbcTemplate.query(GET_FEITEN, this::rowMapper);
     }
@@ -33,5 +35,23 @@ public class JDBCFeitRepository {
                 rs.getString("FEITCODE"),
                 rs.getString("OMSCHRIJVING"),
                 rs.getDouble("BEDRAG"));
+    }
+
+
+    public void addFeit(Feit feit){
+        String sqlAddFeiten = "INSERT INTO feit(feitcode, omschrijving, bedrag) "
+                + "VALUES(?,?,?)";
+
+        try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sqlAddFeiten)) {
+
+            pstmt.setString(1, feit.getFeitcode());
+            pstmt.setString(2, feit.getOmschrijving());
+            pstmt.setDouble(3, feit.getBedrag());
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

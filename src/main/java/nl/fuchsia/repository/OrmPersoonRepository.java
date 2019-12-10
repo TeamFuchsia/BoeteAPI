@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class OrmPersoonRepository {
 
-    @PersistenceContext(unitName = "entityManagerFactory")
+    @PersistenceContext(unitName = "entityManagerFactory")  //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
     private EntityManager entityManager;
 
     /**

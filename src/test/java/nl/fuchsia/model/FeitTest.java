@@ -136,7 +136,6 @@ public class FeitTest {
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
 
-
     @Test
     public void bedragHasToManyDecimals() {
         Feit feit = new Feit(1, "VBF-000", "test", 5.111);
@@ -146,6 +145,4 @@ public class FeitTest {
         assertThat(constraintViolations.size()).isEqualTo(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
-
-
 }

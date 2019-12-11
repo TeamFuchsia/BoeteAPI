@@ -1,24 +1,12 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Persoon;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class OrmPersoonRepositoryTest {
@@ -29,7 +17,7 @@ public class OrmPersoonRepositoryTest {
     @InjectMocks
     OrmPersoonRepository ormPersoonRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         initMocks(this);
     }

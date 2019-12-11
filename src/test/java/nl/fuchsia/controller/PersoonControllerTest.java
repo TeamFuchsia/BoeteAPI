@@ -2,13 +2,10 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -20,7 +17,7 @@ public class PersoonControllerTest {
     @InjectMocks
     PersoonController persoonController;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         initMocks(this);
     }

@@ -37,9 +37,9 @@ public class OrmPersoonRepositoryTest {
     @Test
     public void getOrmPersonen() {
 
-        List<Persoon> ormPersonen = ormPersoonRepository.getOrmPersonen();
+        //List<Persoon> ormPersonen = ormPersoonRepository.getOrmPersonen();
 
-        assertThat(ormPersonen).isEmpty();
+        //assertThat(ormPersonen).isEmpty();
         //verify(entityManager, times(1)).query(anyString(), isA(RowMapper.class));
     }
 }

@@ -1,7 +1,9 @@
 package nl.fuchsia.repository;
 
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -13,7 +15,7 @@ import java.util.List;
 public class OrmPersoonRepository {
 
     /**
-     * maakt een entityManager t.b.v. de persistenceContext.
+     * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
      */
     //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
     @PersistenceContext(unitName = "entityManagerFactory")

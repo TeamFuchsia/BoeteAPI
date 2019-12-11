@@ -40,7 +40,7 @@ public class PersoonServiceTest {
      * Test of de methode addPersoon in de persoonRepository wordt aangeroepen.
      */
     @Test
-    public void testAddPersoon() {
+    public void testAddPersoon() throws Exception {
         Persoon persoon = new Persoon();
         persoonService.addPersoon(persoon);
         verify(persoonRepository).addPersoon(persoon);

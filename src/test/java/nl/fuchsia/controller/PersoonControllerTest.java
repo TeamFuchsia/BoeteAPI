@@ -38,7 +38,7 @@ public class PersoonControllerTest {
      * Test of de methode addPersoon in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testAddPersoon() {
+    public void testAddPersoon() throws Exception {
         Persoon persoon = new Persoon();
         persoonController.addPersoon(persoon);
         verify(persoonService).addPersoon(persoon);

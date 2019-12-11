@@ -1,9 +1,9 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Persoon;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,12 +16,12 @@ public class PersoonRepositoryTest {
     private PersoonRepository persoonRepository = new PersoonRepository();
     private List<Persoon> personen = new ArrayList<>();
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpAll() throws Exception {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         personen.add(new Persoon(1, "Rense", "Houwing", "Voltawerk", "36"
                 , "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12)));

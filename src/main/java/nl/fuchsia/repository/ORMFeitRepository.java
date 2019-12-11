@@ -20,8 +20,9 @@ public class ORMFeitRepository {
      * @param feit is het toe te voegen feit.
      */
     @Transactional
-    public void addFeit(Feit feit) {
+    public Feit addFeit(Feit feit) {
         entityManager.persist(feit);
+        return feit;
     }
 
     /**

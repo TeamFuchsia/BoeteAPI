@@ -1,7 +1,7 @@
 package nl.fuchsia.model;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -17,7 +17,7 @@ public class ZaakTest {
     private static Validator validator;
     private static Zaak zaak;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupAll() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();

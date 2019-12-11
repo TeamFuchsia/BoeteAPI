@@ -1,8 +1,8 @@
 package nl.fuchsia.model;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,13 +18,13 @@ public class PersoonTest {
     private static Validator validator;
     private static Persoon persoon;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupAll() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         persoon = new Persoon(2, "Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
     }

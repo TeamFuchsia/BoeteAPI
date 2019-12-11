@@ -1,8 +1,8 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Feit;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +26,7 @@ public class JDBCFeitRepositoryTest {
     @InjectMocks
     JDBCFeitRepository jdbcFeitRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         initMocks(this);
     }

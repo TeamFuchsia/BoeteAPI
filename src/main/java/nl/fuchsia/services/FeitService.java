@@ -17,9 +17,9 @@ public class FeitService {
         this.ormFeitRepository = ormFeitRepository;
     }
 
-    public void addFeit(Feit feit) {
+    public Feit addFeit(Feit feit) {
         try {
-            ormFeitRepository.addFeit(feit);
+           return ormFeitRepository.addFeit(feit);
         }
         //Vangt opgevoerde feiten met feitcodes die al in de database voor komt.
         catch (TransactionSystemException e) {

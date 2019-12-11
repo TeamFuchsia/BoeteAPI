@@ -27,8 +27,7 @@ public class FeitContoller {
     // Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
     @PostMapping
     public ResponseEntity<Feit> addFeit(@Valid @RequestBody Feit feit) {
-        feitService.addFeit(feit);
-        return ResponseEntity.ok(feit);
+        return ResponseEntity.ok(feitService.addFeit(feit));
     }
 
     /**

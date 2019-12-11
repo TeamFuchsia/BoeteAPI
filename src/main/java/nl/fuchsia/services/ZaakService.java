@@ -1,7 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.model.Zaak;
-import nl.fuchsia.repository.ZaakReposistory;
+import nl.fuchsia.repository.OrmZaakRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,18 +9,19 @@ import java.util.List;
 @Service
 public class ZaakService {
 
-    private ZaakReposistory zaakReposistory;
+    private OrmZaakRepository ormZaakRepository;
 
-    public ZaakService(ZaakReposistory zaakReposistory) {
-        this.zaakReposistory = zaakReposistory;
+    public ZaakService(OrmZaakRepository ormZaakRepository) {
+        this.ormZaakRepository = ormZaakRepository;
     }
 
-    public void addZaak(Zaak newZaak) {
-        zaakReposistory.addZaak(newZaak);
+    public void addZaak(Zaak zaak) {
+        ormZaakRepository.addZaak(zaak);
     }
 
-    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
     public List<Zaak> getZaken() {
-        return zaakReposistory.getZaken();
+        return ormZaakRepository.getZaken();
     }
+
+
 }

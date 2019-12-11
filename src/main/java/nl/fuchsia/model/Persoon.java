@@ -11,11 +11,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "persoon")
 public class Persoon {
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +51,9 @@ public class Persoon {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate geboortedatum;
+
+    @OneToMany(mappedBy = "persoon")
+    private List<Zaak> zaken;
 
     public Persoon() {
     }

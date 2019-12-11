@@ -20,12 +20,12 @@ public class ZaakController {
     }
 
     @PostMapping
-    public void addZaak(@Valid @RequestBody Zaak newZaak) {
-        zaakService.addZaak(newZaak);
+    public ResponseEntity<Zaak> addZaak(@Valid @RequestBody Zaak zaak) {
+        zaakService.addZaak(zaak);
+        return ResponseEntity.ok(zaak);
     }
 
     @GetMapping
-    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
     public ResponseEntity<List> getZaken() {
         return ResponseEntity.ok().body(zaakService.getZaken());
     }

@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class FeitService {
     private ORMFeitRepository ormFeitRepository;
-    private JDBCFeitRepository jdbcFeitRepository;
 
     public FeitService(ORMFeitRepository ormFeitRepository) {
         this.ormFeitRepository = ormFeitRepository;
@@ -21,7 +20,9 @@ public class FeitService {
     public void addFeit(Feit feit) {
         try {
             ormFeitRepository.addFeit(feit);
-        } catch (TransactionSystemException e) {
+        }
+        //Vangt opgevoerde feiten met feitcodes die al in de database voor komt.
+        catch (TransactionSystemException e) {
             throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat al in de database.");
         }
     }

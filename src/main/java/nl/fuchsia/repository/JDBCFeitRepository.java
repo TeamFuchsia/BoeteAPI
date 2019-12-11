@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.util.Objects;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class JDBCFeitRepository {
@@ -37,8 +40,7 @@ public class JDBCFeitRepository {
                 rs.getDouble("BEDRAG"));
     }
 
-
-    public void addFeit(Feit feit){
+    public void addFeit(Feit feit) {
         String sqlAddFeiten = "INSERT INTO feit(feitcode, omschrijving, bedrag) "
                 + "VALUES(?,?,?)";
 

@@ -54,7 +54,7 @@ public class PersoonService {
     }
 
     /**
-     * Voegt de persoon toe via de persoonRepository.
+     * Voegt de persoon toe via de persoonRepository. Mocht BSN-nummer al bestaan dan wordt de UniekVeldException gegooid.
      *
      * @param persoon - De toe te voegen persoon.
      */

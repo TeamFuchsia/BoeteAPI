@@ -1,9 +1,7 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -28,7 +26,7 @@ public class OrmPersoonRepository {
      */
     @Transactional
     public List<Persoon> getOrmPersonen() {
-        TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
+        TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon", Persoon.class);
         return getAllPersonen.getResultList();
     }
 

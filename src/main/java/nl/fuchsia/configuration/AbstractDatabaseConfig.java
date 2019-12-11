@@ -16,7 +16,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
 @EnableTransactionManagement
 @EnableLoadTimeWeaving
 public abstract class AbstractDatabaseConfig {

@@ -3,8 +3,9 @@ package nl.fuchsia.services;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.JdbcPersoonRepository;
 import nl.fuchsia.repository.PersoonRepository;
-import org.junit.Before;
-import org.junit.Test;
+;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -22,7 +23,7 @@ public class PersoonServiceTest {
     @InjectMocks
     PersoonService persoonService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         initMocks(this);
     }

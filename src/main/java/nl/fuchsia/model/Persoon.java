@@ -52,8 +52,8 @@ public class Persoon {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate geboortedatum;
 
-    @OneToMany(mappedBy = "persoon")
-    private List<Zaak> zaken;
+//    @OneToMany(mappedBy = "persoon")
+//    private List<Zaak> zaken;
 
     public Persoon() {
     }

@@ -1,9 +1,11 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.repository.JDBCFeitRepository;
 import nl.fuchsia.repository.ORMFeitRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 
@@ -12,16 +14,19 @@ public class FeitService {
     private ORMFeitRepository ormFeitRepository;
     private JDBCFeitRepository jdbcFeitRepository;
 
-    public FeitService(ORMFeitRepository ormFeitRepository, JDBCFeitRepository jdbcFeitRepository) {
+    public FeitService(ORMFeitRepository ormFeitRepository) {
         this.ormFeitRepository = ormFeitRepository;
-        this.jdbcFeitRepository = jdbcFeitRepository;
     }
 
     public void addFeit(Feit feit) {
-        ormFeitRepository.addFeit(feit);
+        try {
+            ormFeitRepository.addFeit(feit);
+        } catch (TransactionSystemException e) {
+            throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat al in de database.");
+        }
     }
 
-    public List<Feit> getFeiten(){
-       return jdbcFeitRepository.getFeiten();
+    public List<Feit> getFeiten() {
+        return ormFeitRepository.getFeiten();
     }
 }

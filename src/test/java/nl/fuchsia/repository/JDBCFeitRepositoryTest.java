@@ -8,19 +8,17 @@ import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+// Depricated
 public class JDBCFeitRepositoryTest {
-
-    @Mock
-    DataSource dataSource;
 
     @Mock
     JdbcTemplate jdbcTemplate;
@@ -39,6 +37,6 @@ public class JDBCFeitRepositoryTest {
         List<Feit> feiten = jdbcFeitRepository.getFeiten();
 
         assertThat(feiten).isEmpty();
-        verify(jdbcTemplate, times(1)).query(anyString(),isA(RowMapper.class));
+        verify(jdbcTemplate, times(1)).query(anyString(), isA(RowMapper.class));
     }
 }

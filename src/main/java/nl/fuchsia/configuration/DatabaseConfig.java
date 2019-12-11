@@ -40,45 +40,69 @@ public class DatabaseConfig {
     }
 
     /**
-     * JDBC by itself is tough to use, so we wrap it in the {@link JdbcTemplate} from Spring,
-     * which handles a lot of the boilerplate for us.
-     * Pure JDBC has its uses though. While it gives a lot of boilerplate,
-     * it also gives a lot of control, which can be useful for certain applications.
-     * Think of having to make very complex queries for very specific situations.
+     * JDBC op zichzelf is moeilijk te gebruiken, daarom stoppen we dat in {@link JdbcTemplate} van Spring,
+     * deze handelt de boilerplate voor ons af.
      *
-     * @param dataSource
-     * @return The Jdbc template from Spring.
+     * @param dataSource database instellingen
+     * @return De Jdbc template van Spring.
+     */
+    /*
+    Pure JDBC kan in sommige gevallen ook nuttig zijn, ondanks de grote hoeveelheid boilerplate.
+    Het geeft je veel meer controle, dit kan nuttig zijn voor bepaalde applicaties die hele complexe queries nodig heeft.
      */
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
+    /**
+     * Geeft begrijpelijkere errors, indien nodig.
+     *
+     * @return een vertaling van een exception.
+     */
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(emf);
-    return jpaTransactionManager;
-    }
-
-    @Bean
-    public BeanPostProcessor persistenceTranslation(){
+    public BeanPostProcessor persistenceTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+    /**
+     * Implementatie van het soort database in het project.
+     *
+     * @return de adapter specifiek bij deze soort database.
+     */
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter(){
+    public JpaVendorAdapter jpaVendorAdapter() {
         EclipseLinkJpaVendorAdapter adapter = new EclipseLinkJpaVendorAdapter();
         adapter.setDatabase(Database.POSTGRESQL);
         return adapter;
     }
 
+    /**
+     * Maakt een container met alle relevante informatie van de database en zet het pad waarop de enitites gevonden kunnen worden
+     *
+     * @param datasource       instellingen van de gebruikte database
+     * @param jpaVendorAdapter soort database
+     * @return containter om de context naar de database te zetten.
+     */
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource datasource, JpaVendorAdapter jpaVendorAdapter){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource datasource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(datasource);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan("nl.fuchsia.model");
         return entityManagerFactoryBean;
+    }
+
+    /**
+     * Deze zorgt er voor dat de data door middel van een transactie in de database wordt geplaatst.
+     *
+     * @param emf heeft hij nodig om de koppeling tussen de datasource en de entities te maken.
+     * @return is de transactionmanager die de commits richting de database maakt.
+     */
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(emf);
+        return jpaTransactionManager;
     }
 }

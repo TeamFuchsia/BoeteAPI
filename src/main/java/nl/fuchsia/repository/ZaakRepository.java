@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-
 @Repository
 public class ZaakRepository {
 
@@ -33,8 +32,7 @@ public class ZaakRepository {
     }
 
     @Transactional
-    public Zaak getZaakById(Integer zaakNr){
-        return entityManager.find(Zaak.class,zaakNr);
+    public Zaak getZaakById(Integer zaakNr) {
+        return entityManager.find(Zaak.class, zaakNr);
     }
-
 }

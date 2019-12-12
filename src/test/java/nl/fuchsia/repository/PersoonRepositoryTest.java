@@ -25,19 +25,6 @@ public class PersoonRepositoryTest {
     }
 
     @Test
-    @Order(3)
-    public void testGetPersonen() {
-        assertThat(persoonRepository.getPersonen()).hasSize(3);
-    }
-
-    @Test
-    @Order(2)
-    public void testGetPersoonById() {
-        assertThat(persoonRepository.getPersoonById(1).getHuisnummer()).isEqualTo("12");
-        assertThat(persoonRepository.getPersonen()).hasSize(3);
-    }
-
-    @Test
     @Order(1)
     public void testAddPersoon() {
         persoonRepository.addPersoon(new Persoon("Rense1", "Houwing", "De buren", "12", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12)));
@@ -49,5 +36,18 @@ public class PersoonRepositoryTest {
 
         assertThat(persoonRepository.getPersonen()).hasSize(3);
         assertThat(persoonRepository.getPersoonById(1).getVoornaam()).isNotEqualTo("Rense3");
+    }
+
+    @Test
+    @Order(2)
+    public void testGetPersoonById() {
+        assertThat(persoonRepository.getPersoonById(1).getHuisnummer()).isEqualTo("12");
+        assertThat(persoonRepository.getPersonen()).hasSize(3);
+    }
+
+    @Test
+    @Order(3)
+    public void testGetPersonen() {
+        assertThat(persoonRepository.getPersonen()).hasSize(3);
     }
 }

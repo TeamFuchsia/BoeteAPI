@@ -26,7 +26,7 @@ public class PersoonControllerTest {
      * Test of de methode getPersonen in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testGetOrmPersonen(){
+    public void testGetOrmPersonen() {
         persoonController.getPersonen();
         verify(persoonService).getOrmPersonen();
     }
@@ -40,6 +40,4 @@ public class PersoonControllerTest {
         persoonController.addPersoon(persoon);
         verify(persoonService).addPersoon(persoon);
     }
-
-
 }

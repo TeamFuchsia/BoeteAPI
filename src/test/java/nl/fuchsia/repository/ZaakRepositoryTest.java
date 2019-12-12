@@ -1,6 +1,5 @@
 package nl.fuchsia.repository;
 
-
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Zaak;
 import org.junit.jupiter.api.*;
@@ -21,7 +20,6 @@ public class ZaakRepositoryTest {
     @Autowired
     private ZaakRepository zaakRepository;
 
-
     @BeforeEach
     void setUp() {
     }
@@ -29,21 +27,24 @@ public class ZaakRepositoryTest {
     @Test
     @Order(1)
     void addZaak() {
-        zaakRepository.addZaak(new Zaak(LocalDate.of(2019,12,12),"Drachten"));
+        zaakRepository.addZaak(new Zaak(LocalDate.of(2019, 12, 12), "Drachten"));
 
         assertThat(zaakRepository.getZaken()).hasSize(1);
 
-        zaakRepository.addZaak(new Zaak(1,LocalDate.of(2019,12,12),"Sneek"));
+        zaakRepository.addZaak(new Zaak(1, LocalDate.of(2019, 12, 12), "Sneek"));
 
         assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
     }
 
     @Test
     @Order(2)
-    void getZaken() {
+    void getZakenById() {
+        assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
     }
 
-
-
-
+    @Test
+    @Order(3)
+    void getzaken() {
+        assertThat(zaakRepository.getZaken()).hasSize(2);
+    }
 }

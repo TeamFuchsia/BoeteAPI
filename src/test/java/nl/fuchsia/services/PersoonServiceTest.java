@@ -30,16 +30,6 @@ public class PersoonServiceTest {
     }
 
     /**
-     * Test of de methode getPersonen in de persoonRepository wordt aangeroepen.
-     */
-    @Test
-    public void testGetJdbcPersonen() {
-        persoonService.getOrmPersonen();
-
-        verify(persoonRepository).getPersonen();
-    }
-
-    /**
      * Test of de methode addPersoon in de persoonRepository wordt aangeroepen.
      */
     @Test
@@ -49,6 +39,16 @@ public class PersoonServiceTest {
         persoonService.addPersoon(persoon);
 
         verify(persoonRepository).addPersoon(persoon);
+    }
+
+    /**
+     * Test of de methode getPersonen in de persoonRepository wordt aangeroepen.
+     */
+    @Test
+    public void testGetPersonen() {
+        persoonService.getOrmPersonen();
+
+        verify(persoonRepository).getPersonen();
     }
 
     @Test

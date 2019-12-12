@@ -52,7 +52,6 @@ public class Persoon {
     public Persoon() {
     }
 
-
     public Persoon(Integer persoonnr) {
         this.persoonnr = persoonnr;
     }
@@ -67,7 +66,6 @@ public class Persoon {
         this.Bsn = bsn;
         this.geboortedatum = geboortedatum;
     }
-
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
         this.persoonnr = persoonnr;

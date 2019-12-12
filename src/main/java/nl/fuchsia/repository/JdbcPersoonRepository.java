@@ -1,12 +1,16 @@
 package nl.fuchsia.repository;
+
 import nl.fuchsia.model.Persoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import java.sql.*;
 import java.util.Objects;
 
 @Repository
@@ -26,7 +30,7 @@ public class JdbcPersoonRepository {
      *
      * @return Lijst van personen.
      */
-    public List<Persoon> getJdbcPersonen(){
+    public List<Persoon> getJdbcPersonen() {
         return jdbcTemplate.query(GET_PERSONEN, this::rowMapper);
     }
 
@@ -41,6 +45,7 @@ public class JdbcPersoonRepository {
                 rs.getString("bsn"),
                 rs.getObject("geboortedatum", LocalDate.class));
     }
+
     // Voegt personen toe aan de localdatabase BoeteAPI
     // Persoon ID hoeft niet gemaakt, deze wordt gegenereerd door de Database.
     public void addPersoon(Persoon persoon) {
@@ -49,7 +54,6 @@ public class JdbcPersoonRepository {
 
         try (Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
              PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-
 
             pstmt.setString(1, persoon.getVoornaam());
             pstmt.setString(2, persoon.getAchternaam());

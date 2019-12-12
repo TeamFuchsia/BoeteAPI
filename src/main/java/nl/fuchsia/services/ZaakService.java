@@ -23,7 +23,7 @@ public class ZaakService {
         return zaakRepository.getZaken();
     }
 
-    public Zaak getZaakById(Integer zaakNr){
+    public Zaak getZaakById(Integer zaakNr) {
         return zaakRepository.getZaakById(zaakNr);
     }
 }

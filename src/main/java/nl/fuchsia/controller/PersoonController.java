@@ -28,7 +28,8 @@ public class PersoonController {
     // Hoort niet in de user story 1-RH.
     @GetMapping
     public ResponseEntity<List<Persoon>> getPersonen() {
-        return ResponseEntity.ok(persoonService.getPersonen());}
+        return ResponseEntity.ok(persoonService.getOrmPersonen());
+    }
 
     /**
      * Valideert de ingevoerde persoon op basis van een Json object en voegt deze persoon toe via de persoonService.
@@ -38,23 +39,7 @@ public class PersoonController {
      */
     @PostMapping
     public ResponseEntity<Persoon> addPersoon(@Valid @RequestBody Persoon persoon) {
-        persoonService.addPersoon(persoon);
-        return ResponseEntity.ok(persoon);
-    }
-
-    /**
-     * Geeft een lijst van personen die in de database staan via de persoonService.
-     *
-     * @return lijst van personen.
-     */
-    @GetMapping(value = "/jdbc")
-    public ResponseEntity<List<Persoon>> getJdbcPersonen() {
-        return ResponseEntity.ok(persoonService.getJdbcPersonen());
-    }
-
-    @GetMapping(value = "/orm")
-    public ResponseEntity<List<Persoon>> getOrmPersonen() {
-        return ResponseEntity.ok(persoonService.getOrmPersonen());
+        return ResponseEntity.ok(persoonService.addPersoon(persoon));
     }
 
     @GetMapping(value = "/{persoonnr}")

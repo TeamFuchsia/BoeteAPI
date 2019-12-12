@@ -26,8 +26,8 @@ public class PersoonControllerTest {
      * Test of de methode getPersonen in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testGetPersonen() {
-        persoonController.getOrmPersonen();
+    public void testGetOrmPersonen(){
+        persoonController.getPersonen();
         verify(persoonService).getOrmPersonen();
     }
 
@@ -41,9 +41,5 @@ public class PersoonControllerTest {
         verify(persoonService).addPersoon(persoon);
     }
 
-    @Test
-    public void testGetJdbcPersonen(){
-        persoonController.getJdbcPersonen();
-        verify(persoonService).getJdbcPersonen();
-    }
+
 }

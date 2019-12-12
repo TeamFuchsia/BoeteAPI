@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Repository
-public class OrmZaakRepository {
+public class ZaakRepository {
 
     /**
      * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
@@ -21,14 +21,20 @@ public class OrmZaakRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public void addZaak(Zaak zaak) {
+    public Zaak addZaak(Zaak zaak) {
         entityManager.persist(zaak);
+        return zaak;
     }
 
     @Transactional
     public List<Zaak> getZaken() {
         TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
         return getAllZaken.getResultList();
+    }
+
+    @Transactional
+    public Zaak getZaakById(Integer zaakNr){
+        return entityManager.find(Zaak.class,zaakNr);
     }
 
 }

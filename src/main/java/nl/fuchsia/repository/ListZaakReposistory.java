@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ZaakReposistory {
+public class ListZaakReposistory {
 
     private List<Zaak> zaakList = new ArrayList<>();
     private int nieuweZaakNr = 1;

@@ -60,7 +60,6 @@ public class JdbcPersoonRepository {
             pstmt.setObject(7, persoon.getGeboortedatum());
             pstmt.setString(8, persoon.getBsn());
             pstmt.executeUpdate();
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

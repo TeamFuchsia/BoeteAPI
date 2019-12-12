@@ -1,7 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.model.Zaak;
-import nl.fuchsia.repository.OrmZaakRepository;
+import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,19 +9,21 @@ import java.util.List;
 @Service
 public class ZaakService {
 
-    private OrmZaakRepository ormZaakRepository;
+    private ZaakRepository zaakRepository;
 
-    public ZaakService(OrmZaakRepository ormZaakRepository) {
-        this.ormZaakRepository = ormZaakRepository;
+    public ZaakService(ZaakRepository zaakRepository) {
+        this.zaakRepository = zaakRepository;
     }
 
-    public void addZaak(Zaak zaak) {
-        ormZaakRepository.addZaak(zaak);
+    public Zaak addZaak(Zaak zaak) {
+        return zaakRepository.addZaak(zaak);
     }
 
     public List<Zaak> getZaken() {
-        return ormZaakRepository.getZaken();
+        return zaakRepository.getZaken();
     }
 
-
+    public Zaak getZaakById(Integer zaakNr){
+        return zaakRepository.getZaakById(zaakNr);
+    }
 }

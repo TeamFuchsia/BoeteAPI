@@ -1,33 +1,49 @@
 package nl.fuchsia.repository;
 
+
+import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Zaak;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = TestDatabaseConfig.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ZaakRepositoryTest {
 
-    @Test
-    public void testAddZaak() {
-        ZaakReposistory zaakReposistory = new ZaakReposistory();
-        Zaak zaakEen = new Zaak();
-        Zaak zaakTwee = new Zaak();
-        zaakEen.setOvertredingsDatum(LocalDate.of(2019, 3, 12));
-        zaakEen.setPleegLocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden");
-        zaakTwee.setOvertredingsDatum(LocalDate.of(2019, 3, 12));
-        zaakTwee.setPleegLocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden");
+    @Autowired
+    private ZaakRepository zaakRepository;
 
-        zaakReposistory.addZaak(zaakEen);
-        zaakReposistory.addZaak(zaakTwee);
-        List<Zaak> zaakList = zaakReposistory.getZaken();
 
-        assertThat(zaakList.get(0)).isEqualTo(zaakEen);
-
-        zaakEen.setZaakNr(2);
-
-        assertThat(zaakList.get(1)).isEqualTo(zaakEen);
+    @BeforeEach
+    void setUp() {
     }
+
+    @Test
+    @Order(1)
+    void addZaak() {
+        zaakRepository.addZaak(new Zaak(LocalDate.of(2019,12,12),"Drachten"));
+
+        assertThat(zaakRepository.getZaken()).hasSize(1);
+
+        zaakRepository.addZaak(new Zaak(1,LocalDate.of(2019,12,12),"Sneek"));
+
+        assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
+    }
+
+    @Test
+    @Order(2)
+    void getZaken() {
+    }
+
+
+
+
 }

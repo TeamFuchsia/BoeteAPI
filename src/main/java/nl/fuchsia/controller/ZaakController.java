@@ -21,12 +21,16 @@ public class ZaakController {
 
     @PostMapping
     public ResponseEntity<Zaak> addZaak(@Valid @RequestBody Zaak zaak) {
-        zaakService.addZaak(zaak);
-        return ResponseEntity.ok(zaak);
+        return ResponseEntity.ok(zaakService.addZaak(zaak));
     }
 
     @GetMapping
     public ResponseEntity<List> getZaken() {
         return ResponseEntity.ok().body(zaakService.getZaken());
+    }
+
+    @GetMapping(value="/{zaakNr}")
+    public Zaak getZaakById(@PathVariable("zaakNr")Integer zaakNr){
+        return zaakService.getZaakById(zaakNr);
     }
 }

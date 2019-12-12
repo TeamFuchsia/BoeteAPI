@@ -11,14 +11,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "persoon")
 public class Persoon {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,15 +49,25 @@ public class Persoon {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate geboortedatum;
 
-//    @OneToMany(mappedBy = "persoon")
-//    private List<Zaak> zaken;
-
     public Persoon() {
     }
+
 
     public Persoon(Integer persoonnr) {
         this.persoonnr = persoonnr;
     }
+
+    public Persoon(String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
+        this.voornaam = voornaam;
+        this.achternaam = achternaam;
+        this.straat = straat;
+        this.huisnummer = huisnummer;
+        this.postcode = postcode;
+        this.woonplaats = woonplaats;
+        this.Bsn = bsn;
+        this.geboortedatum = geboortedatum;
+    }
+
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
         this.persoonnr = persoonnr;

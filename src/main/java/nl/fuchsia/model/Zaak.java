@@ -38,6 +38,10 @@ public class Zaak {
     public Zaak() {
     }
 
+    public Zaak(LocalDate overtredingsDatum, String pleegLocatie) {
+        this.overtredingsDatum = overtredingsDatum;
+        this.pleegLocatie = pleegLocatie;
+    }
 
     public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie) {
         this.zaakNr = zaakNr;

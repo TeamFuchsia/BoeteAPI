@@ -1,7 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.model.Zaak;
-import nl.fuchsia.repository.ZaakReposistory;
+import nl.fuchsia.repository.ListZaakReposistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ZaakServiceTest {
 
     @Mock
-    private ZaakReposistory zaakReposistory;
+    private ListZaakReposistory listZaakReposistory;
 
     @InjectMocks
     private ZaakService zaakService;
@@ -29,13 +29,13 @@ public class ZaakServiceTest {
 
         zaakService.addZaak(zaak);
 
-        verify(zaakReposistory).addZaak(zaak);
+        verify(listZaakReposistory).addZaak(zaak);
     }
 
     @Test
     public void testGetZaken() {
         zaakService.getZaken();
 
-        verify(zaakReposistory).getZaken();
+        verify(listZaakReposistory).getZaken();
     }
 }

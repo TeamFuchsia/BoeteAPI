@@ -1,25 +1,26 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
-import nl.fuchsia.repository.JdbcPersoonRepository;
 import nl.fuchsia.repository.PersoonRepository;
-;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.transaction.TransactionSystemException;
 
-import java.util.List;
+import java.time.LocalDate;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PersoonServiceTest {
 
     @Mock
     PersoonRepository persoonRepository;
-    @Mock
-    JdbcPersoonRepository jdbcPersoonRepository;
     @InjectMocks
     PersoonService persoonService;
 
@@ -32,8 +33,9 @@ public class PersoonServiceTest {
      * Test of de methode getPersonen in de persoonRepository wordt aangeroepen.
      */
     @Test
-    public void testGetPersonen() {
-        persoonService.getPersonen();
+    public void testGetJdbcPersonen() {
+        persoonService.getOrmPersonen();
+
         verify(persoonRepository).getPersonen();
     }
 
@@ -41,15 +43,19 @@ public class PersoonServiceTest {
      * Test of de methode addPersoon in de persoonRepository wordt aangeroepen.
      */
     @Test
-    public void testAddPersoon() throws Exception {
+    public void testAddPersoon() {
         Persoon persoon = new Persoon();
+
         persoonService.addPersoon(persoon);
+
         verify(persoonRepository).addPersoon(persoon);
     }
 
     @Test
-    public void testGetJdbcPersonen(){
-        persoonService.getJdbcPersonen();
-        verify(jdbcPersoonRepository).getJdbcPersonen();
+    public void testNonUniekBsnExeption() {
+        when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+
+        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+                .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 }

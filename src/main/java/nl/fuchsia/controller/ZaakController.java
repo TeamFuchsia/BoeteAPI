@@ -29,8 +29,8 @@ public class ZaakController {
         return ResponseEntity.ok().body(zaakService.getZaken());
     }
 
-    @GetMapping(value="/{zaakNr}")
-    public Zaak getZaakById(@PathVariable("zaakNr")Integer zaakNr){
+    @GetMapping(value = "/{zaakNr}")
+    public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
         return zaakService.getZaakById(zaakNr);
     }
 }

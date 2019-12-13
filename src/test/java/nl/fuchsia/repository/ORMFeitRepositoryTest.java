@@ -23,17 +23,25 @@ public class ORMFeitRepositoryTest {
     private ORMFeitRepository ormFeitRepository;
 
     @Test
-    public void addGetFeit() {
+    public void testAddGetFeit() {
         ormFeitRepository.addFeit(new Feit("VBF-001", "Test", 500));
+
+        assertThat(ormFeitRepository.getFeiten()).hasSize(1);
+
         ormFeitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+        ormFeitRepository.addFeit(new Feit("VBF-003", "Test", 500));
+        ormFeitRepository.addFeit(new Feit("VBF-004", "Test", 500));
 
         List<Feit> allefeiten = ormFeitRepository.getFeiten();
         Feit eersteFeit = allefeiten.get(0);
         Feit tweedeFeit = allefeiten.get(1);
+        Feit derdeFeit = allefeiten.get(2);
+        Feit vierdeFeit = allefeiten.get(3);
 
-        assertThat(allefeiten).hasSize(2);
+        assertThat(allefeiten).hasSize(4);
         assertThat(eersteFeit.getFeitcode()).isEqualTo("VBF-001");
-        assertThat(tweedeFeit.getFeitcode()).isEqualTo("VBF-002");
-
+        assertThat(tweedeFeit.getFeitcode()).isNotEqualTo("VBF-001");
+        assertThat(derdeFeit.getOmschrijving()).isEqualTo("Test");
+        assertThat(vierdeFeit.getBedrag()).isEqualTo(500);
     }
 }

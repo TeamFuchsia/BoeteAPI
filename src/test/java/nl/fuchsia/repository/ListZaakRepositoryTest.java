@@ -18,7 +18,7 @@ public class ListZaakRepositoryTest {
         zaakEen.setOvertredingsDatum(LocalDate.of(2019, 3, 12));
         zaakEen.setPleegLocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden");
         zaakTwee.setOvertredingsDatum(LocalDate.of(2019, 3, 12));
-        zaakTwee.setPleegLocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden");
+        zaakTwee.setPleegLocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden"); // TODO d.c.
 
         listZaakReposistory.addZaak(zaakEen);
         listZaakReposistory.addZaak(zaakTwee);

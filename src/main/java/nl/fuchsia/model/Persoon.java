@@ -39,7 +39,8 @@ public class Persoon {
     @Column
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
     private String woonplaats;
-    @Column
+    // unique = true om de test database het bsn veld op unique te zetten.
+    @Column(unique = true)
     @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
     private String Bsn;
     @Column
@@ -68,6 +69,7 @@ public class Persoon {
     }
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
+        // TODO constructor construct laten aanroepen, duplicate code
         this.persoonnr = persoonnr;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
@@ -151,12 +153,33 @@ public class Persoon {
         this.geboortedatum = geboortedatum;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Persoon persoon = (Persoon) o;
+//        return getPersoonnr().equals(persoon.getPersoonnr()) &&
+//                Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
+//                Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
+//                Objects.equals(getStraat(), persoon.getStraat()) &&
+//                Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
+//                Objects.equals(getPostcode(), persoon.getPostcode()) &&
+//                Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
+//                Objects.equals(getBsn(), persoon.getBsn()) &&
+//                Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getPersoonnr(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persoon persoon = (Persoon) o;
-        return getPersoonnr().equals(persoon.getPersoonnr()) &&
+        return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) &&
                 Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
                 Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
                 Objects.equals(getStraat(), persoon.getStraat()) &&

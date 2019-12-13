@@ -14,7 +14,7 @@ public class FeitRepositoryTest {
         Feit eersteFeit = new Feit();
         Feit tweedeFeit = new Feit();
         eersteFeit.setFeitcode("VBF-001");
-        eersteFeit.setOmschrijving("Omschrijving eerste Feit");
+        eersteFeit.setOmschrijving("Omschrijving eerste Feit"); // TODO duplicate code
         eersteFeit.setBedrag(10.00);
         tweedeFeit.setFeitcode("VBF-001");
         tweedeFeit.setOmschrijving("Omschrijving eerste Feit");
@@ -29,5 +29,9 @@ public class FeitRepositoryTest {
         eersteFeit.setFeitNr(2);
 
         assertThat(feitList.get(1)).isEqualTo(eersteFeit);
+    }
+
+    public Feit maakFeit(String code, double bedrag, String feitCode, String omschrijving) {
+        return null; // TODO
     }
 }

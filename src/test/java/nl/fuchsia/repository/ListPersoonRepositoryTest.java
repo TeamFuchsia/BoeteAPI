@@ -16,11 +16,6 @@ public class ListPersoonRepositoryTest {
     private ListPersoonRepository listPersoonRepository = new ListPersoonRepository();
     private List<Persoon> personen = new ArrayList<>();
 
-    @BeforeAll
-    public static void setUpAll() throws Exception {
-
-    }
-
     @BeforeEach
     public void setUp() {
         personen.add(new Persoon(1, "Rense", "Houwing", "Voltawerk", "36"

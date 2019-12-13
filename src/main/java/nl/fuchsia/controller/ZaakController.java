@@ -2,6 +2,7 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ public class ZaakController {
 
     private final ZaakService zaakService;
 
+    @Autowired
     public ZaakController(ZaakService zaakService) {
         this.zaakService = zaakService;
     }

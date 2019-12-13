@@ -6,7 +6,7 @@ import java.util.List;
  * Deze klasse zorgt ervoor dat de errorReponse van het List formaat is.
  */
 public class ErrorResponse {
-    private List error;
+    private List error; // TODO dit is een raw format, generic maken
 
     ErrorResponse(List error) {
         this.error = error;

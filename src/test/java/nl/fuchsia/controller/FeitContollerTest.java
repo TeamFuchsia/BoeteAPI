@@ -4,6 +4,7 @@ import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -29,4 +30,6 @@ public class FeitContollerTest {
 
         verify(feitService).addFeit(feit);
     }
+
+    // TODO wat nou als ik een invalid feit aan de controller aanbiedt? Spring controller tests.
 }

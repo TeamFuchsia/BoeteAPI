@@ -1,5 +1,6 @@
 package nl.fuchsia.model;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
@@ -20,6 +21,8 @@ public class Feit {
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
     // TODO regex kan ook repeterend element hebben
     @Pattern(regexp = "VBF-\\d\\d\\d$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
+    // unique = true om de test database het feitcode veld op unique te zetten.
+    @Column(unique = true)
     private String feitcode;
 
     /*

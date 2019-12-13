@@ -20,10 +20,6 @@ public class ZaakRepositoryTest {
     @Autowired
     private ZaakRepository zaakRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     @Order(1)
     void addZaak() {

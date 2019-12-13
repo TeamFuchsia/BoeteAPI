@@ -1,14 +1,13 @@
 package nl.fuchsia.configuration;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.vendor.Database;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class DatabaseConfig {
+public class DatabaseConfig extends AbstractDatabaseConfig {
 
     /**
      * De {@link DataSource} representeert de database connectie.
@@ -16,28 +15,23 @@ public class DatabaseConfig {
      *
      * @return De connectie naar de database
      */
-    @Bean
+    @Override
     public DataSource dataSource() {
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("org.postgresql.Driver");
-        basicDataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi");
-        basicDataSource.setUsername("postgres");
-        basicDataSource.setPassword("postgres");
-        return basicDataSource;
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("org.postgresql.Driver");
+        ds.setUrl("jdbc:postgresql://localhost:5432/boeteapi");
+        ds.setUsername("postgres");
+        ds.setPassword("postgres");
+        return ds;
     }
 
     /**
-     * JDBC by itself is tough to use, so we wrap it in the {@link JdbcTemplate} from Spring,
-     * which handles a lot of the boilerplate for us.
-     * Pure JDBC has its uses though. While it gives a lot of boilerplate,
-     * it also gives a lot of control, which can be useful for certain applications.
-     * Think of having to make very complex queries for very specific situations.
+     * met welk database type wordt er gewerkt.
      *
-     * @param dataSource
-     * @return The Jdbc template from Spring.
+     * @return het database type
      */
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+    @Override
+    public Database getDatabaseType() {
+        return Database.POSTGRESQL;
     }
 }

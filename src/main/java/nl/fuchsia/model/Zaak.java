@@ -7,26 +7,40 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "zaak")
 public class Zaak {
 
-private int zaakNr;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int zaakNr;
 
     @JsonProperty("overtredingsDatum")
     @JsonFormat(pattern = "dd-MM-yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
+    @Column
     //ToDo datum formatter (wordt opgepakt door Sander)
     private LocalDate overtredingsDatum;
 
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
+    @Column
     // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
     private String pleegLocatie;
 
     public Zaak() {
+    }
+
+    public Zaak(LocalDate overtredingsDatum, String pleegLocatie) {
+        this.overtredingsDatum = overtredingsDatum;
+        this.pleegLocatie = pleegLocatie;
     }
 
     public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie) {

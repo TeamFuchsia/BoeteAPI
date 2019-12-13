@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class FeitRepository {
+public class ListFeitRepository {
     /*
      * List is de tijdelijke vervanger van de database.
      */

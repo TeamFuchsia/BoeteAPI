@@ -6,10 +6,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FeitRepositoryTest {
+public class ListFeitRepositoryTest {
     @Test
     public void testAddFeit() {
-        FeitRepository feitRepository = new FeitRepository();
+        ListFeitRepository listFeitRepository = new ListFeitRepository();
         Feit eersteFeit = new Feit();
         Feit tweedeFeit = new Feit();
         eersteFeit.setFeitcode("VBF-001");
@@ -19,9 +19,9 @@ public class FeitRepositoryTest {
         tweedeFeit.setOmschrijving("Omschrijving eerste Feit");
         tweedeFeit.setBedrag(10.00);
 
-        feitRepository.addFeit(eersteFeit);
-        feitRepository.addFeit(tweedeFeit);
-        List<Feit> feitList = feitRepository.getfeiten();
+        listFeitRepository.addFeit(eersteFeit);
+        listFeitRepository.addFeit(tweedeFeit);
+        List<Feit> feitList = listFeitRepository.getfeiten();
 
         assertThat(feitList.get(0)).isNotEqualTo(tweedeFeit);
 

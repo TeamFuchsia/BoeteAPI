@@ -22,7 +22,7 @@ public class Feit {
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
-    @Column
+    @Column(unique = true)
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
     @Pattern(regexp = "VBF-\\d{3}$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
@@ -44,6 +44,12 @@ public class Feit {
     private double bedrag;
 
     public Feit() {
+    }
+
+    public Feit(String feitcode, String omschrijving, double bedrag) {
+        this.feitcode = feitcode;
+        this.omschrijving = omschrijving;
+        this.bedrag = bedrag;
     }
 
     public Feit(long feitNr, String feitcode, String omschrijving, double bedrag) {

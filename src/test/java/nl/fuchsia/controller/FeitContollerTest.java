@@ -4,7 +4,6 @@ import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -22,7 +21,7 @@ public class FeitContollerTest {
         initMocks(this);
     }
 
-    @Testable
+    @Test
     public void testAddFeit() {
         Feit feit = new Feit();
 

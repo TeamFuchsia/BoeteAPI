@@ -1,7 +1,7 @@
 package nl.fuchsia.model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -98,7 +98,7 @@ public class FeitTest {
 
     @Test
     public void omschrijvingIsToLong() {
-        Feit feit = new Feit(1, "VBF-000", new String(new char[5001]).replace('\0', 'P'), 4.00);
+        Feit feit =  new Feit(1, "VBF-000", new String(new char[5001]).replace('\0','F'), 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
 
@@ -136,6 +136,7 @@ public class FeitTest {
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
 
+
     @Test
     public void bedragHasToManyDecimals() {
         Feit feit = new Feit(1, "VBF-000", "test", 5.111);
@@ -145,4 +146,6 @@ public class FeitTest {
         assertThat(constraintViolations.size()).isEqualTo(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
+
+
 }

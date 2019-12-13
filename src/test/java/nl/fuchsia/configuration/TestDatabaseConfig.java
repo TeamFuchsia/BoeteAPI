@@ -1,11 +1,9 @@
 package nl.fuchsia.configuration;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.vendor.Database;
@@ -31,20 +29,25 @@ public class TestDatabaseConfig extends AbstractDatabaseConfig {
                 .build();
     }
 
+    /**
+     * met welk database type wordt er gewerkt.
+     *
+     * @return het database type
+     */
     @Override
     public Database getDatabaseType() {
         return Database.H2;
     }
 
+    /**
+     * welke JpaProperties krijgt de entityManagerFactoryBean mee.
+     *
+     * @return de JpaProperties
+     */
     @Override
     protected Properties getProperties() {
         Properties properties = new Properties();
         properties.setProperty(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
         return properties;
-    }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
     }
 }

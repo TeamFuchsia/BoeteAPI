@@ -4,6 +4,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -80,9 +81,35 @@ public abstract class AbstractDatabaseConfig {
         return entityManagerFactoryBean;
     }
 
+    /**
+     * welke JpaProperties krijgt de entityManagerFactoryBean mee.
+     *
+     * @return de JpaProperties
+     */
     protected Properties getProperties() {
         return new Properties();
     }
 
+    /**
+     * met welk database type wordt er gewerkt.
+     *
+     * @return het database type
+     */
     protected abstract Database getDatabaseType();
+
+    /**
+     * JDBC op zichzelf is moeilijk te gebruiken, daarom stoppen we dat in {@link JdbcTemplate} van Spring,
+     * deze handelt de boilerplate voor ons af.
+     *
+     * @param dataSource database instellingen
+     * @return De Jdbc template van Spring.
+     */
+    /*
+    Pure JDBC kan in sommige gevallen ook nuttig zijn, ondanks de grote hoeveelheid boilerplate.
+    Het geeft je veel meer controle, dit kan nuttig zijn voor bepaalde applicaties die hele complexe queries nodig heeft.
+    */
+    @Bean
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 }

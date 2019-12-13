@@ -34,7 +34,7 @@ public class Persoon {
     private String huisnummer;
     @Column
     @NotBlank(message = ("Postcode moet ingevuld zijn"))
-    @Pattern(regexp = "\\d{4}$\\s[A-Z]{2}$", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
+    @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
     private String postcode;
     @Column
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))

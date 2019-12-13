@@ -27,6 +27,7 @@ public class ExceptionHandlers {
     public ErrorResponse invoerException(MethodArgumentNotValidException exception) {
         List<String> list = new ArrayList<>();
         // per error wordt de defaultMessage eruit gefilterd.
+        // uitdaging, gebruik eens een stream met een lambda
         for (ObjectError objectError : exception.getBindingResult().getAllErrors()) {
             String defaultMessage = objectError.getDefaultMessage();
             list.add(defaultMessage);
@@ -34,6 +35,12 @@ public class ExceptionHandlers {
         return new ErrorResponse(list);
     }
 
+    /**
+     * De annotatie {@link ResponseStatus} geeft de waarde 500 terug via {@link HttpStatus#INTERNAL_SERVER_ERROR} methode
+     *
+     * @param uniekVeldException de exception klasse die de unieke invoer validate afhandelt.
+     * @return e holder {@link ErrorResponse} van de exception.
+     */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UniekVeldException.class)
     public ErrorResponse sqlException(UniekVeldException uniekVeldException) {

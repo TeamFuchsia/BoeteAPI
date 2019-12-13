@@ -16,6 +16,12 @@ import java.util.Properties;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class TestDatabaseConfig extends AbstractDatabaseConfig {
 
+    /**
+     * De {@link DataSource} representeert de database connectie.
+     * In dit geval maken we gebruik van een interne H2 database installatie.
+     *
+     * @return De connectie naar de database
+     */
     @Override
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
@@ -23,11 +29,21 @@ public class TestDatabaseConfig extends AbstractDatabaseConfig {
                 .build();
     }
 
+    /**
+     * met welk database type wordt er gewerkt.
+     *
+     * @return het database type
+     */
     @Override
     public Database getDatabaseType() {
         return Database.H2;
     }
 
+    /**
+     * welke JpaProperties krijgt de entityManagerFactoryBean mee.
+     *
+     * @return de JpaProperties
+     */
     @Override
     protected Properties getProperties() {
         Properties properties = new Properties();

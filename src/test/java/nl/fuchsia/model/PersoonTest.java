@@ -54,7 +54,7 @@ public class PersoonTest {
     }
 
     @Test
-    public void bsnError() {
+    void bsnError() {
         persoon.setBsn("12345678");
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
         assertThat(constraintViolations).hasSize(1);

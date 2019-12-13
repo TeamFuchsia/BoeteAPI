@@ -10,7 +10,7 @@ CREATE TABLE PERSOON (
                          huisnummer VARCHAR (10) NOT NULL,
                          postcode VARCHAR(7) NOT NULL,
                          woonplaats VARCHAR (30) NOT NULL,
-                         bsn INTEGER NOT NULL UNIQUE,
+                         bsn VARCHAR (9) NOT NULL UNIQUE,
                          geboortedatum DATE NOT NULL,
                          PRIMARY KEY (persoonNr)
 );

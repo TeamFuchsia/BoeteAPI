@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ZaakReposistory {
+public class ListZaakReposistory {
 
     private List<Zaak> zaakList = new ArrayList<>();
     private int nieuweZaakNr = 1;
@@ -18,7 +18,6 @@ public class ZaakReposistory {
         zaakList.add(zaak);
     }
 
-    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
     public List<Zaak> getZaken() {
         return zaakList;
     }

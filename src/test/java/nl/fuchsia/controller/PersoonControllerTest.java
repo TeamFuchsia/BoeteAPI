@@ -2,8 +2,8 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -26,7 +26,7 @@ public class PersoonControllerTest {
      * Test of de methode getPersonen in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testGetPersonen() {
+    public void testGetOrmPersonen() {
         persoonController.getPersonen();
         verify(persoonService).getPersonen();
     }

@@ -1,13 +1,12 @@
 package nl.fuchsia.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +15,7 @@ public class FeitTest {
 
     private static Validator validator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -99,7 +98,7 @@ public class FeitTest {
 
     @Test
     public void omschrijvingIsToLong() {
-        Feit feit = new Feit(1, "VBF-000", new String(new byte[5001]), 4.00);
+        Feit feit =  new Feit(1, "VBF-000", new String(new char[5001]).replace('\0','F'), 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
 

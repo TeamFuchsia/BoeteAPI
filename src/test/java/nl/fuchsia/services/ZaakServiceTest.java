@@ -2,8 +2,8 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.repository.ZaakReposistory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -18,7 +18,7 @@ public class ZaakServiceTest {
     @InjectMocks
     private ZaakService zaakService;
 
-    @Before
+    @BeforeEach
     public void setup() {
         initMocks(this);
     }

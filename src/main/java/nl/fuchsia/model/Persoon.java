@@ -42,7 +42,7 @@ public class Persoon {
     // unique = true om de test database het bsn veld op unique te zetten.
     @Column(unique = true)
     @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
-    private String Bsn;
+    private String bsn;
     @Column
     @JsonProperty("geboortedatum")
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -58,13 +58,14 @@ public class Persoon {
     }
 
     public Persoon(String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
+
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.straat = straat;
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
-        this.Bsn = bsn;
+        this.bsn = bsn;
         this.geboortedatum = geboortedatum;
     }
 
@@ -77,7 +78,7 @@ public class Persoon {
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
-        this.Bsn = bsn;
+        this.bsn = bsn;
         this.geboortedatum = geboortedatum;
     }
 
@@ -138,11 +139,11 @@ public class Persoon {
     }
 
     public String getBsn() {
-        return Bsn;
+        return bsn;
     }
 
     void setBsn(String bsn) {
-        Bsn = bsn;
+        this.bsn = bsn;
     }
 
     public LocalDate getGeboortedatum() {
@@ -152,27 +153,6 @@ public class Persoon {
     public void setGeboortedatum(LocalDate geboortedatum) {
         this.geboortedatum = geboortedatum;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Persoon persoon = (Persoon) o;
-//        return getPersoonnr().equals(persoon.getPersoonnr()) &&
-//                Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
-//                Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
-//                Objects.equals(getStraat(), persoon.getStraat()) &&
-//                Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
-//                Objects.equals(getPostcode(), persoon.getPostcode()) &&
-//                Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
-//                Objects.equals(getBsn(), persoon.getBsn()) &&
-//                Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getPersoonnr(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
-//    }
 
     @Override
     public boolean equals(Object o) {

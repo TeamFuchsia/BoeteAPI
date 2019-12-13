@@ -28,7 +28,7 @@ public class PersoonControllerTest {
     @Test
     public void testGetOrmPersonen() {
         persoonController.getPersonen();
-        verify(persoonService).getOrmPersonen();
+        verify(persoonService).getPersonen();
     }
 
     /**

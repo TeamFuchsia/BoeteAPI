@@ -34,14 +34,14 @@ public class Persoon {
     private String huisnummer;
     @Column
     @NotBlank(message = ("Postcode moet ingevuld zijn"))
-    @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
+    @Pattern(regexp = "\\d{4}$\\s[A-Z]{2}$", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
     private String postcode;
     @Column
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
     private String woonplaats;
     // unique = true om de test database het bsn veld op unique te zetten.
     @Column(unique = true)
-    @Pattern(regexp = "\\d\\d\\d\\d\\d\\d\\d\\d\\d", message = ("Voer een geldig 9 cijferig BSN nummer in."))
+    @Pattern(regexp = "\\d{9}$", message = ("Voer een geldig 9 cijferig BSN nummer in."))
     private String bsn;
     @Column
     @JsonProperty("geboortedatum")

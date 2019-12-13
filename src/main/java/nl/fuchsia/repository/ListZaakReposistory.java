@@ -18,7 +18,6 @@ public class ListZaakReposistory {
         zaakList.add(zaak);
     }
 
-    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
     public List<Zaak> getZaken() {
         return zaakList;
     }

@@ -46,7 +46,7 @@ public class PersoonServiceTest {
      */
     @Test
     public void testGetPersonen() {
-        persoonService.getOrmPersonen();
+        persoonService.getPersonen();
 
         verify(persoonRepository).getPersonen();
     }

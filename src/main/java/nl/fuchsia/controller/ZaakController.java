@@ -2,6 +2,7 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,18 +16,23 @@ public class ZaakController {
 
     private final ZaakService zaakService;
 
+    @Autowired
     public ZaakController(ZaakService zaakService) {
         this.zaakService = zaakService;
     }
 
     @PostMapping
-    public void addZaak(@Valid @RequestBody Zaak newZaak) {
-        zaakService.addZaak(newZaak);
+    public ResponseEntity<Zaak> addZaak(@Valid @RequestBody Zaak zaak) {
+        return ResponseEntity.ok(zaakService.addZaak(zaak));
     }
 
     @GetMapping
-    // Is niet nodig voor Story, toegevoegd om te kijken of zaak daadwerkelijk in List is geplaatst.
     public ResponseEntity<List> getZaken() {
         return ResponseEntity.ok().body(zaakService.getZaken());
+    }
+
+    @GetMapping(value = "/{zaakNr}")
+    public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
+        return zaakService.getZaakById(zaakNr);
     }
 }

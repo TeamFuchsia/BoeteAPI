@@ -7,22 +7,27 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "zaak")
 public class Zaak {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int zaakNr;
 
     @JsonProperty("overtredingsDatum")
     @JsonFormat(pattern = "dd-MM-yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
+    @Column
     //ToDo datum formatter (wordt opgepakt door Sander)
     private LocalDate overtredingsDatum;
 
@@ -38,6 +43,12 @@ public class Zaak {
     private List<Feit> feiten;
 
     public Zaak() {
+    }
+
+    public Zaak(LocalDate overtredingsDatum, String pleegLocatie, List<Feit> feiten) {
+        this.overtredingsDatum = overtredingsDatum;
+        this.pleegLocatie = pleegLocatie;
+        this.feiten = feiten;
     }
 
     public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie, List<Feit> feiten) {
@@ -71,33 +82,27 @@ public class Zaak {
         this.pleegLocatie = pleegLocatie;
     }
 
-    public List<Feit> getFeiten() {return feiten;}
-
-    public void setFeiten(List<Feit> feiten) {this.feiten = feiten;}
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Zaak zaak = (Zaak) o;
-        return zaakNr == zaak.zaakNr &&
-                Objects.equals(overtredingsDatum, zaak.overtredingsDatum) &&
-                Objects.equals(pleegLocatie, zaak.pleegLocatie) &&
-                Objects.equals(feiten, zaak.feiten);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(zaakNr, overtredingsDatum, pleegLocatie, feiten);
-    }
-
     @Override
     public String toString() {
         return "Zaak{" +
                 "zaakNr=" + zaakNr +
                 ", overtredingsDatum=" + overtredingsDatum +
                 ", pleegLocatie='" + pleegLocatie + '\'' +
-                ", feiten=" + feiten +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Zaak zaak = (Zaak) o;
+        return getZaakNr() == zaak.getZaakNr() &&
+                Objects.equals(getOvertredingsDatum(), zaak.getOvertredingsDatum()) &&
+                Objects.equals(getPleegLocatie(), zaak.getPleegLocatie());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getZaakNr(), getOvertredingsDatum(), getPleegLocatie());
     }
 }

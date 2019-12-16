@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class FeitRepository {
+public class ListFeitRepository {
     /*
      * List is de tijdelijke vervanger van de database.
      */
@@ -32,7 +32,7 @@ public class FeitRepository {
     /**
      * Methode haalt de feiten op.
      */
-    List<Feit> getfeiten() {
+    public List<Feit> getfeiten() {
         return Collections.unmodifiableList(feitList);
     }
 }

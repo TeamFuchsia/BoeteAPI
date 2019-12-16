@@ -1,6 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class ORMFeitRepository {
+public class FeitRepository {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -33,5 +34,15 @@ public class ORMFeitRepository {
     public List<Feit> getFeiten() {
         TypedQuery<Feit> getAllFeiten = entityManager.createQuery("SELECT feit FROM Feit feit", Feit.class);
         return getAllFeiten.getResultList();
+    }
+    /**
+     * Haalt het strafbare feit op op basis van het feitnr.
+     *
+     * @param feitnr het feitnr van de op te halen feiten.
+     * @return het opgehaalde feit.
+     */
+    @Transactional
+    public Persoon getFeitById(Integer feitnr) {
+        return entityManager.find(Persoon.class, feitnr);
     }
 }

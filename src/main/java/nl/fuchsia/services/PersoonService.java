@@ -42,7 +42,7 @@ public class PersoonService {
     }
 
     /**
-     * haalt de persoon per ID (persoonnr) via de OrmPersoonRepository.
+     * haalt de persoon per ID (persoonnr) via de PersoonRepository.
      *
      * @param persoonnr - ID de op te halen persoon.
      */

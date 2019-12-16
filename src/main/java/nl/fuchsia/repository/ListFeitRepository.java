@@ -17,7 +17,7 @@ public class ListFeitRepository {
     /*
      * eersteNieuweFeitnummer is tijdelijke counter voor het feitnummer, deze sleutel gaat later door de database worden bijgehouden.
      */
-    private long eersteNieuweFeitnummer = 1;
+    private int eersteNieuweFeitnummer = 1;
 
     /**
      * AddFeit haalt het nieuwe feitnummer op, daarna plust hij de counter voor het feitnummer op.

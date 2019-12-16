@@ -9,7 +9,6 @@ import org.mockito.Mock;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ZaakControllerTest {
@@ -33,7 +32,7 @@ public class ZaakControllerTest {
 
     @Test
     public void testAddZaak() {
-        Zaak zaak = new Zaak();
+        Zaak zaak = new Zaak(persoon);
 
         zaakController.addZaak(zaak);
 

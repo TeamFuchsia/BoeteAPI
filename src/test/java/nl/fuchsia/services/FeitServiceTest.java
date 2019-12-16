@@ -2,7 +2,7 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.repository.ORMFeitRepository;
+import nl.fuchsia.repository.FeitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +17,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class FeitServiceTest {
     @Mock
-    private ORMFeitRepository ormFeitRepository;
+    private FeitRepository feitRepository;
     @InjectMocks
     private FeitService feitService;
 
@@ -32,12 +32,12 @@ public class FeitServiceTest {
 
         feitService.addFeit(feit);
 
-        verify(ormFeitRepository).addFeit(feit);
+        verify(feitRepository).addFeit(feit);
     }
 
     @Test
     public void testNonUniekFeitcodeExeption(){
-        when(ormFeitRepository.addFeit(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(feitRepository.addFeit(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(()->feitService.addFeit(new Feit(1,"VBF-001","Test",500))).isInstanceOf(UniekVeldException.class).hasMessage("Feitcode: VBF-001 bestaat al in de database.");
     }
@@ -46,6 +46,6 @@ public class FeitServiceTest {
     public void testGetFeiten() {
         feitService.getFeiten();
 
-        verify(ormFeitRepository).getFeiten();
+        verify(feitRepository).getFeiten();
     }
 }

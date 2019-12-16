@@ -25,7 +25,7 @@ public class ZaakTest {
 
     @Test
     public void zaakAdded() {
-        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
+        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), persoon, "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
 
         Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
 
@@ -34,7 +34,7 @@ public class ZaakTest {
 
     @Test
     public void pleegLocatieHasToManyCharacters() {
-        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), new String(new byte[101]));
+        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), persoon, new String(new byte[101]));
 
         Set<ConstraintViolation<Zaak>> constraintViolations =
                 validator.validate(zaak);

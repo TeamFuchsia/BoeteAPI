@@ -27,7 +27,7 @@ public class ZaakRepositoryTest {
 
         assertThat(zaakRepository.getZaken()).hasSize(1);
 
-        zaakRepository.addZaak(new Zaak(1, LocalDate.of(2019, 12, 12), "Sneek"));
+        zaakRepository.addZaak(new Zaak(1, LocalDate.of(2019, 12, 12), persoon, "Sneek"));
 
         assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
     }

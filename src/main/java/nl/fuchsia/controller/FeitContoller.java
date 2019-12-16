@@ -2,12 +2,11 @@ package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.services.FeitService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/feiten")
@@ -20,14 +19,23 @@ public class FeitContoller {
 
     /**
      * Deze methode voegt een feit aan de database toe
+     *
      * @param feit wordt uit een Json post opgehaald
-     * Dit feit word daarna doorgezet naar de service
+     *             Dit feit word daarna doorgezet naar de service
      */
 
     // Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
-
     @PostMapping
-    public void addFeit(@Valid @RequestBody Feit feit) {
-        feitService.addFeit(feit);
+    public ResponseEntity<Feit> addFeit(@Valid @RequestBody Feit feit) {
+        return ResponseEntity.ok(feitService.addFeit(feit));
+    }
+
+    /**
+     * Haalt alle Feiten uit de database
+     * @return een lijst met alle feiten
+     */
+    @GetMapping
+    public ResponseEntity<List<Feit>> getFeiten() {
+        return ResponseEntity.ok().body(feitService.getFeiten());
     }
 }

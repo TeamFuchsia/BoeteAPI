@@ -1,11 +1,7 @@
 package nl.fuchsia.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import nl.fuchsia.util.JsonDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,12 +19,9 @@ public class Zaak {
     private int zaakNr;
 
     @JsonProperty("overtredingsDatum")
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
     @Column
-    //ToDo datum formatter (wordt opgepakt door Sander)
+    @JsonDate
     private LocalDate overtredingsDatum;
 
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")

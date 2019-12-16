@@ -36,10 +36,11 @@ public class Zaak {
     private String pleegLocatie;
 
     @ManyToMany
-    @JoinTable(
-            name = "zaakregel",
-            joinColumns = @JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
-            inverseJoinColumns = @JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
+    @JoinTable(name = "zaakregel",
+            joinColumns =
+            @JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
+            inverseJoinColumns =
+            @JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
     private List<Feit> feiten;
 
     public Zaak() {

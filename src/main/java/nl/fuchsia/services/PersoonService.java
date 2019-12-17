@@ -49,4 +49,13 @@ public class PersoonService {
     public Persoon getPersoonById(Integer persoonnr) {
         return persoonRepository.getPersoonById(persoonnr);
     }
+
+    public Persoon updatePersoonById(Persoon persoon) {
+        try {
+            return persoonRepository.updatePersoonById(persoon)
+                    ;
+        } catch (TransactionSystemException e) {
+            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
+        }
+    }
 }

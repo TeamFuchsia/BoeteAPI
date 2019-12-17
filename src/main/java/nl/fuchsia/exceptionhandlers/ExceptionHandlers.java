@@ -49,4 +49,14 @@ public class ExceptionHandlers {
         list.add(0, message);
         return new ErrorResponse(list);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NullException.class)
+    public ErrorResponse sql2Exception(NullException nullException) {
+        List<String> list = new ArrayList<>();
+        String message = nullException.getMessage();
+        list.add(0, message);
+        return new ErrorResponse(list);
+    }
+
 }

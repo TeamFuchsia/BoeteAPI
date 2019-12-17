@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.validation.Valid;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,7 @@ public class ZaakRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public Zaak addZaak(Zaak zaak) {
+    public Zaak addZaak(@Valid Zaak zaak) {
         entityManager.persist(zaak);
         return zaak;
     }

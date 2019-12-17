@@ -1,8 +1,14 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.dto.ZaakDto;
+import nl.fuchsia.exceptionhandlers.NullException;
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
+import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
+import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.List;
 
@@ -10,12 +16,28 @@ import java.util.List;
 public class ZaakService {
 
     private ZaakRepository zaakRepository;
+    private PersoonRepository persoonRepository;
 
-    public ZaakService(ZaakRepository zaakRepository) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository) {
         this.zaakRepository = zaakRepository;
+        this.persoonRepository = persoonRepository;
     }
 
-    public Zaak addZaak(Zaak zaak) {
+    public Zaak addZaak(ZaakDto zaakDto) {
+
+        Zaak zaak = null;
+        try {
+            Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
+            if (persoon.equals(null)){
+                throw new NullPointerException();
+            }
+            zaak = new Zaak();
+            zaak.setOvertredingsDatum(zaakDto.getOvertredingsDatum());
+            zaak.setPleegLocatie(zaakDto.getPleegLocatie());
+            zaak.setPersoon(persoon);
+        } catch (NullPointerException e) {
+            throw new NullException("Persoonnr: " + zaakDto.getPersoonnr() + " bestaat niet.");
+        }
         return zaakRepository.addZaak(zaak);
     }
 

@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class ZaakController {
     }
 
     @PostMapping
-    public ResponseEntity<Zaak> addZaak(@Valid @RequestBody Zaak zaak) {
-        return ResponseEntity.ok(zaakService.addZaak(zaak));
+    public ResponseEntity<Zaak> addZaak(@Valid @RequestBody ZaakDto zaakDto) {
+        return ResponseEntity.ok(zaakService.addZaak(zaakDto));
     }
 
     @GetMapping

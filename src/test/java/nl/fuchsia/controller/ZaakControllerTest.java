@@ -31,12 +31,12 @@ public class ZaakControllerTest {
         verify(zaakService).getZaken();
     }
 
-    @Test
-    public void testAddZaak() {
-        Zaak zaak = new Zaak();
-
-        zaakController.addZaak(zaak);
-
-        verify(zaakService).addZaak(zaak);
-    }
+//    @Test
+//    public void testAddZaak() {
+//        Zaak zaak = new Zaak();
+//
+//        zaakController.addZaak(zaak);
+//
+//        verify(zaakService).addZaak(zaak);
+//    }
 }

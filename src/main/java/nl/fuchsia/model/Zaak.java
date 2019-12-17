@@ -28,6 +28,11 @@ public class Zaak {
     // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
     private String pleegLocatie;
 
+    @ManyToOne
+    @JoinColumn(name = "persoonnr")
+    @NotNull(message = ("PERSOONNR bestaat niet!!"))
+    private Persoon persoon;
+
     public Zaak() {
     }
 
@@ -64,6 +69,14 @@ public class Zaak {
 
     public void setPleegLocatie(String pleegLocatie) {
         this.pleegLocatie = pleegLocatie;
+    }
+
+    public Persoon getPersoon() {
+        return persoon;
+    }
+
+    public void setPersoon(Persoon persoon) {
+        this.persoon = persoon;
     }
 
     @Override

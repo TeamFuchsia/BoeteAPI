@@ -23,7 +23,7 @@ CREATE TABLE FEIT (
 );
 CREATE TABLE ZAAK (
                       zaakNr SERIAL,
-                      persoonNr Integer,
+                      persoonNr Integer NOT NULL,
                       overtredingsdatum DATE NOT NULL,
                       pleegLocatie VARCHAR (100),
                       PRIMARY KEY (zaakNr),

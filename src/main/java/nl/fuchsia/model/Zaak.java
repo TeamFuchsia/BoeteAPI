@@ -1,11 +1,6 @@
 package nl.fuchsia.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.fuchsia.util.JsonDate;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -18,20 +13,15 @@ public class Zaak {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int zaakNr;
 
-    @JsonProperty("overtredingsDatum")
-    @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
     @Column
-    @JsonDate
     private LocalDate overtredingsDatum;
 
-    @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
     @Column
     // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
     private String pleegLocatie;
 
     @ManyToOne
     @JoinColumn(name = "persoonnr")
-    @NotNull(message = ("PERSOONNR bestaat niet!!"))
     private Persoon persoon;
 
     @ManyToMany
@@ -51,9 +41,8 @@ public class Zaak {
     }
 
     public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie) {
-        this.zaakNr = zaakNr;
-        this.overtredingsDatum = overtredingsDatum;
-        this.pleegLocatie = pleegLocatie;
+        this(overtredingsDatum,pleegLocatie);
+    	this.zaakNr = zaakNr;
     }
 
     public int getZaakNr() {

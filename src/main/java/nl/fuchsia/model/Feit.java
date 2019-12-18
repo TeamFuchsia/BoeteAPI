@@ -53,10 +53,8 @@ public class Feit {
     }
 
     public Feit(int feitNr, String feitcode, String omschrijving, double bedrag) {
-        this.feitNr = feitNr;
-        this.feitcode = feitcode;
-        this.omschrijving = omschrijving;
-        this.bedrag = bedrag;
+        this(feitcode,omschrijving,bedrag);
+    	this.feitNr = feitNr;
     }
 
     public String getFeitcode() {

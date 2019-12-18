@@ -2,7 +2,7 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.repository.ORMFeitRepository;
+import nl.fuchsia.repository.FeitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -10,15 +10,15 @@ import java.util.List;
 
 @Service
 public class FeitService {
-    private ORMFeitRepository ormFeitRepository;
+    private FeitRepository feitRepository;
 
-    public FeitService(ORMFeitRepository ormFeitRepository) {
-        this.ormFeitRepository = ormFeitRepository;
+    public FeitService(FeitRepository feitRepository) {
+        this.feitRepository = feitRepository;
     }
 
     public Feit addFeit(Feit feit) {
         try {
-           return ormFeitRepository.addFeit(feit);
+           return feitRepository.addFeit(feit);
         }
         //Vangt opgevoerde feiten met feitcodes die al in de database voor komt.
         catch (TransactionSystemException e) {
@@ -27,6 +27,6 @@ public class FeitService {
     }
 
     public List<Feit> getFeiten() {
-        return ormFeitRepository.getFeiten();
+        return feitRepository.getFeiten();
     }
 }

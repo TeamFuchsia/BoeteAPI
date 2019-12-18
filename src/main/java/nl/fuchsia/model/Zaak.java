@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +33,14 @@ public class Zaak {
     @JoinColumn(name = "persoonnr")
     @NotNull(message = ("PERSOONNR bestaat niet!!"))
     private Persoon persoon;
+
+    @ManyToMany
+	@JoinTable(name = "zaakregel",
+		joinColumns =
+		@JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
+		inverseJoinColumns =
+		@JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
+    private List<Feit> feiten;
 
     public Zaak() {
     }
@@ -79,7 +88,15 @@ public class Zaak {
         this.persoon = persoon;
     }
 
-    @Override
+	public List<Feit> getFeiten() {
+		return feiten;
+	}
+
+	public void setFeiten(List<Feit> feiten) {
+		this.feiten = feiten;
+	}
+
+	@Override
     public String toString() {
         return "Zaak{" +
                 "zaakNr=" + zaakNr +

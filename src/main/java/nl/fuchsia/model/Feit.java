@@ -16,7 +16,7 @@ public class Feit {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long feitNr;
+    private int feitNr;
 
     /*
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
@@ -52,7 +52,7 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public Feit(long feitNr, String feitcode, String omschrijving, double bedrag) {
+    public Feit(int feitNr, String feitcode, String omschrijving, double bedrag) {
         this.feitNr = feitNr;
         this.feitcode = feitcode;
         this.omschrijving = omschrijving;
@@ -83,11 +83,11 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public long getFeitNr() {
+    public int getFeitNr() {
         return feitNr;
     }
 
-    public void setFeitNr(long feitNr) {
+    public void setFeitNr(int feitNr) {
         this.feitNr = feitNr;
     }
 

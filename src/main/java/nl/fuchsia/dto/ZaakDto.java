@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.fuchsia.util.JsonDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ZaakDto {
 
@@ -22,6 +24,9 @@ public class ZaakDto {
 
     @NotNull(message = ("Persoonnr dient te zijn gevuld!"))
     private Integer persoonnr;
+
+    @Size(min=1, message = "Voeg minimaal 1 feit toe.")
+    private List<Integer> feitnrs;
 
     public int getZaaknr() {
         return zaaknr;
@@ -54,4 +59,12 @@ public class ZaakDto {
     public void setPersoonnr(Integer persoonnr) {
         this.persoonnr = persoonnr;
     }
+
+	public List<Integer> getFeitnrs() {
+		return feitnrs;
+	}
+
+	public void setFeitnrs(List<Integer> feitnrs) {
+		this.feitnrs = feitnrs;
+	}
 }

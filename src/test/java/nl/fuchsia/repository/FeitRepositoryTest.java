@@ -17,22 +17,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
 @Transactional
-public class ORMFeitRepositoryTest {
+public class FeitRepositoryTest {
 
     @Autowired
-    private ORMFeitRepository ormFeitRepository;
+    private FeitRepository feitRepository;
 
     @Test
     public void testAddGetFeit() {
-        ormFeitRepository.addFeit(new Feit("VBF-001", "Test", 500));
+        feitRepository.addFeit(new Feit("VBF-001", "Test", 500));
 
-        assertThat(ormFeitRepository.getFeiten()).hasSize(1);
+        assertThat(feitRepository.getFeiten()).hasSize(1);
 
-        ormFeitRepository.addFeit(new Feit("VBF-002", "Test", 500));
-        ormFeitRepository.addFeit(new Feit("VBF-003", "Test", 500));
-        ormFeitRepository.addFeit(new Feit("VBF-004", "Test", 500));
+        feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+        feitRepository.addFeit(new Feit("VBF-003", "Test", 500));
+        feitRepository.addFeit(new Feit("VBF-004", "Test", 500));
 
-        List<Feit> allefeiten = ormFeitRepository.getFeiten();
+        List<Feit> allefeiten = feitRepository.getFeiten();
         Feit eersteFeit = allefeiten.get(0);
         Feit tweedeFeit = allefeiten.get(1);
         Feit derdeFeit = allefeiten.get(2);

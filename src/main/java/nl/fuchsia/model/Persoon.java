@@ -45,8 +45,8 @@ public class Persoon {
     @JsonDate
     private LocalDate geboortedatum;
 
-//    @OneToMany(mappedBy = "persoon")
-//    private List<Zaak> zaken;
+    @OneToMany(mappedBy = "persoon")
+    private List<Zaak> zaken;
 
     public Persoon() {
     }

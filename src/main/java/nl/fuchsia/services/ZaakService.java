@@ -20,7 +20,6 @@ public class ZaakService {
 	private PersoonRepository persoonRepository;
 	private FeitRepository feitRepository;
 
-
 	public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository) {
 		this.zaakRepository = zaakRepository;
 		this.persoonRepository = persoonRepository;
@@ -30,19 +29,21 @@ public class ZaakService {
 	public Zaak addZaak(ZaakDto zaakDto) {
 
 		Zaak zaak = new Zaak();
+		String errorMessage = "";
 
+		//todo Zorg ervoor dat alle exception getoond worden, dus beide (persoonnr en feitnr) bestaan niet.
 		try {
 			Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
-			if (persoon.equals(null)) {
-				String bericht = "Persoon";
-				throw new NullPointerException(bericht);
+			if (persoon == null) {
+				errorMessage = "Persoonnr " +zaakDto.getPersoonnr()+ " bestaat niet";
+				throw new NullPointerException();
 			}
 			List<Feit> feiten = new ArrayList<>();
 			for (int feitNr : zaakDto.getFeitnrs()) {
 				Feit feit = feitRepository.getFeitById(feitNr);
-				if (feit.equals(null)) {
-					String bericht = "Feit";
-					throw new NullPointerException(bericht);
+				if (feit == null) {
+					errorMessage = "Feitnr " +feitNr+ " bestaat niet";
+					throw new NullPointerException();
 				}
 				feiten.add(feit);
 			}
@@ -51,9 +52,7 @@ public class ZaakService {
 			zaak.setPersoon(persoon);
 			zaak.setFeiten(feiten);
 		} catch (NullPointerException e) {
-
-			//throw new NullException();
-			throw new NullException("Persoonnr: " + zaakDto.getPersoonnr() + " bestaat niet.");
+			throw new NullException(errorMessage);
 		}
 		return zaakRepository.addZaak(zaak);
 	}

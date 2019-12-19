@@ -49,22 +49,22 @@ public class PersoonService {
      * @param persoonnr - ID de op te halen persoon.
      */
     public Persoon getPersoonById(Integer persoonnr) {
-        try {
 
             return persoonRepository.getPersoonById(persoonnr);
-        } catch (HttpStatusCodeException e) {
-            throw new NullPointerException("Something is missing");
-        }
+
+
     }
 
-
+    /**
+     * wijzigd de persoon op bassis van de meegeven ID nummer.
+     */
     public Persoon updatePersoonById(Persoon persoon) {
 
         try {
             Persoon persoonBestaan = persoonRepository.getPersoonById(persoon.getPersoonnr());
             if (persoonBestaan == null) {
 
-                throw new BestaanException("ID nummer bestaat niet!");
+                throw new BestaanException("Persoonnummer: <"+persoon.getPersoonnr()+ "> bestaat niet!");
             }
 
             return persoonRepository.updatePersoonById(persoon);

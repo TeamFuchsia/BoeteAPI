@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.exceptionhandlers.BestaanException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
@@ -43,7 +44,9 @@ public class PersoonController {
 
         return ResponseEntity.ok(persoonService.addPersoon(persoon));
     }
-
+    /**
+     * verkrijgt  één persoon op bassis van de meegegeven ID nummer.
+     */
     @GetMapping(value = "/{persoonnr}")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Persoon getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
@@ -51,12 +54,12 @@ public class PersoonController {
         return persoonService.getPersoonById(persoonnr);
     }
 
-    @PutMapping(value = "/{persoonnr}")
+    /**
+     * wijzigd de persoon op bassis van de meegegeven ID nummer in Json object.
+     */
+    @PutMapping
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Persoon>  updatePersoonById(@Valid@RequestBody Persoon persoon,@PathVariable("persoonnr") Integer persoonnr){
-
-        if (!persoonnr.equals(persoon.getPersoonnr())){
-            throw new UniekVeldException("PersoonId: <"  + persoonnr + "> en <" + persoon.getPersoonnr() + "> komen niet overeen!");}
+    public ResponseEntity<Persoon>  updatePersoonById(@Valid@RequestBody Persoon persoon){
 
             return ResponseEntity.ok(persoonService.updatePersoonById(persoon));
     }

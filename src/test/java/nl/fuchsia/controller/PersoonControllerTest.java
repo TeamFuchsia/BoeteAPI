@@ -26,8 +26,9 @@ public class PersoonControllerTest {
      * Test of de methode getPersonen in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testGetOrmPersonen() {
+    public void testGetPersonen() {
         persoonController.getPersonen();
+
         verify(persoonService).getPersonen();
     }
 
@@ -37,7 +38,32 @@ public class PersoonControllerTest {
     @Test
     public void testAddPersoon() {
         Persoon persoon = new Persoon();
+
         persoonController.addPersoon(persoon);
+
         verify(persoonService).addPersoon(persoon);
     }
+    /**
+     * Test of de methode getPersoonById in de persoonService wordt aangeroepen.
+     */
+    @Test
+    public void testGetPersoonById() {
+        persoonController.getPersoonById(1);
+
+        verify(persoonService).getPersoonById(1);
+    }
+
+    /**
+     * Test of de methode updatePersoonById in de persoonService wordt aangeroepen.
+     */
+    @Test
+    public void testUpdatePersoonById() {
+        Persoon persoon = new Persoon();
+
+        persoonController.updatePersoonById(persoon);
+
+        verify(persoonService).updatePersoonById(persoon);
+    }
+
 }
+

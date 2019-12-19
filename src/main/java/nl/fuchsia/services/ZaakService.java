@@ -34,6 +34,7 @@ public class ZaakService {
 		//todo Zorg ervoor dat alle exception getoond worden, dus beide (persoonnr en feitnr) bestaan niet.
 		try {
 			Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
+
 			if (persoon == null) {
 				errorMessage = "Persoonnr " +zaakDto.getPersoonnr()+ " bestaat niet";
 				throw new NullPointerException();
@@ -47,8 +48,8 @@ public class ZaakService {
 				}
 				feiten.add(feit);
 			}
-			zaak.setOvertredingsDatum(zaakDto.getOvertredingsDatum());
-			zaak.setPleegLocatie(zaakDto.getPleegLocatie());
+			zaak.setOvertredingsdatum(zaakDto.getOvertredingsdatum());
+			zaak.setPleeglocatie(zaakDto.getPleeglocatie());
 			zaak.setPersoon(persoon);
 			zaak.setFeiten(feiten);
 		} catch (NullPointerException e) {

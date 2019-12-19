@@ -2,12 +2,13 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Zaak;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -15,13 +16,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ZaakRepositoryTest {
 
     @Autowired
     private ZaakRepository zaakRepository;
 
-    @BeforeEach
-	void setup() {
+    @BeforeAll
+	public void setup() {
 
 		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
 		zaakRepository.addZaak(zaak);
@@ -41,11 +43,11 @@ public class ZaakRepositoryTest {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
 
-    	assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaakNr()).getPleegLocatie()).isEqualTo("Heerenveen");
+    	assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
     }
 
-    @Test
-    void getzaken() {
-        assertThat(zaakRepository.getZaken()).hasSize(1);
-    }
+	@Test
+	void getzaken() {
+		assertThat(zaakRepository.getZaken()).hasSize(3);
+	}
 }

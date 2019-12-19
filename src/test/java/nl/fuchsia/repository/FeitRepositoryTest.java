@@ -2,6 +2,7 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,4 +46,12 @@ public class FeitRepositoryTest {
         assertThat(derdeFeit.getOmschrijving()).isEqualTo("Test");
         assertThat(vierdeFeit.getBedrag()).isEqualTo(500);
     }
+
+	@Test()
+	public void testGetPersoonById() {
+		Feit feitId = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+
+		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
+	}
 }

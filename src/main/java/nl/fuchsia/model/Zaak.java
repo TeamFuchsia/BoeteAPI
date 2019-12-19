@@ -11,14 +11,14 @@ public class Zaak {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int zaakNr;
+    private int zaaknr;
 
     @Column
-    private LocalDate overtredingsDatum;
+    private LocalDate overtredingsdatum;
 
     @Column
     // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
-    private String pleegLocatie;
+    private String pleeglocatie;
 
     @ManyToOne
     @JoinColumn(name = "persoonnr")
@@ -35,38 +35,45 @@ public class Zaak {
     public Zaak() {
     }
 
-    public Zaak(LocalDate overtredingsDatum, String pleegLocatie) {
-        this.overtredingsDatum = overtredingsDatum;
-        this.pleegLocatie = pleegLocatie;
+    public Zaak(LocalDate overtredingsdatum, String pleeglocatie) {
+        this.overtredingsdatum = overtredingsdatum;
+        this.pleeglocatie = pleeglocatie;
     }
 
-    public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie) {
-        this(overtredingsDatum,pleegLocatie);
-    	this.zaakNr = zaakNr;
+    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie) {
+        this(overtredingsdatum, pleeglocatie);
+    	this.zaaknr = zaaknr;
     }
 
-    public int getZaakNr() {
-        return zaakNr;
+	public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+		this.overtredingsdatum = overtredingsdatum;
+		this.pleeglocatie = pleeglocatie;
+		this.persoon = persoon;
+		this.feiten = feiten;
+	}
+
+	public int getZaaknr() {
+        return zaaknr;
     }
 
-    public void setZaakNr(int zaakNr) {
-        this.zaakNr = zaakNr;
+    public void setZaaknr(int zaakNr) {
+        this.zaaknr = zaakNr;
     }
 
-    public LocalDate getOvertredingsDatum() {
-        return overtredingsDatum;
+    public LocalDate getOvertredingsdatum() {
+        return overtredingsdatum;
     }
 
-    public void setOvertredingsDatum(LocalDate overtredingsDatum) {
-        this.overtredingsDatum = overtredingsDatum;
+    public void setOvertredingsdatum(LocalDate overtredingsDatum) {
+        this.overtredingsdatum = overtredingsDatum;
     }
 
-    public String getPleegLocatie() {
-        return pleegLocatie;
+    public String getPleeglocatie() {
+        return pleeglocatie;
     }
 
-    public void setPleegLocatie(String pleegLocatie) {
-        this.pleegLocatie = pleegLocatie;
+    public void setPleeglocatie(String pleegLocatie) {
+        this.pleeglocatie = pleegLocatie;
     }
 
     public Persoon getPersoon() {
@@ -88,9 +95,9 @@ public class Zaak {
 	@Override
     public String toString() {
         return "Zaak{" +
-                "zaakNr=" + zaakNr +
-                ", overtredingsDatum=" + overtredingsDatum +
-                ", pleegLocatie='" + pleegLocatie + '\'' +
+                "zaakNr=" + zaaknr +
+                ", overtredingsDatum=" + overtredingsdatum +
+                ", pleegLocatie='" + pleeglocatie + '\'' +
                 '}';
     }
 
@@ -99,13 +106,13 @@ public class Zaak {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Zaak zaak = (Zaak) o;
-        return getZaakNr() == zaak.getZaakNr() &&
-                Objects.equals(getOvertredingsDatum(), zaak.getOvertredingsDatum()) &&
-                Objects.equals(getPleegLocatie(), zaak.getPleegLocatie());
+        return getZaaknr() == zaak.getZaaknr() &&
+                Objects.equals(getOvertredingsdatum(), zaak.getOvertredingsdatum()) &&
+                Objects.equals(getPleeglocatie(), zaak.getPleeglocatie());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getZaakNr(), getOvertredingsDatum(), getPleegLocatie());
+        return Objects.hash(getZaaknr(), getOvertredingsdatum(), getPleeglocatie());
     }
 }

@@ -3,8 +3,7 @@ package nl.fuchsia.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.fuchsia.util.JsonDate;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -17,18 +16,37 @@ public class ZaakDto {
     @JsonProperty("overtredingsDatum")
     @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
     @JsonDate
-    private LocalDate overtredingsDatum;
+    private LocalDate overtredingsdatum;
 
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
-    private String pleegLocatie;
+    private String pleeglocatie;
 
-    @NotNull(message = ("Persoonnr dient te zijn gevuld!"))
-    private Integer persoonnr;
+	//@Min(value = 1L, message = "Persoonnr dient te zijn gevuld en groter dan 0!")
+    private int persoonnr;
 
+    @NotNull(message = "Voeg minimaal 1 feit toe.")
     @Size(min=1, message = "Voeg minimaal 1 feit toe.")
     private List<Integer> feitnrs;
 
-    public int getZaaknr() {
+	public ZaakDto() {
+	}
+
+//	public ZaakDto(LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
+//		this.overtredingsdatum = overtredingsdatum;
+//		this.pleeglocatie = pleeglocatie;
+//		this.persoonnr = persoonnr;
+//		this.feitnrs = feitnrs;
+//	}
+
+	public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
+		this.zaaknr = zaaknr;
+		this.overtredingsdatum = overtredingsdatum;
+		this.pleeglocatie = pleeglocatie;
+		this.persoonnr = persoonnr;
+		this.feitnrs = feitnrs;
+	}
+
+	public int getZaaknr() {
         return zaaknr;
     }
 
@@ -36,27 +54,27 @@ public class ZaakDto {
         this.zaaknr = zaaknr;
     }
 
-    public LocalDate getOvertredingsDatum() {
-        return overtredingsDatum;
+    public LocalDate getOvertredingsdatum() {
+        return overtredingsdatum;
     }
 
-    public void setOvertredingsDatum(LocalDate overtredingsDatum) {
-        this.overtredingsDatum = overtredingsDatum;
+    public void setOvertredingsdatum(LocalDate overtredingsdatum) {
+        this.overtredingsdatum = overtredingsdatum;
     }
 
-    public String getPleegLocatie() {
-        return pleegLocatie;
+    public String getPleeglocatie() {
+        return pleeglocatie;
     }
 
-    public void setPleegLocatie(String pleegLocatie) {
-        this.pleegLocatie = pleegLocatie;
+    public void setPleeglocatie(String pleeglocatie) {
+        this.pleeglocatie = pleeglocatie;
     }
 
-    public Integer getPersoonnr() {
+    public int getPersoonnr() {
         return persoonnr;
     }
 
-    public void setPersoonnr(Integer persoonnr) {
+    public void setPersoonnr(int persoonnr) {
         this.persoonnr = persoonnr;
     }
 

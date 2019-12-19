@@ -43,18 +43,18 @@ public class ExceptionHandlers {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 @ExceptionHandler(UniekVeldException.class)
-public ErrorResponse sqlException(UniekVeldException uniekVeldException) {
+public ErrorResponse sqlUniekVeldException(UniekVeldException uniekVeldException) {
     List<String> list = new ArrayList<>();
     String message = uniekVeldException.getMessage();
     list.add(0, message);
     return new ErrorResponse(list);
 }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BestaanException.class)
-    public ErrorResponse sqlException(BestaanException bestaaanException) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NullException.class)
+    public ErrorResponse sqlNullException(NullException nullException) {
         List<String> list = new ArrayList<>();
-        String message = bestaaanException.getMessage();
+        String message = nullException.getMessage();
         list.add(0, message);
         return new ErrorResponse(list);
     }

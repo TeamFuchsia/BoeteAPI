@@ -1,7 +1,5 @@
 package nl.fuchsia.controller;
 
-import nl.fuchsia.exceptionhandlers.BestaanException;
-import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +42,7 @@ public class PersoonController {
 
         return ResponseEntity.ok(persoonService.addPersoon(persoon));
     }
+
     /**
      * verkrijgt  één persoon op bassis van de meegegeven ID nummer.
      */
@@ -59,8 +58,8 @@ public class PersoonController {
      */
     @PutMapping
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Persoon>  updatePersoonById(@Valid@RequestBody Persoon persoon){
+    public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody Persoon persoon) {
 
-            return ResponseEntity.ok(persoonService.updatePersoonById(persoon));
+        return ResponseEntity.ok(persoonService.updatePersoonById(persoon));
     }
-   }
+}

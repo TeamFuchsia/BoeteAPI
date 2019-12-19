@@ -43,6 +43,7 @@ public class PersoonControllerTest {
 
         verify(persoonService).addPersoon(persoon);
     }
+
     /**
      * Test of de methode getPersoonById in de persoonService wordt aangeroepen.
      */
@@ -64,6 +65,4 @@ public class PersoonControllerTest {
 
         verify(persoonService).updatePersoonById(persoon);
     }
-
 }
-

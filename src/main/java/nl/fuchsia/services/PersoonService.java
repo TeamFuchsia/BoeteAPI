@@ -1,13 +1,12 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.exceptionhandlers.BestaanException;
+import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
-import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.List;
 
@@ -50,8 +49,7 @@ public class PersoonService {
      */
     public Persoon getPersoonById(Integer persoonnr) {
 
-            return persoonRepository.getPersoonById(persoonnr);
-
+        return persoonRepository.getPersoonById(persoonnr);
 
     }
 
@@ -61,17 +59,12 @@ public class PersoonService {
     public Persoon updatePersoonById(Persoon persoon) {
 
         try {
-            Persoon persoonBestaan = persoonRepository.getPersoonById(persoon.getPersoonnr());
-            if (persoonBestaan == null) {
-
-                throw new BestaanException("Persoonnummer: <"+persoon.getPersoonnr()+ "> bestaat niet!");
+            if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {
+                throw new NullException("Persoonnummer: <" + persoon.getPersoonnr() + "> bestaat niet!");
             }
-
-            return persoonRepository.updatePersoonById(persoon);
-
         } catch (TransactionSystemException e) {
             throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
-
+        return persoonRepository.updatePersoonById(persoon);
     }
 }

@@ -1,6 +1,6 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.exceptionhandlers.BestaanException;
+import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
@@ -69,18 +69,15 @@ public class PersoonServiceTest {
     @Test
     public void testUpdatePersoonById() {
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(new Persoon(
-                1,
-                "Henk",
-                "Houwing",
-                "De buren",
-                "10",
-                "8402 GH",
-                "Drachten",
-                "123456789",
-                LocalDate.of(1990, 10, 12))));
+        Persoon persoon = new Persoon(1,"Henk","V","straat","1","9999 AA","Sneek","123456789",LocalDate.of(1990,01,01));
+
+        when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
+
+        persoonService.updatePersoonById(persoon);
 
         verify(persoonRepository).getPersoonById(1);
+        verify(persoonRepository).updatePersoonById(persoonService.getPersoonById(1));
+
     }
 
     /**
@@ -120,6 +117,6 @@ public class PersoonServiceTest {
                 "Drachten",
                 "123456789",
                 LocalDate.of(1990, 10, 12))))
-                .isInstanceOf(BestaanException.class).hasMessage("Persoonnummer: <1> bestaat niet!");
+                .isInstanceOf(NullException.class).hasMessage("Persoonnummer: <1> bestaat niet!");
     }
 }

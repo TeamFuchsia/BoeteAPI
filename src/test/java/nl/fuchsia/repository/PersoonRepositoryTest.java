@@ -56,15 +56,16 @@ public class PersoonRepositoryTest {
 
         assertThat(persoonRepository.getPersonen()).hasSize(2);
     }
+
     @Test
     public void testUpdatePersoonById() {
         persoonRepository.addPersoon(new Persoon(
-                1,"Rense1", "Houwing", "De buren", "12", "8402 GH", "Drachten", "123456709", LocalDate.of(1990, 10, 12)));
+                1, "Rense1", "Houwing", "De buren", "12", "8402 GH", "Drachten", "123456709", LocalDate.of(1990, 10, 12)));
 
         assertThat(persoonRepository.getPersoonById(1).getVoornaam()).isEqualTo("Rense1");
 
         persoonRepository.updatePersoonById(new Persoon(
-                1,"Henk", "Houwing", "De buren", "12", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12)));
+                1, "Henk", "Houwing", "De buren", "12", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12)));
 
         assertThat(persoonRepository.getPersonen()).hasSize(1);
         assertThat(persoonRepository.getPersoonById(1).getVoornaam()).isEqualTo("Henk");

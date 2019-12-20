@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -44,6 +45,9 @@ public class Persoon {
     @JsonDate
     private LocalDate geboortedatum;
 
+    @OneToMany(mappedBy = "persoon")
+    private List<Zaak> zaken;
+
     public Persoon() {
     }
 
@@ -64,16 +68,8 @@ public class Persoon {
     }
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-        // TODO constructor construct laten aanroepen, duplicate code
+        this(voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum);
         this.persoonnr = persoonnr;
-        this.voornaam = voornaam;
-        this.achternaam = achternaam;
-        this.straat = straat;
-        this.huisnummer = huisnummer;
-        this.postcode = postcode;
-        this.woonplaats = woonplaats;
-        this.bsn = bsn;
-        this.geboortedatum = geboortedatum;
     }
 
     public Integer getPersoonnr() {

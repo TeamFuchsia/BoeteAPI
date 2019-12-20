@@ -24,22 +24,11 @@ public class ZaakTest {
     }
 
     @Test
-    public void zaakAdded() {
+    public void testAddZaak() {
         zaak = new Zaak(1, LocalDate.of(2019, 2, 18), "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
 
         Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
 
         assertThat(constraintViolations.size()).isEqualTo(0);
-    }
-
-    @Test
-    public void pleegLocatieHasToManyCharacters() {
-        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), new String(new byte[101]));
-
-        Set<ConstraintViolation<Zaak>> constraintViolations =
-                validator.validate(zaak);
-
-        assertThat(constraintViolations.size()).isEqualTo(1);
-        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten");
     }
 }

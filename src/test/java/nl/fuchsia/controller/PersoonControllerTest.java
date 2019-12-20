@@ -12,32 +12,32 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PersoonControllerTest {
 
-    @Mock
-    PersoonService persoonService;
-    @InjectMocks
-    PersoonController persoonController;
+	@Mock
+	PersoonService persoonService;
+	@InjectMocks
+	PersoonController persoonController;
 
-    @BeforeEach
-    public void setUp() {
-        initMocks(this);
-    }
+	@BeforeEach
+	public void setUp() {
+		initMocks(this);
+	}
 
-    /**
-     * Test of de methode getPersonen in de persoonService wordt aangeroepen.
-     */
-    @Test
-    public void testGetOrmPersonen() {
-        persoonController.getPersonen();
-        verify(persoonService).getPersonen();
-    }
+	/**
+	 * Test of de methode getPersonen in de persoonService wordt aangeroepen.
+	 */
+	@Test
+	public void testGetOrmPersonen() {
+		persoonController.getPersonen();
+		verify(persoonService).getPersonen();
+	}
 
-    /**
-     * Test of de methode addPersoon in de persoonService wordt aangeroepen.
-     */
-    @Test
-    public void testAddPersoon() {
-        Persoon persoon = new Persoon();
-        persoonController.addPersoon(persoon);
-        verify(persoonService).addPersoon(persoon);
-    }
+	/**
+	 * Test of de methode addPersoon in de persoonService wordt aangeroepen.
+	 */
+	@Test
+	public void testAddPersoon() {
+		Persoon persoon = new Persoon();
+		persoonController.addPersoon(persoon);
+		verify(persoonService).addPersoon(persoon);
+	}
 }

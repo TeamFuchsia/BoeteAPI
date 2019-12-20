@@ -68,7 +68,7 @@ public class Persoon {
     }
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-		this(voornaam,achternaam,straat,huisnummer,postcode,woonplaats,bsn,geboortedatum);
+        this(voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum);
         this.persoonnr = persoonnr;
     }
 

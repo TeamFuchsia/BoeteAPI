@@ -36,14 +36,14 @@ public class ZaakService {
 			Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
 
 			if (persoon == null) {
-				errorMessage = "Persoonnr " +zaakDto.getPersoonnr()+ " bestaat niet";
+				errorMessage = "Persoonnr " + zaakDto.getPersoonnr() + " bestaat niet";
 				throw new NullPointerException();
 			}
 			List<Feit> feiten = new ArrayList<>();
 			for (int feitNr : zaakDto.getFeitnrs()) {
 				Feit feit = feitRepository.getFeitById(feitNr);
 				if (feit == null) {
-					errorMessage = "Feitnr " +feitNr+ " bestaat niet";
+					errorMessage = "Feitnr " + feitNr + " bestaat niet";
 					throw new NullPointerException();
 				}
 				feiten.add(feit);

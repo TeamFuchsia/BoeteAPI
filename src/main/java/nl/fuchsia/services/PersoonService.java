@@ -12,41 +12,41 @@ import java.util.List;
 @Component
 public class PersoonService {
 
-    private PersoonRepository persoonRepository;
+	private PersoonRepository persoonRepository;
 
-    @Autowired
-    public PersoonService(PersoonRepository persoonRepository) {
-        this.persoonRepository = persoonRepository;
-    }
+	@Autowired
+	public PersoonService(PersoonRepository persoonRepository) {
+		this.persoonRepository = persoonRepository;
+	}
 
-    /**
-     * Geeft een lijst van personen die in de database staan via de ormPersoonRepository.
-     *
-     * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
-     */
-    public List<Persoon> getPersonen() {
-        return persoonRepository.getPersonen();
-    }
+	/**
+	 * Geeft een lijst van personen die in de database staan via de ormPersoonRepository.
+	 *
+	 * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
+	 */
+	public List<Persoon> getPersonen() {
+		return persoonRepository.getPersonen();
+	}
 
-    /**
-     * Voegt de persoon toe via de persoonRepository.
-     *
-     * @param persoon - De toe te voegen persoon.
-     */
-    public Persoon addPersoon(Persoon persoon) {
-        try {
-            return persoonRepository.addPersoon(persoon);
-        } catch (TransactionSystemException e) {
-            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
-        }
-    }
+	/**
+	 * Voegt de persoon toe via de persoonRepository.
+	 *
+	 * @param persoon - De toe te voegen persoon.
+	 */
+	public Persoon addPersoon(Persoon persoon) {
+		try {
+			return persoonRepository.addPersoon(persoon);
+		} catch (TransactionSystemException e) {
+			throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
+		}
+	}
 
-    /**
-     * haalt de persoon per ID (persoonnr) via de OrmPersoonRepository.
-     *
-     * @param persoonnr - ID de op te halen persoon.
-     */
-    public Persoon getPersoonById(Integer persoonnr) {
-        return persoonRepository.getPersoonById(persoonnr);
-    }
+	/**
+	 * haalt de persoon per ID (persoonnr) via de OrmPersoonRepository.
+	 *
+	 * @param persoonnr - ID de op te halen persoon.
+	 */
+	public Persoon getPersoonById(Integer persoonnr) {
+		return persoonRepository.getPersoonById(persoonnr);
+	}
 }

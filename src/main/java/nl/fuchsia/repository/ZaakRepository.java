@@ -13,27 +13,27 @@ import java.util.List;
 @Repository
 public class ZaakRepository {
 
-    /**
-     * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
-     */
-    //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
-    @PersistenceContext(unitName = "entityManagerFactory")
-    private EntityManager entityManager;
+	/**
+	 * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
+	 */
+	//unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
+	@PersistenceContext(unitName = "entityManagerFactory")
+	private EntityManager entityManager;
 
-    @Transactional
-    public Zaak addZaak(@Valid Zaak zaak) {
-        entityManager.persist(zaak);
-        return zaak;
-    }
+	@Transactional
+	public Zaak addZaak(@Valid Zaak zaak) {
+		entityManager.persist(zaak);
+		return zaak;
+	}
 
-    @Transactional
-    public List<Zaak> getZaken() {
-        TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
-        return getAllZaken.getResultList();
-    }
+	@Transactional
+	public List<Zaak> getZaken() {
+		TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
+		return getAllZaken.getResultList();
+	}
 
-    @Transactional
-    public Zaak getZaakById(Integer zaakNr) {
-        return entityManager.find(Zaak.class, zaakNr);
-    }
+	@Transactional
+	public Zaak getZaakById(Integer zaakNr) {
+		return entityManager.find(Zaak.class, zaakNr);
+	}
 }

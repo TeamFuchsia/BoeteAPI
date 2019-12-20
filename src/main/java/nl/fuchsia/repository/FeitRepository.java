@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class ORMFeitRepository {
+public class FeitRepository {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -24,6 +24,17 @@ public class ORMFeitRepository {
         entityManager.persist(feit);
         return feit;
     }
+
+	/**
+	 * Haalt het strafbare feit op basis van het feitnr.
+	 *
+	 * @param feitnr het feitnr van de op te halen feiten.
+	 * @return het opgehaalde feit.
+	 */
+	@Transactional
+    public Feit getFeitById(Integer feitnr){
+    	return entityManager.find(Feit.class, feitnr);
+	}
 
     /**
      * Haalt alle Feiten uit de database

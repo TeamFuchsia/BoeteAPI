@@ -1,92 +1,118 @@
 package nl.fuchsia.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.fuchsia.util.JsonDate;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "zaak")
 public class Zaak {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int zaakNr;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int zaaknr;
 
-    @JsonProperty("overtredingsDatum")
-    @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
-    @Column
-    @JsonDate
-    private LocalDate overtredingsDatum;
+	@Column
+	private LocalDate overtredingsdatum;
 
-    @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
-    @Column
-    // mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
-    private String pleegLocatie;
+	@Column
+	// mag leeg zijn indien het adminstratieve boete is bijv boete niet verzekerd.
+	private String pleeglocatie;
 
-    public Zaak() {
-    }
+	@ManyToOne
+	@JoinColumn(name = "persoonnr")
+	private Persoon persoon;
 
-    public Zaak(LocalDate overtredingsDatum, String pleegLocatie) {
-        this.overtredingsDatum = overtredingsDatum;
-        this.pleegLocatie = pleegLocatie;
-    }
+	@ManyToMany
+	@JoinTable(name = "zaakregel",
+		joinColumns =
+		@JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
+		inverseJoinColumns =
+		@JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
+	private List<Feit> feiten;
 
-    public Zaak(int zaakNr, LocalDate overtredingsDatum, String pleegLocatie) {
-        this.zaakNr = zaakNr;
-        this.overtredingsDatum = overtredingsDatum;
-        this.pleegLocatie = pleegLocatie;
-    }
+	public Zaak() {
+	}
 
-    public int getZaakNr() {
-        return zaakNr;
-    }
+	public Zaak(LocalDate overtredingsdatum, String pleeglocatie) {
+		this.overtredingsdatum = overtredingsdatum;
+		this.pleeglocatie = pleeglocatie;
+	}
 
-    public void setZaakNr(int zaakNr) {
-        this.zaakNr = zaakNr;
-    }
+	public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie) {
+		this(overtredingsdatum, pleeglocatie);
+		this.zaaknr = zaaknr;
+	}
 
-    public LocalDate getOvertredingsDatum() {
-        return overtredingsDatum;
-    }
+	public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+		this.overtredingsdatum = overtredingsdatum;
+		this.pleeglocatie = pleeglocatie;
+		this.persoon = persoon;
+		this.feiten = feiten;
+	}
 
-    public void setOvertredingsDatum(LocalDate overtredingsDatum) {
-        this.overtredingsDatum = overtredingsDatum;
-    }
+	public int getZaaknr() {
+		return zaaknr;
+	}
 
-    public String getPleegLocatie() {
-        return pleegLocatie;
-    }
+	public void setZaaknr(int zaakNr) {
+		this.zaaknr = zaakNr;
+	}
 
-    public void setPleegLocatie(String pleegLocatie) {
-        this.pleegLocatie = pleegLocatie;
-    }
+	public LocalDate getOvertredingsdatum() {
+		return overtredingsdatum;
+	}
 
-    @Override
-    public String toString() {
-        return "Zaak{" +
-                "zaakNr=" + zaakNr +
-                ", overtredingsDatum=" + overtredingsDatum +
-                ", pleegLocatie='" + pleegLocatie + '\'' +
-                '}';
-    }
+	public void setOvertredingsdatum(LocalDate overtredingsDatum) {
+		this.overtredingsdatum = overtredingsDatum;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Zaak zaak = (Zaak) o;
-        return getZaakNr() == zaak.getZaakNr() &&
-                Objects.equals(getOvertredingsDatum(), zaak.getOvertredingsDatum()) &&
-                Objects.equals(getPleegLocatie(), zaak.getPleegLocatie());
-    }
+	public String getPleeglocatie() {
+		return pleeglocatie;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getZaakNr(), getOvertredingsDatum(), getPleegLocatie());
-    }
+	public void setPleeglocatie(String pleegLocatie) {
+		this.pleeglocatie = pleegLocatie;
+	}
+
+	public Persoon getPersoon() {
+		return persoon;
+	}
+
+	public void setPersoon(Persoon persoon) {
+		this.persoon = persoon;
+	}
+
+	public List<Feit> getFeiten() {
+		return feiten;
+	}
+
+	public void setFeiten(List<Feit> feiten) {
+		this.feiten = feiten;
+	}
+
+	@Override
+	public String toString() {
+		return "Zaak{" +
+			"zaakNr=" + zaaknr +
+			", overtredingsDatum=" + overtredingsdatum +
+			", pleegLocatie='" + pleeglocatie + '\'' +
+			'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Zaak zaak = (Zaak) o;
+		return getZaaknr() == zaak.getZaaknr() &&
+			Objects.equals(getOvertredingsdatum(), zaak.getOvertredingsdatum()) &&
+			Objects.equals(getPleeglocatie(), zaak.getPleeglocatie());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getZaaknr(), getOvertredingsdatum(), getPleeglocatie());
+	}
 }

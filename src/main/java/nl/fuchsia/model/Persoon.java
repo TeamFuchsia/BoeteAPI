@@ -1,6 +1,7 @@
 package nl.fuchsia.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,6 +49,9 @@ public class Persoon {
     @JsonProperty("geboortedatum")
     @JsonDate
     private LocalDate geboortedatum;
+
+    @OneToMany(mappedBy = "persoon")
+    private List<Zaak> zaken;
 
     public Persoon() {
     }

@@ -146,6 +146,4 @@ public class FeitTest {
         assertThat(constraintViolations.size()).isEqualTo(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
-
-
 }

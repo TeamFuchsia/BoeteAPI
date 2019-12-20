@@ -13,7 +13,6 @@ import java.util.List;
 
 @Component
 public class PersoonService {
-
     private PersoonRepository persoonRepository;
 
     @Autowired

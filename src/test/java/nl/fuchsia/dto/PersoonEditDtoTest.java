@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PersoonEditDtoTest {
 
     private static Validator validator;
-    private static PersoonEditDto persoonDto;
+    private static PersoonEditDto persoonEditDto;
 
     @BeforeAll
     public static void setupAll() {
@@ -26,24 +26,24 @@ class PersoonEditDtoTest {
 
     @BeforeEach
     public void setup() {
-        persoonDto = new PersoonEditDto(2, "Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
+        persoonEditDto = new PersoonEditDto(2, "Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
     }
 
     @Test
     public void persoonnrIsNullOrBlank() {
-        persoonDto.setVoornaam(null);
+        persoonEditDto.setVoornaam(null);
 
-        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonDto);
+        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voornaam moet ingevuld zijn");
-       }
+    }
 
     @Test
     public void voornaamIsNull() {
-        persoonDto = new PersoonEditDto( "Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
+        persoonEditDto = new PersoonEditDto("Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
 
-        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonDto);
+        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Persoonr moet ingevuld zijn");
@@ -51,16 +51,16 @@ class PersoonEditDtoTest {
 
     @Test
     public void postcodeError() {
-        persoonDto.setPostcode("8401EN");
+        persoonEditDto.setPostcode("8401EN");
 
-        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonDto);
+        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters");
 
-        persoonDto.setPostcode("8404 as");
+        persoonEditDto.setPostcode("8404 as");
 
-        constraintViolations = validator.validate(persoonDto);
+        constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters");
@@ -68,9 +68,9 @@ class PersoonEditDtoTest {
 
     @Test
     void bsnError() {
-        persoonDto.setBsn("12345678");
+        persoonEditDto.setBsn("12345678");
 
-        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonDto);
+        Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldig 9 cijferig BSN nummer in.");

@@ -55,28 +55,28 @@ public class PersoonService {
     }
 
     /**
-     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoonDto.
-     * @param persoonDto zijn de gegevens waarin de persoon gewijzigd moet worden
+     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoonEditDto.
+     * @param persoonEditDto zijn de gegevens waarin de persoon gewijzigd moet worden
      * @return de nieuwe persoon in de database
      */
-    public Persoon updatePersoonById(PersoonEditDto persoonDto) {
+    public Persoon updatePersoonById(PersoonEditDto persoonEditDto) {
 
         try {
-            if (persoonRepository.getPersoonById(persoonDto.getPersoonnr()) == null) {
-                throw new NullException("Persoonnummer: " + persoonDto.getPersoonnr() + " bestaat niet!");
+            if (persoonRepository.getPersoonById(persoonEditDto.getPersoonnr()) == null) {
+                throw new NullException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
             }
         } catch (TransactionSystemException e) {
-            throw new UniekVeldException("BSN nummer: " + persoonDto.getBsn() + " bestaat reeds.");
+            throw new UniekVeldException("BSN nummer: " + persoonEditDto.getBsn() + " bestaat reeds.");
         }
-        Persoon persoon = new Persoon(persoonDto.getPersoonnr(),
-                                      persoonDto.getVoornaam(),
-                                      persoonDto.getAchternaam(),
-                                      persoonDto.getStraat(),
-                                      persoonDto.getHuisnummer(),
-                                      persoonDto.getPostcode(),
-                                      persoonDto.getWoonplaats(),
-                                      persoonDto.getBsn(),
-                                      persoonDto.getGeboortedatum());
+        Persoon persoon = new Persoon(persoonEditDto.getPersoonnr(),
+                                      persoonEditDto.getVoornaam(),
+                                      persoonEditDto.getAchternaam(),
+                                      persoonEditDto.getStraat(),
+                                      persoonEditDto.getHuisnummer(),
+                                      persoonEditDto.getPostcode(),
+                                      persoonEditDto.getWoonplaats(),
+                                      persoonEditDto.getBsn(),
+                                      persoonEditDto.getGeboortedatum());
 
         return persoonRepository.updatePersoonById(persoon);
     }

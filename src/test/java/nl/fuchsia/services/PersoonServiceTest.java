@@ -1,5 +1,7 @@
 package nl.fuchsia.services;
 
+import java.time.LocalDate;
+
 import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
@@ -11,9 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.transaction.TransactionSystemException;
 
-import java.time.LocalDate;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -28,7 +27,7 @@ public class PersoonServiceTest {
     PersoonService persoonService;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         initMocks(this);
     }
 
@@ -69,8 +68,8 @@ public class PersoonServiceTest {
      */
     @Test
     public void testUpdatePersoonById() {
-        Persoon persoon = new Persoon(1,"Henk","V","straat","1","9999 AA","Sneek","123456789",LocalDate.of(1990,01,01));
-        PersoonEditDto persoonEditDto = new PersoonEditDto(1,"Henk","V","straat","1","9999 AA","Sneek","123456789",LocalDate.of(1990,01,01));
+        Persoon persoon = new Persoon(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
+        PersoonEditDto persoonEditDto = new PersoonEditDto(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
 
         when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
@@ -87,16 +86,7 @@ public class PersoonServiceTest {
     public void testNonUniekBsnExeption() {
         when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(
-                1,
-                "Rense",
-                "Houwing",
-                "De buren",
-                "10",
-                "8402 GH",
-                "Drachten",
-                "123456789",
-                LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 
@@ -107,16 +97,7 @@ public class PersoonServiceTest {
     public void testBestaanPersoonnr() {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(
-                1,
-                "Geert",
-                "Houwing",
-                "De buren",
-                "10",
-                "8402 GH",
-                "Drachten",
-                "123456789",
-                LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(NullException.class).hasMessage("Persoonnummer: <1> bestaat niet!");
     }
 }

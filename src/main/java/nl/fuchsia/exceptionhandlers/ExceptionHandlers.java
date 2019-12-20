@@ -42,10 +42,19 @@ public class ExceptionHandlers {
      * @return e holder {@link ErrorResponse} van de exception.
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(UniekVeldException.class)
-    public ErrorResponse sqlException(UniekVeldException uniekVeldException) {
+@ExceptionHandler(UniekVeldException.class)
+public ErrorResponse sqlUniekVeldException(UniekVeldException uniekVeldException) {
+    List<String> list = new ArrayList<>();
+    String message = uniekVeldException.getMessage();
+    list.add(0, message);
+    return new ErrorResponse(list);
+}
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NullException.class)
+    public ErrorResponse sqlNullException(NullException nullException) {
         List<String> list = new ArrayList<>();
-        String message = uniekVeldException.getMessage();
+        String message = nullException.getMessage();
         list.add(0, message);
         return new ErrorResponse(list);
     }

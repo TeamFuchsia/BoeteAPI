@@ -1,5 +1,6 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
@@ -47,15 +48,23 @@ public class PersoonService {
      * @param persoonnr - ID de op te halen persoon.
      */
     public Persoon getPersoonById(Integer persoonnr) {
+
         return persoonRepository.getPersoonById(persoonnr);
+
     }
 
+    /**
+     * wijzigd de persoon op bassis van de meegeven ID nummer.
+     */
     public Persoon updatePersoonById(Persoon persoon) {
+
         try {
-            return persoonRepository.updatePersoonById(persoon)
-                    ;
+            if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {
+                throw new NullException("Persoonnummer: <" + persoon.getPersoonnr() + "> bestaat niet!");
+            }
         } catch (TransactionSystemException e) {
             throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
+        return persoonRepository.updatePersoonById(persoon);
     }
 }

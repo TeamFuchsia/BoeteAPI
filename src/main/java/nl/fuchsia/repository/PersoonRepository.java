@@ -51,8 +51,15 @@ public class PersoonRepository {
         entityManager.persist(persoon);
         return persoon;
     }
+
+    /**
+     * wijzigd een bestaande persoon.
+     *
+     * @param persoon de te wijzigen persoon.
+     */
     @Transactional
     public Persoon updatePersoonById(Persoon persoon) {
         entityManager.merge(persoon);
-           return persoon ;}
+        return persoon;
+    }
 }

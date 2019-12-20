@@ -35,22 +35,18 @@ public class ZaakService {
 	public Zaak addZaak(ZaakAddDto zaakAddDto) {
 
 		Zaak zaak = new Zaak();
-		String errorMessage = "";
 
 		//todo Zorg ervoor dat alle exception getoond worden, dus beide (persoonnr en feitnr) bestaan niet.
-		try {
 			Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
 
 			if (persoon == null) {
-				errorMessage = "Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet";
-				throw new NullPointerException();
+				throw new NullException("Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet");
 			}
 			List<Feit> feiten = new ArrayList<>();
 			for (int feitNr : zaakAddDto.getFeitnrs()) {
 				Feit feit = feitRepository.getFeitById(feitNr);
 				if (feit == null) {
-					errorMessage = "Feitnr " + feitNr + " bestaat niet";
-					throw new NullPointerException();
+					throw new NullException("Feitnr " + feitNr + " bestaat niet");
 				}
 				feiten.add(feit);
 			}
@@ -58,9 +54,6 @@ public class ZaakService {
 			zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
 			zaak.setPersoon(persoon);
 			zaak.setFeiten(feiten);
-		} catch (NullPointerException e) {
-			throw new NullException(errorMessage);
-		}
 		return zaakRepository.addZaak(zaak);
 	}
 

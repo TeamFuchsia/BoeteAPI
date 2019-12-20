@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,10 +60,10 @@ public class PersoonControllerTest {
      */
     @Test
     public void testUpdatePersoonById() {
-        Persoon persoon = new Persoon();
+        PersoonEditDto persoonDto = new PersoonEditDto();
 
-        persoonController.updatePersoonById(persoon);
+        persoonController.updatePersoonById(persoonDto);
 
-        verify(persoonService).updatePersoonById(persoon);
+        verify(persoonService).updatePersoonById(persoonDto);
     }
 }

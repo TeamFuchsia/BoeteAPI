@@ -1,5 +1,6 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -68,20 +69,19 @@ public class PersoonServiceTest {
      */
     @Test
     public void testUpdatePersoonById() {
-
         Persoon persoon = new Persoon(1,"Henk","V","straat","1","9999 AA","Sneek","123456789",LocalDate.of(1990,01,01));
+        PersoonEditDto persoonEditDto = new PersoonEditDto(1,"Henk","V","straat","1","9999 AA","Sneek","123456789",LocalDate.of(1990,01,01));
 
         when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
-        persoonService.updatePersoonById(persoon);
+        persoonService.updatePersoonById(persoonEditDto);
 
         verify(persoonRepository).getPersoonById(1);
-        verify(persoonRepository).updatePersoonById(persoonService.getPersoonById(1));
-
+        verify(persoonRepository).updatePersoonById(persoon);
     }
 
     /**
-     * Test controleert of het BSN bij het updaten/toevoegen al bestaat.
+     * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
      */
     @Test
     public void testNonUniekBsnExeption() {
@@ -107,7 +107,7 @@ public class PersoonServiceTest {
     public void testBestaanPersoonnr() {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(new Persoon(
+        assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(
                 1,
                 "Geert",
                 "Houwing",

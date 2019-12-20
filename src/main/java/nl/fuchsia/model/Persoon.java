@@ -52,7 +52,6 @@ public class Persoon {
     }
 
     public Persoon(String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.straat = straat;
@@ -64,16 +63,8 @@ public class Persoon {
     }
 
     public Persoon(Integer persoonnr, String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-        // TODO constructor construct laten aanroepen, duplicate code
+        this(voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum);
         this.persoonnr = persoonnr;
-        this.voornaam = voornaam;
-        this.achternaam = achternaam;
-        this.straat = straat;
-        this.huisnummer = huisnummer;
-        this.postcode = postcode;
-        this.woonplaats = woonplaats;
-        this.bsn = bsn;
-        this.geboortedatum = geboortedatum;
     }
 
     public Integer getPersoonnr() {

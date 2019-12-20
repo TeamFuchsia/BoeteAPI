@@ -1,5 +1,6 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -54,17 +55,29 @@ public class PersoonService {
     }
 
     /**
-     * wijzigd de persoon op bassis van de meegeven ID nummer.
+     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoonDto.
+     * @param persoonDto zijn de gegevens waarin de persoon gewijzigd moet worden
+     * @return de nieuwe persoon in de database
      */
-    public Persoon updatePersoonById(Persoon persoon) {
+    public Persoon updatePersoonById(PersoonEditDto persoonDto) {
 
         try {
-            if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {
-                throw new NullException("Persoonnummer: <" + persoon.getPersoonnr() + "> bestaat niet!");
+            if (persoonRepository.getPersoonById(persoonDto.getPersoonnr()) == null) {
+                throw new NullException("Persoonnummer: " + persoonDto.getPersoonnr() + " bestaat niet!");
             }
         } catch (TransactionSystemException e) {
-            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
+            throw new UniekVeldException("BSN nummer: " + persoonDto.getBsn() + " bestaat reeds.");
         }
+        Persoon persoon = new Persoon(persoonDto.getPersoonnr(),
+                                      persoonDto.getVoornaam(),
+                                      persoonDto.getAchternaam(),
+                                      persoonDto.getStraat(),
+                                      persoonDto.getHuisnummer(),
+                                      persoonDto.getPostcode(),
+                                      persoonDto.getWoonplaats(),
+                                      persoonDto.getBsn(),
+                                      persoonDto.getGeboortedatum());
+
         return persoonRepository.updatePersoonById(persoon);
     }
 }

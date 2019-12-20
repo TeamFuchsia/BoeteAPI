@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.services.ZaakService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

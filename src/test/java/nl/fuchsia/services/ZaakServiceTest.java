@@ -1,6 +1,6 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.ZaakDto;
+import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
@@ -47,8 +47,8 @@ public class ZaakServiceTest {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
 		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
-		ZaakDto zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<Integer>(Arrays.asList(1, 2)));
-		List<Integer> feitnrs = zaakDto.getFeitnrs();
+		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
+		List<Integer> feitnrs = zaakAddDto.getFeitnrs();
 		for (int feitnr : feitnrs) {
 			Feit test = new Feit(feitnr, "VBF-003", "Test", 4.00);
 			when(feitRepository.getFeitById(feitnr)).thenReturn(test);
@@ -56,7 +56,7 @@ public class ZaakServiceTest {
 		}
 		Zaak zaak = new Zaak(LocalDate.of(2019, 2, 18), "Leeuwarden", persoon, feiten);
 
-		zaakService.addZaak(zaakDto);
+		zaakService.addZaak(zaakAddDto);
 
 		verify(persoonRepository).getPersoonById(1);
 		verify(feitRepository).getFeitById(1);
@@ -65,24 +65,24 @@ public class ZaakServiceTest {
 
 	@Test
 	public void testPersoonDoesNotExist() {
-		ZaakDto zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<Integer>(Arrays.asList(1, 2)));
+		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 
-		assertThatThrownBy(() -> zaakService.addZaak(zaakDto))
+		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
 			.isInstanceOf(NullException.class).hasMessage("Persoonnr 1 bestaat niet");
 	}
 
 	@Test
 	public void testFeitDoesNotExist() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
-		ZaakDto zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<Integer>(Arrays.asList(1, 2)));
+		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
-		assertThatThrownBy(() -> zaakService.addZaak(zaakDto))
+		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
 			.isInstanceOf(NullException.class).hasMessage("Feitnr 1 bestaat niet");
 
 		when(feitRepository.getFeitById(1)).thenReturn(new Feit(1, "VBF-003", "Test", 4.00));
 
-		assertThatThrownBy(() -> zaakService.addZaak(zaakDto))
+		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
 			.isInstanceOf(NullException.class).hasMessage("Feitnr 2 bestaat niet");
 	}
 

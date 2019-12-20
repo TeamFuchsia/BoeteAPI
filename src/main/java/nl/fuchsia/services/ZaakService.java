@@ -1,6 +1,6 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.ZaakDto;
+import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NullException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
@@ -26,21 +26,27 @@ public class ZaakService {
 		this.feitRepository = feitRepository;
 	}
 
-	public Zaak addZaak(ZaakDto zaakDto) {
+	/**
+	 * Voegt een nieuwe zaak toe inclusief een persoon en minimaal 1 feit.
+	 *
+	 * @param zaakAddDto de ingevoerde zaakDto
+	 * @return de gemaakte zaak inclusief persoon en feit(en).
+	 */
+	public Zaak addZaak(ZaakAddDto zaakAddDto) {
 
 		Zaak zaak = new Zaak();
 		String errorMessage = "";
 
 		//todo Zorg ervoor dat alle exception getoond worden, dus beide (persoonnr en feitnr) bestaan niet.
 		try {
-			Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
+			Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
 
 			if (persoon == null) {
-				errorMessage = "Persoonnr " + zaakDto.getPersoonnr() + " bestaat niet";
+				errorMessage = "Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet";
 				throw new NullPointerException();
 			}
 			List<Feit> feiten = new ArrayList<>();
-			for (int feitNr : zaakDto.getFeitnrs()) {
+			for (int feitNr : zaakAddDto.getFeitnrs()) {
 				Feit feit = feitRepository.getFeitById(feitNr);
 				if (feit == null) {
 					errorMessage = "Feitnr " + feitNr + " bestaat niet";
@@ -48,8 +54,8 @@ public class ZaakService {
 				}
 				feiten.add(feit);
 			}
-			zaak.setOvertredingsdatum(zaakDto.getOvertredingsdatum());
-			zaak.setPleeglocatie(zaakDto.getPleeglocatie());
+			zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
+			zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
 			zaak.setPersoon(persoon);
 			zaak.setFeiten(feiten);
 		} catch (NullPointerException e) {

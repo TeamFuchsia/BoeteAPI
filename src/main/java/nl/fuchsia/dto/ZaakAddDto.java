@@ -8,7 +8,10 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ZaakDto {
+/**
+ * De binnenkomende zaakDto in Json formaat.
+ */
+public class ZaakAddDto {
 
 	private int zaaknr;
 
@@ -20,17 +23,16 @@ public class ZaakDto {
 	@Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
 	private String pleeglocatie;
 
-	//@Min(value = 1L, message = "Persoonnr dient te zijn gevuld en groter dan 0!")
 	private int persoonnr;
 
 	@NotNull(message = "Voeg minimaal 1 feit toe.")
 	@Size(min = 1, message = "Voeg minimaal 1 feit toe.")
 	private List<Integer> feitnrs;
 
-	public ZaakDto() {
+	public ZaakAddDto() {
 	}
 
-	public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
+	public ZaakAddDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
 		this.zaaknr = zaaknr;
 		this.overtredingsdatum = overtredingsdatum;
 		this.pleeglocatie = pleeglocatie;

@@ -26,7 +26,7 @@ public class PersoonControllerTest {
 	 * Test of de methode getPersonen in de persoonService wordt aangeroepen.
 	 */
 	@Test
-	public void testGetOrmPersonen() {
+	public void testGetPersonen() {
 		persoonController.getPersonen();
 		verify(persoonService).getPersonen();
 	}

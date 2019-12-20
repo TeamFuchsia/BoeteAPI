@@ -12,6 +12,7 @@ import nl.fuchsia.util.JsonDate;
  * DTO voor het wijzigen van een persoon.
  */
 //DTO is toegevoegd om de validatie op persoonr te kunnen uitvoeren.
+
 public class PersoonEditDto {
     @NotNull(message = ("Persoonr moet ingevuld zijn"))
     private Integer persoonnr;

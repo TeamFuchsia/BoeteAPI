@@ -77,13 +77,11 @@ public class PersoonService {
                 persoonEditDto.getBsn(),
                 persoonEditDto.getGeboortedatum());
 
-
             persoonRepository.updatePersoonById(persoon);
 
         } catch (TransactionSystemException e) {
             throw new UniekVeldException("BSN nummer: " + persoonEditDto.getBsn() + " bestaat reeds.");
         }
-
 
         return persoon;
     }

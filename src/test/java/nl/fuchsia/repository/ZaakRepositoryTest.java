@@ -21,7 +21,6 @@ public class ZaakRepositoryTest {
     private ZaakRepository zaakRepository;
 
     @Test
-
     void addZaak() {
         zaakRepository.addZaak(new Zaak(LocalDate.of(2019, 12, 12), "Drachten"));
 
@@ -33,12 +32,10 @@ public class ZaakRepositoryTest {
     }
 
     @Test
-
-    void getZakenById() { assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
+    void testGetZaakById() { assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
     }
 
     @Test
-
     void getzaken() {
         assertThat(zaakRepository.getZaken()).hasSize(2);
     }

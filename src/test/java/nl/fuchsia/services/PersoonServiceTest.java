@@ -98,6 +98,6 @@ public class PersoonServiceTest {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
-                .isInstanceOf(NullException.class).hasMessage("Persoonnummer: <1> bestaat niet!");
+                .isInstanceOf(NullException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
     }
 }

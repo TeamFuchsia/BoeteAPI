@@ -30,17 +30,23 @@ class PersoonEditDtoTest {
     }
 
     @Test
-    public void persoonnrIsNullOrBlank() {
+    public void testVoornaamIsNullOrBlank() {
         persoonEditDto.setVoornaam(null);
 
         Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voornaam moet ingevuld zijn");
+
+        persoonEditDto.setVoornaam("  ");
+        constraintViolations = validator.validate(persoonEditDto);
+
+        assertThat(constraintViolations).hasSize(1);
+        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voornaam moet ingevuld zijn");
     }
 
     @Test
-    public void voornaamIsNull() {
+    public void testPersoonnrIsNull() {
         persoonEditDto = new PersoonEditDto("Rense", "Houwing", "Voltawerk2", "36", "8401 EN", "Gorredijk", "123456789", LocalDate.of(1967, 10, 12));
 
         Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
@@ -50,7 +56,7 @@ class PersoonEditDtoTest {
     }
 
     @Test
-    public void postcodeError() {
+    public void testPostcodeError() {
         persoonEditDto.setPostcode("8401EN");
 
         Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);
@@ -67,7 +73,7 @@ class PersoonEditDtoTest {
     }
 
     @Test
-    void bsnError() {
+    void testBsnError() {
         persoonEditDto.setBsn("12345678");
 
         Set<ConstraintViolation<PersoonEditDto>> constraintViolations = validator.validate(persoonEditDto);

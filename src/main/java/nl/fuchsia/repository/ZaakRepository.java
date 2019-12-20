@@ -21,7 +21,7 @@ public class ZaakRepository {
 	private EntityManager entityManager;
 
 	@Transactional
-	public Zaak addZaak(@Valid Zaak zaak) {
+	public Zaak addZaak(Zaak zaak) {
 		entityManager.persist(zaak);
 		return zaak;
 	}

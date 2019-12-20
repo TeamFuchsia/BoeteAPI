@@ -61,23 +61,30 @@ public class PersoonService {
      */
     public Persoon updatePersoonById(PersoonEditDto persoonEditDto) {
 
+        Persoon persoon;
+
         try {
             if (persoonRepository.getPersoonById(persoonEditDto.getPersoonnr()) == null) {
                 throw new NullException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
             }
+                persoon = new Persoon(persoonEditDto.getPersoonnr(),
+                persoonEditDto.getVoornaam(),
+                persoonEditDto.getAchternaam(),
+                persoonEditDto.getStraat(),
+                persoonEditDto.getHuisnummer(),
+                persoonEditDto.getPostcode(),
+                persoonEditDto.getWoonplaats(),
+                persoonEditDto.getBsn(),
+                persoonEditDto.getGeboortedatum());
+
+
+            persoonRepository.updatePersoonById(persoon);
+
         } catch (TransactionSystemException e) {
             throw new UniekVeldException("BSN nummer: " + persoonEditDto.getBsn() + " bestaat reeds.");
         }
-        Persoon persoon = new Persoon(persoonEditDto.getPersoonnr(),
-                                      persoonEditDto.getVoornaam(),
-                                      persoonEditDto.getAchternaam(),
-                                      persoonEditDto.getStraat(),
-                                      persoonEditDto.getHuisnummer(),
-                                      persoonEditDto.getPostcode(),
-                                      persoonEditDto.getWoonplaats(),
-                                      persoonEditDto.getBsn(),
-                                      persoonEditDto.getGeboortedatum());
 
-        return persoonRepository.updatePersoonById(persoon);
+
+        return persoon;
     }
 }

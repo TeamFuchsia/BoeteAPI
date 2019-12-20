@@ -39,7 +39,8 @@ public class ZaakRepositoryTest {
     }
 
     @Test
-    void getZakenById() {
+
+    void testGetZaakById() {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
 

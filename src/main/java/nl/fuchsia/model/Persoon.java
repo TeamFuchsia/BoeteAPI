@@ -1,14 +1,19 @@
 package nl.fuchsia.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.fuchsia.util.JsonDate;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.fuchsia.util.JsonDate;
 
 @Entity
 @Table(name = "persoon")
@@ -31,7 +36,7 @@ public class Persoon {
     private String huisnummer;
     @Column
     @NotBlank(message = ("Postcode moet ingevuld zijn"))
-    @Pattern(regexp = "\\d\\d\\d\\d\\s[A-Z][A-Z]", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
+    @Pattern(regexp = "\\d{4}\\s[A-Z]{2}$", message = ("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters"))
     private String postcode;
     @Column
     @NotBlank(message = ("Woonplaats moet ingevuld zijn"))
@@ -56,7 +61,6 @@ public class Persoon {
     }
 
     public Persoon(String voornaam, String achternaam, String straat, String huisnummer, String postcode, String woonplaats, String bsn, LocalDate geboortedatum) {
-
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.straat = straat;
@@ -116,7 +120,7 @@ public class Persoon {
         return postcode;
     }
 
-    void setPostcode(String postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 
@@ -132,7 +136,7 @@ public class Persoon {
         return bsn;
     }
 
-    void setBsn(String bsn) {
+    public void setBsn(String bsn) {
         this.bsn = bsn;
     }
 
@@ -146,18 +150,14 @@ public class Persoon {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Persoon persoon = (Persoon) o;
-        return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) &&
-                Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
-                Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
-                Objects.equals(getStraat(), persoon.getStraat()) &&
-                Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
-                Objects.equals(getPostcode(), persoon.getPostcode()) &&
-                Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
-                Objects.equals(getBsn(), persoon.getBsn()) &&
-                Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
+        return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) && Objects.equals(getVoornaam(), persoon.getVoornaam()) && Objects.equals(getAchternaam(), persoon.getAchternaam()) && Objects
+                .equals(getStraat(), persoon.getStraat()) && Objects.equals(getHuisnummer(), persoon.getHuisnummer()) && Objects.equals(getPostcode(), persoon.getPostcode()) && Objects
+                .equals(getWoonplaats(), persoon.getWoonplaats()) && Objects.equals(getBsn(), persoon.getBsn()) && Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
     }
 
     @Override

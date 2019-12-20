@@ -40,15 +40,25 @@ public class PersoonRepository {
 	public Persoon getPersoonById(Integer persoonnr) {
 		return entityManager.find(Persoon.class, persoonnr);
 	}
+    /**
+     * Voegt een nieuwe persoon toe.
+     *
+     * @param persoon de toe te voegen persoon.
+     */
+    @Transactional
+    public Persoon addPersoon(Persoon persoon) {
+        entityManager.persist(persoon);
+        return persoon;
+    }
 
-	/**
-	 * Voegt een nieuwe persoon toe.
-	 *
-	 * @param persoon de toe te voegen persoon.
-	 */
-	@Transactional
-	public Persoon addPersoon(Persoon persoon) {
-		entityManager.persist(persoon);
-		return persoon;
-	}
+    /**
+     * wijzigd een bestaande persoon.
+     *
+     * @param persoon de te wijzigen persoon.
+     */
+    @Transactional
+    public Persoon updatePersoonById(Persoon persoon) {
+        entityManager.merge(persoon);
+        return persoon;
+    }
 }

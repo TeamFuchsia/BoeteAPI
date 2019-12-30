@@ -64,7 +64,7 @@ public class ZaakServiceTest {
 	}
 
 	@Test
-	public void testPersoonDoesNotExist() {
+	public void testAddZaakPersoonDoesNotExist() {
 		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
@@ -72,7 +72,7 @@ public class ZaakServiceTest {
 	}
 
 	@Test
-	public void testFeitDoesNotExist() {
+	public void testAddZaakFeitDoesNotExist() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
@@ -91,5 +91,24 @@ public class ZaakServiceTest {
 		zaakService.getZaken();
 
 		verify(zaakRepository).getZaken();
+	}
+
+	@Test
+	void testGetZakenByPersoon() {
+		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
+
+		zaakService.getZakenByPersoon(persoon.getPersoonnr());
+
+		verify(persoonRepository).getPersoonById(persoon.getPersoonnr());
+		verify(zaakRepository).getZakenByPersoon(persoon);
+	}
+
+	@Test
+	public void testGetZakenByPersoonPersoonDoesNotExist() {
+		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+
+		assertThatThrownBy(() -> zaakService.getZakenByPersoon(persoon.getPersoonnr()))
+				.isInstanceOf(NullException.class).hasMessage("Persoonnr " + persoon.getPersoonnr() + " bestaat niet");
 	}
 }

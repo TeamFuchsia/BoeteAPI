@@ -37,4 +37,13 @@ public class ZaakControllerTest {
 
         verify(zaakService).addZaak(zaakAddDto);
     }
+
+	@Test
+	void testGetZakenByPersoon() {
+		int persoonnr = 1;
+
+		zaakController.getZakenByPersoon(persoonnr);
+
+		verify(zaakService).getZakenByPersoon(persoonnr);
+	}
 }

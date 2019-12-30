@@ -66,6 +66,13 @@ public class ZaakService {
 	}
 
 	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
-		return zaakRepository.getZakenByPersoon(persoonnr);
+
+		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
+
+		if (persoon == null) {
+			throw new NullException("Persoonnr " + persoonnr + " bestaat niet");
+		}
+
+		return zaakRepository.getZakenByPersoon(persoon);
 	}
 }

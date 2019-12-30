@@ -36,4 +36,8 @@ public class ZaakRepository {
 	public Zaak getZaakById(Integer zaakNr) {
 		return entityManager.find(Zaak.class, zaakNr);
 	}
+
+	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+		return entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class).getResultList();
+	}
 }

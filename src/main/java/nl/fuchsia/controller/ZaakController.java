@@ -36,4 +36,9 @@ public class ZaakController {
     public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
         return zaakService.getZaakById(zaakNr);
     }
+
+    @GetMapping(value = "/persoon/{persoonnr}")
+    public ResponseEntity<List<Zaak>> getZakenByPersoon(@PathVariable("persoonnr") Integer persoonnr) {
+        return ResponseEntity.ok().body(zaakService.getZakenByPersoon(persoonnr));
+    }
 }

@@ -64,4 +64,8 @@ public class ZaakService {
 	public Zaak getZaakById(Integer zaakNr) {
 		return zaakRepository.getZaakById(zaakNr);
 	}
+
+	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+		return zaakRepository.getZakenByPersoon(persoonnr);
+	}
 }

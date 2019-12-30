@@ -19,33 +19,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ZaakRepositoryTest {
 
-    @Autowired
-    private ZaakRepository zaakRepository;
+	@Autowired
+	private ZaakRepository zaakRepository;
 
-    @BeforeAll
+	@BeforeAll
 	public void setup() {
 
 		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
 		zaakRepository.addZaak(zaak);
 	}
 
-    @Test
-    void addZaak() {
+	@Test
+	void addZaak() {
 		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
 		zaakRepository.addZaak(zaak);
 
-        assertThat(zaakRepository.getZaken()).hasSize(2);
+		assertThat(zaakRepository.getZaken()).hasSize(2);
 
-    }
+	}
 
-    @Test
-
-    void testGetZaakById() {
+	@Test
+	void getZakenById() {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
 
-    	assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
-    }
+		assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
+	}
 
 	@Test
 	void getzaken() {

@@ -33,27 +33,29 @@ public class ZaakService {
 	 * @return de gemaakte zaak inclusief persoon en feit(en).
 	 */
 	public Zaak addZaak(ZaakAddDto zaakAddDto) {
-
 		Zaak zaak = new Zaak();
+		List<String> exceptions = new ArrayList<>();
 
-		//todo Zorg ervoor dat alle exception getoond worden, dus beide (persoonnr en feitnr) bestaan niet.
-			Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
+		Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
 
-			if (persoon == null) {
-				throw new NullException("Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet");
+		if (persoon == null) {
+			exceptions.add(" Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet");
+		}
+		List<Feit> feiten = new ArrayList<>();
+		for (int feitNr : zaakAddDto.getFeitnrs()) {
+			Feit feit = feitRepository.getFeitById(feitNr);
+			if (feit == null) {
+				exceptions.add("Feitnr " + feitNr + " bestaat niet");
 			}
-			List<Feit> feiten = new ArrayList<>();
-			for (int feitNr : zaakAddDto.getFeitnrs()) {
-				Feit feit = feitRepository.getFeitById(feitNr);
-				if (feit == null) {
-					throw new NullException("Feitnr " + feitNr + " bestaat niet");
-				}
-				feiten.add(feit);
-			}
-			zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
-			zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
-			zaak.setPersoon(persoon);
-			zaak.setFeiten(feiten);
+			else feiten.add(feit);
+		}
+		if (exceptions.size()>0){
+			throw new NullException(exceptions.toString());
+		}
+		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
+		zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
+		zaak.setPersoon(persoon);
+		zaak.setFeiten(feiten);
 		return zaakRepository.addZaak(zaak);
 	}
 

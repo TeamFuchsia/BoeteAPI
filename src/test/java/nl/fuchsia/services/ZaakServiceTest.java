@@ -50,9 +50,9 @@ public class ZaakServiceTest {
 		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 		List<Integer> feitnrs = zaakAddDto.getFeitnrs();
 		for (int feitnr : feitnrs) {
-			Feit test = new Feit(feitnr, "VBF-003", "Test", 4.00);
-			when(feitRepository.getFeitById(feitnr)).thenReturn(test);
-			feiten.add(test);
+			Feit feit = new Feit(feitnr, "VBF-003", "Test", 4.00);
+			when(feitRepository.getFeitById(feitnr)).thenReturn(feit);
+			feiten.add(feit);
 		}
 		Zaak zaak = new Zaak(LocalDate.of(2019, 2, 18), "Leeuwarden", persoon, feiten);
 
@@ -65,10 +65,12 @@ public class ZaakServiceTest {
 
 	@Test
 	public void testAddZaakPersoonDoesNotExist() {
-		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
+		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1)));
+		Feit feit = new Feit(zaakAddDto.getFeitnrs().indexOf(0), "VBF-001", "Test", 4.00);
+		when(feitRepository.getFeitById(1)).thenReturn(feit);
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
-			.isInstanceOf(NullException.class).hasMessage("Persoonnr 1 bestaat niet");
+			.isInstanceOf(NullException.class).hasMessage("[ Persoonnr 1 bestaat niet]");
 	}
 
 	@Test
@@ -78,12 +80,21 @@ public class ZaakServiceTest {
 		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
-			.isInstanceOf(NullException.class).hasMessage("Feitnr 1 bestaat niet");
+			.isInstanceOf(NullException.class).hasMessage("[Feitnr 1 bestaat niet, Feitnr 2 bestaat niet]");
 
-		when(feitRepository.getFeitById(1)).thenReturn(new Feit(1, "VBF-003", "Test", 4.00));
+		when(feitRepository.getFeitById(1)).thenReturn(new Feit(1, "VBF-001", "Test", 4.00));
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
-			.isInstanceOf(NullException.class).hasMessage("Feitnr 2 bestaat niet");
+			.isInstanceOf(NullException.class).hasMessage("[Feitnr 2 bestaat niet]");
+	}
+
+	@Test
+	public void testAddZaakFeitAndPersoonDoesNotExist() {
+		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
+
+		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))
+				.isInstanceOf(NullException.class).hasMessage("[ Persoonnr 1 bestaat niet, Feitnr 1 bestaat niet, Feitnr 2 bestaat niet]");
 	}
 
 	@Test

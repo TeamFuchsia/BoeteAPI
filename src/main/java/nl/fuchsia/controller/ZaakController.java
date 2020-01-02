@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,8 +43,8 @@ public class ZaakController {
         return zaakService.getZaakById(zaakNr);
     }
 
-    @GetMapping(value = "zaken?persoonnr={persoonnr}")
-    public ResponseEntity<List<Zaak>> getZakenByPersoon(@PathVariable("persoonnr") Integer persoonnr) {
+    @GetMapping(value = "zaken?persoonnr")
+    public ResponseEntity<List<Zaak>> getZakenByPersoon(@RequestParam("persoonnr") Integer persoonnr) {
         return ResponseEntity.ok().body(zaakService.getZakenByPersoon(persoonnr));
     }
 }

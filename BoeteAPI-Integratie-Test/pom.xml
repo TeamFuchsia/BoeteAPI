@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>BoeteAPI</artifactId>
+        <groupId>nl.fuchsia</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <!-- Cucumber 4+ is not yet supported by Citrus-->
+        <cucumber.version>3.0.2</cucumber.version>
+        <citrus.version>2.8.0</citrus.version>
+        <citrus-db.version>0.1.4</citrus-db.version>
+    </properties>
+
+    <artifactId>BoeteAPI-Integratie-Test</artifactId>
+
+<dependencies>
+
+    <!-- Test scoped dependencies -->
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>6.14.3</version>
+        <scope>test</scope>
+    </dependency>
+
+    <!--Integration tests dependencies-->
+    <!-- Citrus -->
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-core</artifactId>
+        <version>${citrus.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-java-dsl</artifactId>
+        <version>${citrus.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-http</artifactId>
+        <version>${citrus.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-db-driver</artifactId>
+        <version>${citrus-db.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-jdbc</artifactId>
+        <version>${citrus.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-cucumber</artifactId>
+        <version>${citrus.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- Cucumber -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${cucumber.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>${cucumber.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>nl.fuchsia</groupId>
+        <artifactId>BoeteAPI</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+</project>

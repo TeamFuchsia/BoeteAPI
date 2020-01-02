@@ -36,26 +36,26 @@ public class ZaakService {
 		Zaak zaak = new Zaak();
 		List<String> exceptions = new ArrayList<>();
 
-			Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
+		Persoon persoon = persoonRepository.getPersoonById(zaakAddDto.getPersoonnr());
 
-			if (persoon == null) {
-				exceptions.add(" Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet");
-			}
-			List<Feit> feiten = new ArrayList<>();
-			for (int feitNr : zaakAddDto.getFeitnrs()) {
-				Feit feit = feitRepository.getFeitById(feitNr);
-				if (feit == null) {
-					exceptions.add("Feitnr " + feitNr + " bestaat niet");
-				}
-				else feiten.add(feit);
-			}
-			if (exceptions.size()>0){
-				throw new NullException(exceptions.toString());
+		if (persoon == null) {
+			exceptions.add(" Persoonnr " + zaakAddDto.getPersoonnr() + " bestaat niet");
 		}
-			zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
-			zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
-			zaak.setPersoon(persoon);
-			zaak.setFeiten(feiten);
+		List<Feit> feiten = new ArrayList<>();
+		for (int feitNr : zaakAddDto.getFeitnrs()) {
+			Feit feit = feitRepository.getFeitById(feitNr);
+			if (feit == null) {
+				exceptions.add("Feitnr " + feitNr + " bestaat niet");
+			}
+			else feiten.add(feit);
+		}
+		if (exceptions.size()>0){
+			throw new NullException(exceptions.toString());
+		}
+		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
+		zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
+		zaak.setPersoon(persoon);
+		zaak.setFeiten(feiten);
 		return zaakRepository.addZaak(zaak);
 	}
 
@@ -65,5 +65,16 @@ public class ZaakService {
 
 	public Zaak getZaakById(Integer zaakNr) {
 		return zaakRepository.getZaakById(zaakNr);
+	}
+
+	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+
+		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
+
+		if (persoon == null) {
+			throw new NullException("Persoonnr " + persoonnr + " bestaat niet");
+		}
+
+		return zaakRepository.getZakenByPersoon(persoon);
 	}
 }

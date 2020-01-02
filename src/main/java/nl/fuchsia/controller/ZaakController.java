@@ -33,18 +33,20 @@ public class ZaakController {
         return ResponseEntity.ok(zaakService.addZaak(zaakAddDto));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Zaak>> getZaken() {
-        return ResponseEntity.ok().body(zaakService.getZaken());
+    @GetMapping()
+    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", defaultValue = "0") Integer persoonnr) {
+        List<Zaak> zaken;
+        if (persoonnr != 0) {
+            zaken = zaakService.getZakenByPersoon(persoonnr);
+        } else {
+            zaken = zaakService.getZaken();
+        }
+
+        return ResponseEntity.ok().body(zaken);
     }
 
     @GetMapping(value = "/{zaakNr}")
     public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
         return zaakService.getZaakById(zaakNr);
-    }
-
-    @GetMapping(value = "zaken?persoonnr")
-    public ResponseEntity<List<Zaak>> getZakenByPersoon(@RequestParam("persoonnr") Integer persoonnr) {
-        return ResponseEntity.ok().body(zaakService.getZakenByPersoon(persoonnr));
     }
 }

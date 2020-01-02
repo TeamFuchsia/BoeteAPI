@@ -24,7 +24,7 @@ public class ZaakControllerTest {
 
 	@Test
 	public void testGetZaken() {
-		zaakController.getZaken(0);
+		zaakController.getZaken(null);
 
 		verify(zaakService).getZaken();
 	}

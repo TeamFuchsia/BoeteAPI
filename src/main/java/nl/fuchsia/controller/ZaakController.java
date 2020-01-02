@@ -34,9 +34,10 @@ public class ZaakController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", defaultValue = "0") Integer persoonnr) {
+    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
         List<Zaak> zaken;
-        if (persoonnr != 0) {
+
+        if (persoonnr != null) {
             zaken = zaakService.getZakenByPersoon(persoonnr);
         } else {
             zaken = zaakService.getZaken();

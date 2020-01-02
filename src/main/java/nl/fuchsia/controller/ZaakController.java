@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,18 +33,21 @@ public class ZaakController {
         return ResponseEntity.ok(zaakService.addZaak(zaakAddDto));
     }
 
-    @GetMapping
-    public ResponseEntity<List<Zaak>> getZaken() {
-        return ResponseEntity.ok().body(zaakService.getZaken());
+    @GetMapping()
+    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
+        List<Zaak> zaken;
+
+        if (persoonnr != null) {
+            zaken = zaakService.getZakenByPersoon(persoonnr);
+        } else {
+            zaken = zaakService.getZaken();
+        }
+
+        return ResponseEntity.ok().body(zaken);
     }
 
     @GetMapping(value = "/{zaakNr}")
     public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
         return zaakService.getZaakById(zaakNr);
-    }
-
-    @GetMapping(value = "/persoon/{persoonnr}")
-    public ResponseEntity<List<Zaak>> getZakenByPersoon(@PathVariable("persoonnr") Integer persoonnr) {
-        return ResponseEntity.ok().body(zaakService.getZakenByPersoon(persoonnr));
     }
 }

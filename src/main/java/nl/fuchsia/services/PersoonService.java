@@ -1,7 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.dto.PersoonEditDto;
-import nl.fuchsia.exceptionhandlers.NullException;
+import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
@@ -64,7 +64,7 @@ public class PersoonService {
 
         try {
             if (persoonRepository.getPersoonById(persoonEditDto.getPersoonnr()) == null) {
-                throw new NullException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
+                throw new NotFoundException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
             }
                 persoon = new Persoon(persoonEditDto.getPersoonnr(),
                 persoonEditDto.getVoornaam(),

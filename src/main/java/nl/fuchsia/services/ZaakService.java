@@ -1,7 +1,7 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.dto.ZaakAddDto;
-import nl.fuchsia.exceptionhandlers.NullException;
+import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
@@ -50,7 +50,7 @@ public class ZaakService {
 			else feiten.add(feit);
 		}
 		if (exceptions.size()>0){
-			throw new NullException(exceptions.toString());
+			throw new NotFoundException(exceptions.toString());
 		}
 		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
 		zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
@@ -72,7 +72,7 @@ public class ZaakService {
 		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 
 		if (persoon == null) {
-			throw new NullException("Persoonnr " + persoonnr + " bestaat niet");
+			throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
 		}
 
 		return zaakRepository.getZakenByPersoon(persoon);

@@ -42,7 +42,7 @@ public class ZaakController {
         return zaakService.getZaakById(zaakNr);
     }
 
-    @GetMapping(value = "/persoon/{persoonnr}")
+    @GetMapping(value = "zaken?persoonnr={persoonnr}")
     public ResponseEntity<List<Zaak>> getZakenByPersoon(@PathVariable("persoonnr") Integer persoonnr) {
         return ResponseEntity.ok().body(zaakService.getZakenByPersoon(persoonnr));
     }

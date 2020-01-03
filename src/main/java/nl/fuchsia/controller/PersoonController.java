@@ -48,17 +48,15 @@ public class PersoonController {
      * verkrijgt  één persoon op bassis van de meegegeven ID nummer.
      */
     @GetMapping(value = "/{persoonnr}")
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Persoon getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
+    public ResponseEntity<Persoon> getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
 
-        return persoonService.getPersoonById(persoonnr);
+        return ResponseEntity.ok(persoonService.getPersoonById(persoonnr));
     }
 
     /**
      * Wijzigd de persoon op bassis van de meegegeven ID nummer in Json object.
      */
     @PutMapping
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody PersoonEditDto persoonEditDto) {
 
         return ResponseEntity.ok(persoonService.updatePersoonById(persoonEditDto));

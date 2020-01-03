@@ -1,5 +1,6 @@
 package nl.fuchsia.repository;
 
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +26,9 @@ public class PersoonRepository {
 	 * @return Lijst van personen.
 	 */
 	@Transactional
-	public List<Persoon> getPersonen() {
+	public Payload<List<Persoon>> getPersonen() {
 		TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
-		return getAllPersonen.getResultList();
+		return (Payload<List<Persoon>>) getAllPersonen.getResultList();
 	}
 
 	/**

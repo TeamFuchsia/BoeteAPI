@@ -1,6 +1,7 @@
 package nl.fuchsia.controller;
 
 import nl.fuchsia.dto.PersoonEditDto;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class PersoonController {
      * @return - Roept de methode getPersonen aan in persoonService.
      */
     @GetMapping
-    public ResponseEntity<List<Persoon>> getPersonen() {
+    public ResponseEntity<Payload<List<Persoon>>> getPersonen() {
         return ResponseEntity.ok(persoonService.getPersonen());
     }
 

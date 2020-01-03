@@ -3,6 +3,7 @@ package nl.fuchsia.services;
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.repository.FeitRepository;
@@ -59,7 +60,7 @@ public class ZaakService {
 		return zaakRepository.addZaak(zaak);
 	}
 
-	public List<Zaak> getZaken() {
+	public Payload<List<Zaak>> getZaken() {
 		return zaakRepository.getZaken();
 	}
 
@@ -67,7 +68,7 @@ public class ZaakService {
 		return zaakRepository.getZaakById(zaakNr);
 	}
 
-	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+	public Payload<List<Zaak>>  getZakenByPersoon(Integer persoonnr) {
 
 		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 

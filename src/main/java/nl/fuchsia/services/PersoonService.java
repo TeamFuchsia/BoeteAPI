@@ -3,6 +3,7 @@ package nl.fuchsia.services;
 import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PersoonService {
      *
      * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
      */
-    public List<Persoon> getPersonen() {
+    public Payload<List<Persoon>> getPersonen() {
         return persoonRepository.getPersonen();
     }
 

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class ZaakController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
-        List<Zaak> zaken;
+    public ResponseEntity<Payload<List<Zaak>>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
+        Payload<List<Zaak>> zaken;
 
         if (persoonnr != null) {
             zaken = zaakService.getZakenByPersoon(persoonnr);

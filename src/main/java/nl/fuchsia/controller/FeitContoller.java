@@ -1,6 +1,7 @@
 package nl.fuchsia.controller;
 
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.services.FeitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class FeitContoller {
      * @return een lijst met alle feiten
      */
     @GetMapping
-    public ResponseEntity<List<Feit>> getFeiten() {
+    public ResponseEntity<Payload<List<Feit>>> getFeiten() {
         return ResponseEntity.ok().body(feitService.getFeiten());
     }
 }

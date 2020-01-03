@@ -1,6 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Payload;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -41,8 +42,8 @@ public class FeitRepository {
      * @return een lijst met alle feiten
      */
     @Transactional
-    public List<Feit> getFeiten() {
+    public Payload <List<Feit>> getFeiten() {
         TypedQuery<Feit> getAllFeiten = entityManager.createQuery("SELECT feit FROM Feit feit", Feit.class);
-        return getAllFeiten.getResultList();
+        return (Payload<List<Feit>>) getAllFeiten.getResultList();
     }
 }

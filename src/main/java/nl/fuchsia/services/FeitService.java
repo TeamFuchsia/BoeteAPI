@@ -2,6 +2,7 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.repository.FeitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -26,7 +27,7 @@ public class FeitService {
         }
     }
 
-    public List<Feit> getFeiten() {
+    public Payload<List<Feit>> getFeiten() {
         return feitRepository.getFeiten();
     }
 }

@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
 import org.springframework.stereotype.Repository;
@@ -27,9 +28,9 @@ public class ZaakRepository {
     }
 
     @Transactional
-    public List<Zaak> getZaken() {
+    public Payload<List<Zaak>> getZaken() {
         TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
-        return getAllZaken.getResultList();
+        return (Payload<List<Zaak>>) getAllZaken.getResultList();
     }
 
     @Transactional
@@ -38,10 +39,10 @@ public class ZaakRepository {
     }
 
     @Transactional
-    public List<Zaak> getZakenByPersoon(Persoon persoon) {
+    public Payload<List<Zaak>> getZakenByPersoon(Persoon persoon) {
 
         TypedQuery<Zaak> zakenByPersoon = entityManager.createQuery("SELECT zaak FROM Zaak zaak where zaak.persoon=:persoon", Zaak.class);
         zakenByPersoon.setParameter("persoon", persoon);
-        return zakenByPersoon.getResultList();
+        return (Payload<List<Zaak>>) zakenByPersoon.getResultList();
     }
 }

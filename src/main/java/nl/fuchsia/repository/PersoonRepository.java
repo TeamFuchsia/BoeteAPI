@@ -19,6 +19,8 @@ public class PersoonRepository {
 	@PersistenceContext(unitName = "entityManagerFactory")
 	private EntityManager entityManager;
 
+	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon ";
+
 	/**
 	 * Haalt een lijst van alle personen uit de database m.b.v. ornm.
 	 *
@@ -26,7 +28,7 @@ public class PersoonRepository {
 	 */
 	@Transactional
 	public List<Persoon> getPersonen() {
-		TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
+		TypedQuery<Persoon> getAllPersonen = entityManager.createQuery(GET_PERSONEN, Persoon.class);
 		return getAllPersonen.getResultList();
 	}
 

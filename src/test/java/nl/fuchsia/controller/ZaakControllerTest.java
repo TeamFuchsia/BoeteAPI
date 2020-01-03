@@ -24,7 +24,7 @@ public class ZaakControllerTest {
 
 	@Test
 	public void testGetZaken() {
-		zaakController.getZaken();
+		zaakController.getZaken(null);
 
 		verify(zaakService).getZaken();
 	}
@@ -37,4 +37,13 @@ public class ZaakControllerTest {
 
         verify(zaakService).addZaak(zaakAddDto);
     }
+
+	@Test
+	void testGetZakenByPersoon() {
+		int persoonnr = 1;
+
+		zaakController.getZaken(persoonnr);
+
+		verify(zaakService).getZakenByPersoon(persoonnr);
+	}
 }

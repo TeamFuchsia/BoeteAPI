@@ -15,6 +15,8 @@ public class FeitRepository {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
+    private static final String GET_FEITEN ="SELECT feit FROM Feit feit";
+
     /**
      * Voegt een Feit toe aan de database
      * @param feit is het toe te voegen feit.
@@ -42,7 +44,7 @@ public class FeitRepository {
      */
     @Transactional
     public List<Feit> getFeiten() {
-        TypedQuery<Feit> getAllFeiten = entityManager.createQuery("SELECT feit FROM Feit feit", Feit.class);
+        TypedQuery<Feit> getAllFeiten = entityManager.createQuery(GET_FEITEN, Feit.class);
         return getAllFeiten.getResultList();
     }
 }

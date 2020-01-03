@@ -53,14 +53,14 @@ public class ExceptionHandlers {
 	/**
 	 * De annotatie {@link ResponseStatus} geeft de waarde 500 terug via {@link HttpStatus#INTERNAL_SERVER_ERROR} methode
 	 *
-	 * @param nullException de exception klasse die de unieke invoer validate afhandelt.
+	 * @param notFoundException de exception klasse die de unieke invoer validate afhandelt.
 	 * @return de holder {@link ErrorResponse} van de exception.
 	 */
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(NullException.class)
-	public ErrorResponse sqlNullException(NullException nullException) {
+	@ExceptionHandler(NotFoundException.class)
+	public ErrorResponse sqlNullException(NotFoundException notFoundException) {
 		List<String> list = new ArrayList<>();
-		String message = nullException.getMessage();
+		String message = notFoundException.getMessage();
 		list.add(0, message);
 		return new ErrorResponse(list);
 	}

@@ -30,16 +30,15 @@ public class ZaakRepositoryTest {
 	}
 
 	@Test
-	void addZaak() {
+	void testAddZaak() {
 		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
 		zaakRepository.addZaak(zaak);
 
 		assertThat(zaakRepository.getZaken()).hasSize(2);
-
 	}
 
 	@Test
-	void getZakenById() {
+	void testGetZakenById() {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
 
@@ -47,7 +46,7 @@ public class ZaakRepositoryTest {
 	}
 
 	@Test
-	void getzaken() {
+	void testGetzaken() {
 		assertThat(zaakRepository.getZaken()).hasSize(3);
 	}
 }

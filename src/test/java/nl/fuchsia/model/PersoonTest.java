@@ -46,7 +46,7 @@ public class PersoonTest {
     }
 
     @Test
-    public void postcodeError() {
+    public void testPostcodeError() {
         persoon.setPostcode("8401EN");
 
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
@@ -63,7 +63,7 @@ public class PersoonTest {
     }
 
     @Test
-    void bsnError() {
+    void testBsnError() {
         persoon.setBsn("12345678");
 
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);

@@ -90,7 +90,6 @@ public class ZaakServiceTest {
 
 	@Test
 	public void testAddZaakFeitAndPersoonDoesNotExist() {
-		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))

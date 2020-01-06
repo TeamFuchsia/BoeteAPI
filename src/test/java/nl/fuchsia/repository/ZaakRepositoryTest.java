@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,7 +30,6 @@ public class ZaakRepositoryTest {
 	@Autowired
 	private ZaakRepository zaakRepository;
 
-	@Commit
 	@BeforeEach
 	public void setup(){
 		entityManager.createQuery("Delete FROM Zaak").executeUpdate();
@@ -49,8 +50,8 @@ public class ZaakRepositoryTest {
 	void testGetZakenById() {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
-		assertThat(zaakRepository.getZaken()).hasSize(3);
-		assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
+
+		assertThat(zaakRepository.getZaakById(6).getPleeglocatie()).isEqualTo("Heerenveen");
 	}
 
 	@Test

@@ -1,7 +1,10 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.dto.PersoonEditDto;
+import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.FeitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -28,5 +31,21 @@ public class FeitService {
 
     public List<Feit> getFeiten() {
         return feitRepository.getFeiten();
+    }
+
+    public Feit updateFeitById(Feit feit) {
+
+        try {
+            if (feit.getFeitNr() = null)
+            if (feitRepository.getFeitById(feit.getFeitNr()) == null) {
+                throw new NotFoundException("Persoonnummer: " + feit.getFeitNr() + " bestaat niet!");
+            }
+            feitRepository.updateFeitById(feit);
+
+        } catch (TransactionSystemException e) {
+            throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat reeds.");
+        }
+
+        return feit;
     }
 }

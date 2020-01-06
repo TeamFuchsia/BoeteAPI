@@ -1,7 +1,10 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.FeitService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +40,14 @@ public class FeitContoller {
     @GetMapping
     public ResponseEntity<List<Feit>> getFeiten() {
         return ResponseEntity.ok().body(feitService.getFeiten());
+    }
+
+    /**
+     * Wijzigd het feit op bassis van de meegegeven ID nummer in Json object.
+     */
+    @PutMapping
+    public ResponseEntity<Persoon> updateFeitById(@Valid @RequestBody Feit feit) {
+
+        return ResponseEntity.ok(feitService.updateFeitById(feit));
     }
 }

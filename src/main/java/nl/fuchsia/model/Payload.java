@@ -9,4 +9,12 @@ public class Payload<T> {
     public Payload(List<T> payload) {
         this.payload = payload;
     }
+
+    public List<T> getPayload() {
+        return payload;
+    }
+
+    public void setPayload(List<T> payload) {
+        this.payload = payload;
+    }
 }

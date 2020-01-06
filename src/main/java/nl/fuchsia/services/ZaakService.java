@@ -60,7 +60,7 @@ public class ZaakService {
 		return zaakRepository.addZaak(zaak);
 	}
 
-	public Payload<List<Zaak>> getZaken() {
+	public List<Zaak> getZaken() {
 		return zaakRepository.getZaken();
 	}
 
@@ -68,7 +68,7 @@ public class ZaakService {
 		return zaakRepository.getZaakById(zaakNr);
 	}
 
-	public Payload<List<Zaak>>  getZakenByPersoon(Integer persoonnr) {
+	public List<Zaak> getZakenByPersoon(Integer persoonnr) {
 
 		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 

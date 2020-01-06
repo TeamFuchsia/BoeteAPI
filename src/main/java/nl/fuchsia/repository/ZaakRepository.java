@@ -28,9 +28,9 @@ public class ZaakRepository {
     }
 
     @Transactional
-    public Payload<List<Zaak>> getZaken() {
+    public List<Zaak> getZaken() {
         TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
-        return (Payload<List<Zaak>>) getAllZaken.getResultList();
+        return getAllZaken.getResultList();
     }
 
     @Transactional
@@ -39,10 +39,10 @@ public class ZaakRepository {
     }
 
     @Transactional
-    public Payload<List<Zaak>> getZakenByPersoon(Persoon persoon) {
+    public List<Zaak> getZakenByPersoon(Persoon persoon) {
 
         TypedQuery<Zaak> zakenByPersoon = entityManager.createQuery("SELECT zaak FROM Zaak zaak where zaak.persoon=:persoon", Zaak.class);
         zakenByPersoon.setParameter("persoon", persoon);
-        return (Payload<List<Zaak>>) zakenByPersoon.getResultList();
+        return zakenByPersoon.getResultList();
     }
 }

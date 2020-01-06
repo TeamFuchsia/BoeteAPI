@@ -27,7 +27,7 @@ public class FeitService {
         }
     }
 
-    public Payload<List<Feit>> getFeiten() {
+    public List<Feit> getFeiten() {
         return feitRepository.getFeiten();
     }
 }

@@ -36,7 +36,8 @@ public class FeitContoller {
      * @return een lijst met alle feiten
      */
     @GetMapping
-    public ResponseEntity<Payload<List<Feit>>> getFeiten() {
-        return ResponseEntity.ok().body(feitService.getFeiten());
+    public ResponseEntity<Payload<Feit>> getFeiten() {
+        Payload<Feit> payload = new Payload<>(feitService.getFeiten());
+        return ResponseEntity.ok().body(payload);
     }
 }

@@ -42,8 +42,8 @@ public class FeitRepository {
      * @return een lijst met alle feiten
      */
     @Transactional
-    public Payload <List<Feit>> getFeiten() {
+    public List<Feit> getFeiten() {
         TypedQuery<Feit> getAllFeiten = entityManager.createQuery("SELECT feit FROM Feit feit", Feit.class);
-        return (Payload<List<Feit>>) getAllFeiten.getResultList();
+        return getAllFeiten.getResultList();
     }
 }

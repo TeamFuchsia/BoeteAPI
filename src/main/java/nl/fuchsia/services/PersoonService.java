@@ -26,7 +26,7 @@ public class PersoonService {
      *
      * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
      */
-    public Payload<List<Persoon>> getPersonen() {
+    public List<Persoon> getPersonen() {
         return persoonRepository.getPersonen();
     }
 

@@ -26,9 +26,9 @@ public class PersoonRepository {
 	 * @return Lijst van personen.
 	 */
 	@Transactional
-	public Payload<List<Persoon>> getPersonen() {
+	public List<Persoon> getPersonen() {
 		TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
-		return (Payload<List<Persoon>>) getAllPersonen.getResultList();
+		return getAllPersonen.getResultList();
 	}
 
 	/**

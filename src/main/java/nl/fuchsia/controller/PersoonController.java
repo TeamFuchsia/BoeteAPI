@@ -1,6 +1,7 @@
 package nl.fuchsia.controller;
 
 import nl.fuchsia.dto.PersoonEditDto;
+import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
@@ -29,8 +30,9 @@ public class PersoonController {
      * @return - Roept de methode getPersonen aan in persoonService.
      */
     @GetMapping
-    public ResponseEntity<Payload<List<Persoon>>> getPersonen() {
-        return ResponseEntity.ok(persoonService.getPersonen());
+    public ResponseEntity<Payload<Persoon>> getPersonen() {
+        Payload<Persoon> payload = new Payload<>(persoonService.getPersonen());
+        return ResponseEntity.ok(payload);
     }
 
     /**

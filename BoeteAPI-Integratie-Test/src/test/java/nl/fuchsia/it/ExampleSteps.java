@@ -19,14 +19,13 @@ package nl.fuchsia.it;
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.dsl.builder.HttpClientActionBuilder;
+import com.consol.citrus.dsl.junit.JUnit4CitrusTestRunner;
 import com.consol.citrus.dsl.runner.TestRunner;
-import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.jdbc.server.JdbcServer;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import nl.fuchsia.model.Persoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,7 +37,7 @@ import javax.sql.DataSource;
  *
  * @author Christoph Deppisch
  */
-public class ExampleSteps extends TestNGCitrusTestRunner {
+public class ExampleSteps extends JUnit4CitrusTestRunner {
 
     /**
      * Test runner filled with actions by step definitions
@@ -91,7 +90,7 @@ public class ExampleSteps extends TestNGCitrusTestRunner {
                         .client(boeteApiClient)
                         .receive()
                         .response()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                        .contentType(MediaType.APPLICATION_JSON.toString())
                         .payload("{}")
         );
     }

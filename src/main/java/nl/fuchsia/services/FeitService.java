@@ -6,6 +6,7 @@ import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.FeitRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -33,7 +34,7 @@ public class FeitService {
         return feitRepository.getFeiten();
     }
 
-    public Feit updateFeitById(Feit feit) {
+    public ResponseEntity<Feit> updateFeitById(Feit feit) {
 
         try {
             if (feit.getFeitNr() = null)
@@ -46,6 +47,6 @@ public class FeitService {
             throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat reeds.");
         }
 
-        return feit;
+        return ResponseEntity.ok(feit);
     }
 }

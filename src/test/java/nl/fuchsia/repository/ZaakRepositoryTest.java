@@ -1,16 +1,19 @@
 package nl.fuchsia.repository;
 
+import java.time.LocalDate;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Zaak;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,11 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ZaakRepositoryTest {
 
+	@PersistenceContext(unitName = "entityManagerFactory")
+	private EntityManager entityManager;
+
 	@Autowired
 	private ZaakRepository zaakRepository;
 
-	@BeforeAll
-	public void setup() {
+	@Commit
+	@BeforeEach
+	public void setup(){
+		entityManager.createQuery("Delete FROM Zaak").executeUpdate();
 
 		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
 		zaakRepository.addZaak(zaak);
@@ -41,12 +49,12 @@ public class ZaakRepositoryTest {
 	void testGetZakenById() {
 		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
 		zaakRepository.addZaak(zaakByIdtest);
-
+		assertThat(zaakRepository.getZaken()).hasSize(3);
 		assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
 	}
 
 	@Test
 	void testGetzaken() {
-		assertThat(zaakRepository.getZaken()).hasSize(3);
+		assertThat(zaakRepository.getZaken()).hasSize(1);
 	}
 }

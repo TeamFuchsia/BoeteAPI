@@ -69,11 +69,10 @@ public class PersoonServiceTest {
     @Test
     public void testUpdatePersoonById() {
         Persoon persoon = new Persoon(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
-        PersoonEditDto persoonEditDto = new PersoonEditDto(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
 
         when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
-        persoonService.updatePersoonById(persoonEditDto);
+        persoonService.updatePersoonById(persoon);
 
         verify(persoonRepository).getPersoonById(1);
         verify(persoonRepository).updatePersoonById(persoon);
@@ -97,7 +96,7 @@ public class PersoonServiceTest {
     public void testBestaanPersoonnr() {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.updatePersoonById(new Persoon(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(NotFoundException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
     }
 }

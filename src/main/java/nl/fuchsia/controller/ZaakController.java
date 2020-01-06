@@ -35,7 +35,7 @@ public class ZaakController {
         return ResponseEntity.ok(zaakService.addZaak(zaakAddDto));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Payload<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
         Payload<Zaak> payload;
 

@@ -60,10 +60,10 @@ public class PersoonControllerTest {
      */
     @Test
     public void testUpdatePersoonById() {
-        PersoonEditDto persoonEditDto = new PersoonEditDto();
+        Persoon persoon = new Persoon();
 
-        persoonController.updatePersoonById(persoonEditDto);
+        persoonController.updatePersoonById(persoon);
 
-        verify(persoonService).updatePersoonById(persoonEditDto);
+        verify(persoonService).updatePersoonById(persoon);
     }
 }

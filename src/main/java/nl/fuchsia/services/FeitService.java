@@ -34,12 +34,14 @@ public class FeitService {
         return feitRepository.getFeiten();
     }
 
-    public ResponseEntity<Feit> updateFeitById(Feit feit) {
+    public Feit UpdateFeitById(Feit feit) {
 
         try {
-            if (feit.getFeitNr() = null)
             if (feitRepository.getFeitById(feit.getFeitNr()) == null) {
                 throw new NotFoundException("Persoonnummer: " + feit.getFeitNr() + " bestaat niet!");
+            }
+            if (feitRepository.getFeitById(feit.getFeitNr()).getFeitcode().equals(feit.getFeitcode()) ){
+
             }
             feitRepository.updateFeitById(feit);
 
@@ -47,6 +49,6 @@ public class FeitService {
             throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat reeds.");
         }
 
-        return ResponseEntity.ok(feit);
+        return feit;
     }
 }

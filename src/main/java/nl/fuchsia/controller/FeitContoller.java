@@ -48,6 +48,6 @@ public class FeitContoller {
     @PutMapping
     public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
 
-        return ResponseEntity.ok(feitService.updateFeitById(feit));
+        return ResponseEntity.ok(feitService.UpdateFeitById(feit));
     }
 }

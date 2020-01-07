@@ -1,6 +1,8 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.PersoonEditDto;
+import java.util.List;
+
+import nl.fuchsia.exceptionhandlers.MissingIdExeption;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -8,8 +10,6 @@ import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
-
-import java.util.List;
 
 @Component
 public class PersoonService {
@@ -54,32 +54,23 @@ public class PersoonService {
     }
 
     /**
-     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoonEditDto.
-     * @param persoonEditDto zijn de gegevens waarin de persoon gewijzigd moet worden
+     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoon.
+     * @param persoon zijn de gegevens waarin de persoon gewijzigd moet worden
      * @return de nieuwe persoon in de database
      */
-    public Persoon updatePersoonById(PersoonEditDto persoonEditDto) {
-
-        Persoon persoon;
+    public Persoon updatePersoonById(Persoon persoon) {
 
         try {
-            if (persoonRepository.getPersoonById(persoonEditDto.getPersoonnr()) == null) {
-                throw new NotFoundException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
+            if (persoon.getPersoonnr() == null){
+                throw new MissingIdExeption("Geen Persoonnummer ingevoerd");
             }
-                persoon = new Persoon(persoonEditDto.getPersoonnr(),
-                persoonEditDto.getVoornaam(),
-                persoonEditDto.getAchternaam(),
-                persoonEditDto.getStraat(),
-                persoonEditDto.getHuisnummer(),
-                persoonEditDto.getPostcode(),
-                persoonEditDto.getWoonplaats(),
-                persoonEditDto.getBsn(),
-                persoonEditDto.getGeboortedatum());
-
+            if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {
+                throw new NotFoundException("Persoonnummer: " + persoon.getPersoonnr() + " bestaat niet!");
+            }
             persoonRepository.updatePersoonById(persoon);
 
         } catch (TransactionSystemException e) {
-            throw new UniekVeldException("BSN nummer: " + persoonEditDto.getBsn() + " bestaat reeds.");
+            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
 
         return persoon;

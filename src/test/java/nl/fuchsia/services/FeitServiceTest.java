@@ -1,12 +1,8 @@
 package nl.fuchsia.services;
 
-import java.time.LocalDate;
-
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.FeitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +12,6 @@ import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;

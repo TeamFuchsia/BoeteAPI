@@ -1,10 +1,10 @@
 package nl.fuchsia.configuration;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.vendor.Database;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig extends AbstractDatabaseConfig {

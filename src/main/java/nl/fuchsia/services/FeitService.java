@@ -1,12 +1,9 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.FeitRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 

@@ -1,15 +1,15 @@
 package nl.fuchsia.model;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import java.time.LocalDate;
+import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.time.LocalDate;
-import java.util.Set;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ public class PersoonTest {
     }
 
     @Test
-    public void postcodeError() {
+    public void testPostcodeError() {
         persoon.setPostcode("8401EN");
 
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
@@ -63,7 +63,7 @@ public class PersoonTest {
     }
 
     @Test
-    void bsnError() {
+    void testBsnError() {
         persoon.setBsn("12345678");
 
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);

@@ -1,5 +1,10 @@
 package nl.fuchsia.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
@@ -12,11 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -90,7 +90,6 @@ public class ZaakServiceTest {
 
 	@Test
 	public void testAddZaakFeitAndPersoonDoesNotExist() {
-		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		ZaakAddDto zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
 
 		assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto))

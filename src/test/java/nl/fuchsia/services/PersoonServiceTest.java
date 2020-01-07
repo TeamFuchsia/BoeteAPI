@@ -2,9 +2,9 @@ package nl.fuchsia.services;
 
 import java.time.LocalDate;
 
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
+import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -85,7 +85,7 @@ public class PersoonServiceTest {
     public void testNonUniekBsnExeptionAddPersoon() {
 		when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 
@@ -98,5 +98,16 @@ public class PersoonServiceTest {
 
         assertThatThrownBy(() -> persoonService.updatePersoonById(new Persoon(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(NotFoundException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
+    }
+
+    @Test
+    public void testNonUniekBsnExeptionUpdatePersoon() {
+        Persoon persoon = new Persoon(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+
+        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
+
+        assertThatThrownBy(() -> persoonService.updatePersoonById(persoon))
+                .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -55,7 +56,7 @@ public class FeitServiceTest {
 	}
 
 	/**
-	 * Test of de methode updatePersoonByID in de persoonRepository wordt aangeroepen.
+	 * Test of de methode updateFeitByID in de feitRepository wordt aangeroepen.
 	 */
 	@Test
 	public void testUpdateFeitById() {
@@ -63,31 +64,32 @@ public class FeitServiceTest {
 		when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
 		Feit updatedfeit = new Feit(2, "VBF-002", "Test", 5000);
 
-		feitRepository.updateFeitById(updatedfeit);
+		feitService.updateFeitById(updatedfeit);
 
 		verify(feitRepository).getFeitById(feit.getFeitNr());
 		verify(feitRepository).updateFeitById(updatedfeit);
 	}
 
-//	/**
-//	 * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
-//	 */
-//	@Test
-//	public void testNonUniekBsnExeption() {
-//		when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
-//
-//		assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
-//				.isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
-//	}
-//
-//	/**
-//	 * Test controleert of de te updaten persoonnr bestaat.
-//	 */
-//	@Test
-//	public void testBestaanPersoonnr() {
-//		when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
-//
-//		assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
-//				.isInstanceOf(NotFoundException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
-//	}
+	/**
+	 * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
+	 */
+	@Test
+	public void testFeitcodeUpdateExeption() {
+		Feit feit = new Feit(3, "VBF-003", "Test", 500);
+		when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+
+		assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-004", "Test", 500)))
+				.isInstanceOf(UniekVeldException.class).hasMessage("Feitcode: VBF-003 mag niet gewijzigd worden in VBF-004");
+	}
+
+	/**
+	 * Test controleert of de te updaten persoonnr bestaat.
+	 */
+	@Test
+	public void testBestaanPersoonnr() {
+		when(feitRepository.updateFeitById(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
+
+		assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-003", "Test", 500)))
+				.isInstanceOf(NotFoundException.class).hasMessage("Feitnummer: 3 bestaat niet!");
+	}
 }

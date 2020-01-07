@@ -37,11 +37,13 @@ public class FeitService {
     public Feit updateFeitById(Feit feit) {
 
         try {
-            if (feitRepository.getFeitById(feit.getFeitNr()) == null) {
-                throw new NotFoundException("Persoonnummer: " + feit.getFeitNr() + " bestaat niet!");
+            Feit feitOpgehaald = feitRepository.getFeitById(feit.getFeitNr());
+
+            if (feitOpgehaald == null) {
+                throw new NotFoundException("Feitnummer: " + feit.getFeitNr() + " bestaat niet!");
             }
-            if (!(feitRepository.getFeitById(feit.getFeitNr()).getFeitcode().equals(feit.getFeitcode()) )){
-                throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " mag niet gewijzigd worden");
+            if (!(feitOpgehaald.getFeitcode().equals(feit.getFeitcode()) )){
+                throw new UniekVeldException("Feitcode: " + feitOpgehaald.getFeitcode() + " mag niet gewijzigd worden in " + feit.getFeitcode());
             }
 
             feitRepository.updateFeitById(feit);

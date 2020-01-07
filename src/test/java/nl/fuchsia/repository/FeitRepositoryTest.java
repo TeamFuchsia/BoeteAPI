@@ -1,8 +1,10 @@
 package nl.fuchsia.repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Zaak;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,12 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

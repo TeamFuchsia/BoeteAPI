@@ -1,12 +1,12 @@
 package nl.fuchsia.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.fuchsia.util.JsonDate;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.fuchsia.util.JsonDate;
 
 /**
  * De binnenkomende zaakDto in Json formaat.

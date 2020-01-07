@@ -1,18 +1,17 @@
 package nl.fuchsia.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ZaakService {

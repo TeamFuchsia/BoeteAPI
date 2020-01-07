@@ -1,5 +1,10 @@
 package nl.fuchsia.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
@@ -12,11 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;

@@ -1,10 +1,8 @@
 package nl.fuchsia.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 
 import nl.fuchsia.dto.ZaakAddDto;
-import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;

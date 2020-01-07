@@ -1,5 +1,9 @@
 package nl.fuchsia.configuration;
 
+import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
@@ -12,10 +16,6 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
 
 @EnableTransactionManagement
 @EnableLoadTimeWeaving

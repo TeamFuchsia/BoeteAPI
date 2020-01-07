@@ -1,6 +1,5 @@
 package nl.fuchsia.controller;
 
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
-import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.junit.jupiter.api.BeforeEach;

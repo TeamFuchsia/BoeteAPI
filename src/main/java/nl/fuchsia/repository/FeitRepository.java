@@ -1,14 +1,13 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Payload;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.List;
+
+import nl.fuchsia.model.Feit;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class FeitRepository {

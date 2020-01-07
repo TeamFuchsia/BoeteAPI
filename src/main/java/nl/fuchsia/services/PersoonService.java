@@ -1,17 +1,15 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.PersoonEditDto;
+import java.util.List;
+
 import nl.fuchsia.exceptionhandlers.MissingIdExeption;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
-import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
-
-import java.util.List;
 
 @Component
 public class PersoonService {

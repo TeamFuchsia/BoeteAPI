@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
 import org.springframework.stereotype.Repository;

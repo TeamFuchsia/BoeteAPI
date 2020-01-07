@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,38 +24,39 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ZaakRepositoryTest {
 
-	@PersistenceContext(unitName = "entityManagerFactory")
-	private EntityManager entityManager;
+    @PersistenceContext(unitName = "entityManagerFactory")
+    private EntityManager entityManager;
 
-	@Autowired
-	private ZaakRepository zaakRepository;
+    @Autowired
+    private ZaakRepository zaakRepository;
 
-	@BeforeEach
-	public void setup(){
-		entityManager.createQuery("Delete FROM Zaak").executeUpdate();
+    @BeforeEach
+    public void setup() {
+        entityManager.createQuery("Delete FROM Zaak").executeUpdate();
 
-		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
-		zaakRepository.addZaak(zaak);
-	}
+        Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
+        zaakRepository.addZaak(zaak);
+    }
 
-	@Test
-	void testAddZaak() {
-		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
-		zaakRepository.addZaak(zaak);
+    @Test
+    void testAddZaak() {
+        Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
+        zaakRepository.addZaak(zaak);
 
-		assertThat(zaakRepository.getZaken()).hasSize(2);
-	}
+        assertThat(zaakRepository.getZaken()).hasSize(2);
+    }
 
-	@Test
-	void testGetZakenById() {
-		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
-		zaakRepository.addZaak(zaakByIdtest);
+    @Test
+    void testGetZakenById() {
+        Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
+        zaakRepository.addZaak(zaakByIdtest);
 
-		assertThat(zaakRepository.getZaakById(6).getPleeglocatie()).isEqualTo("Heerenveen");
-	}
+        assertThat(zaakRepository.getZaken()).hasSize(2);
+        assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
+    }
 
-	@Test
-	void testGetzaken() {
-		assertThat(zaakRepository.getZaken()).hasSize(1);
-	}
+    @Test
+    void testGetzaken() {
+        assertThat(zaakRepository.getZaken()).hasSize(1);
+    }
 }

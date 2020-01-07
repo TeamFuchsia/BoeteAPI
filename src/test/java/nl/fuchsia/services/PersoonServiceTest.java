@@ -82,7 +82,7 @@ public class PersoonServiceTest {
      * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
      */
     @Test
-    public void testNonUniekBsnExeption() {
+    public void testNonUniekBsnExeptionAddPersoon() {
 		when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))

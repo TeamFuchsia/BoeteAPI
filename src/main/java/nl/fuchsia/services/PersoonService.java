@@ -1,5 +1,7 @@
 package nl.fuchsia.services;
 
+import nl.fuchsia.dto.PersoonEditDto;
+import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
@@ -11,7 +13,6 @@ import java.util.List;
 
 @Component
 public class PersoonService {
-
     private PersoonRepository persoonRepository;
 
     @Autowired
@@ -47,6 +48,40 @@ public class PersoonService {
      * @param persoonnr - ID de op te halen persoon.
      */
     public Persoon getPersoonById(Integer persoonnr) {
+
         return persoonRepository.getPersoonById(persoonnr);
+
+    }
+
+    /**
+     * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoonEditDto.
+     * @param persoonEditDto zijn de gegevens waarin de persoon gewijzigd moet worden
+     * @return de nieuwe persoon in de database
+     */
+    public Persoon updatePersoonById(PersoonEditDto persoonEditDto) {
+
+        Persoon persoon;
+
+        try {
+            if (persoonRepository.getPersoonById(persoonEditDto.getPersoonnr()) == null) {
+                throw new NotFoundException("Persoonnummer: " + persoonEditDto.getPersoonnr() + " bestaat niet!");
+            }
+                persoon = new Persoon(persoonEditDto.getPersoonnr(),
+                persoonEditDto.getVoornaam(),
+                persoonEditDto.getAchternaam(),
+                persoonEditDto.getStraat(),
+                persoonEditDto.getHuisnummer(),
+                persoonEditDto.getPostcode(),
+                persoonEditDto.getWoonplaats(),
+                persoonEditDto.getBsn(),
+                persoonEditDto.getGeboortedatum());
+
+            persoonRepository.updatePersoonById(persoon);
+
+        } catch (TransactionSystemException e) {
+            throw new UniekVeldException("BSN nummer: " + persoonEditDto.getBsn() + " bestaat reeds.");
+        }
+
+        return persoon;
     }
 }

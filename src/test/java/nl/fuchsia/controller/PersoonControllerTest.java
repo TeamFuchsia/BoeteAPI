@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,22 +13,23 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PersoonControllerTest {
 
-    @Mock
-    PersoonService persoonService;
-    @InjectMocks
-    PersoonController persoonController;
+	@Mock
+	PersoonService persoonService;
+	@InjectMocks
+	PersoonController persoonController;
 
-    @BeforeEach
-    public void setUp() {
-        initMocks(this);
-    }
+	@BeforeEach
+	public void setUp() {
+		initMocks(this);
+	}
 
     /**
      * Test of de methode getPersonen in de persoonService wordt aangeroepen.
      */
     @Test
-    public void testGetOrmPersonen() {
+    public void testGetPersonen() {
         persoonController.getPersonen();
+
         verify(persoonService).getPersonen();
     }
 
@@ -37,7 +39,31 @@ public class PersoonControllerTest {
     @Test
     public void testAddPersoon() {
         Persoon persoon = new Persoon();
+
         persoonController.addPersoon(persoon);
+
         verify(persoonService).addPersoon(persoon);
+    }
+
+    /**
+     * Test of de methode getPersoonById in de persoonService wordt aangeroepen.
+     */
+    @Test
+    public void testGetPersoonById() {
+        persoonController.getPersoonById(1);
+
+        verify(persoonService).getPersoonById(1);
+    }
+
+    /**
+     * Test of de methode updatePersoonById in de persoonService wordt aangeroepen.
+     */
+    @Test
+    public void testUpdatePersoonById() {
+        PersoonEditDto persoonEditDto = new PersoonEditDto();
+
+        persoonController.updatePersoonById(persoonEditDto);
+
+        verify(persoonService).updatePersoonById(persoonEditDto);
     }
 }

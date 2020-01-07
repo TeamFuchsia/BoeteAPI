@@ -10,10 +10,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class ORMFeitRepository {
+public class FeitRepository {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
+
+    private static final String GET_FEITEN ="SELECT feit FROM Feit feit";
 
     /**
      * Voegt een Feit toe aan de database
@@ -25,13 +27,24 @@ public class ORMFeitRepository {
         return feit;
     }
 
+	/**
+	 * Haalt het strafbare feit op basis van het feitnr.
+	 *
+	 * @param feitnr het feitnr van de op te halen feiten.
+	 * @return het opgehaalde feit.
+	 */
+	@Transactional
+    public Feit getFeitById(Integer feitnr){
+    	return entityManager.find(Feit.class, feitnr);
+	}
+
     /**
      * Haalt alle Feiten uit de database
      * @return een lijst met alle feiten
      */
     @Transactional
     public List<Feit> getFeiten() {
-        TypedQuery<Feit> getAllFeiten = entityManager.createQuery("SELECT feit FROM Feit feit", Feit.class);
+        TypedQuery<Feit> getAllFeiten = entityManager.createQuery(GET_FEITEN, Feit.class);
         return getAllFeiten.getResultList();
     }
 }

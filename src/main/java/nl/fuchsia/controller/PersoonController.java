@@ -1,8 +1,10 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,11 +40,27 @@ public class PersoonController {
      */
     @PostMapping
     public ResponseEntity<Persoon> addPersoon(@Valid @RequestBody Persoon persoon) {
+
         return ResponseEntity.ok(persoonService.addPersoon(persoon));
     }
 
+    /**
+     * verkrijgt  één persoon op bassis van de meegegeven ID nummer.
+     */
     @GetMapping(value = "/{persoonnr}")
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Persoon getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
+
         return persoonService.getPersoonById(persoonnr);
+    }
+
+    /**
+     * Wijzigd de persoon op bassis van de meegegeven ID nummer in Json object.
+     */
+    @PutMapping
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody PersoonEditDto persoonEditDto) {
+
+        return ResponseEntity.ok(persoonService.updatePersoonById(persoonEditDto));
     }
 }

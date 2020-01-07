@@ -32,11 +32,15 @@ public class PersoonTest {
     @Test
     public void voornaamIsNullOrBlank() {
         persoon.setVoornaam(null);
+
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
+
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voornaam moet ingevuld zijn");
+
         persoon.setVoornaam("  ");
         constraintViolations = validator.validate(persoon);
+
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voornaam moet ingevuld zijn");
     }
@@ -44,11 +48,16 @@ public class PersoonTest {
     @Test
     public void postcodeError() {
         persoon.setPostcode("8401EN");
+
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
+
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters");
+
         persoon.setPostcode("8404 as");
+
         constraintViolations = validator.validate(persoon);
+
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldige postcode in. 4 cijfers, een spatie en 2 hoofdletters");
     }
@@ -56,16 +65,10 @@ public class PersoonTest {
     @Test
     void bsnError() {
         persoon.setBsn("12345678");
+
         Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
+
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voer een geldig 9 cijferig BSN nummer in.");
-    }
-
-    @Test
-    public void geboortedatumError() {
-        // todo - i.v.m. error in de datum welke in behandeling is bij Sandor, deze test niet gemaakt.
-//        persoon.setGeboortedatum(LocalDate.of(1967, 02, 30));
-//        Set<ConstraintViolation<Persoon>> constraintViolations = validator.validate(persoon);
-//        assertThat(constraintViolations).hasSize(1);
     }
 }

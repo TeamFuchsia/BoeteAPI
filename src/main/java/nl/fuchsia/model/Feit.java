@@ -16,13 +16,13 @@ public class Feit {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long feitNr;
+    private int feitNr;
 
     /*
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
-    @Column(unique = true)
+	@Column(unique = true)
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
     @Pattern(regexp = "VBF-\\d{3}$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
@@ -52,11 +52,9 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public Feit(long feitNr, String feitcode, String omschrijving, double bedrag) {
-        this.feitNr = feitNr;
-        this.feitcode = feitcode;
-        this.omschrijving = omschrijving;
-        this.bedrag = bedrag;
+    public Feit(int feitNr, String feitcode, String omschrijving, double bedrag) {
+        this(feitcode,omschrijving,bedrag);
+    	this.feitNr = feitNr;
     }
 
     public String getFeitcode() {
@@ -83,11 +81,11 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public long getFeitNr() {
+    public int getFeitNr() {
         return feitNr;
     }
 
-    public void setFeitNr(long feitNr) {
+    public void setFeitNr(int feitNr) {
         this.feitNr = feitNr;
     }
 

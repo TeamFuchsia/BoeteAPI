@@ -12,35 +12,36 @@ import java.util.List;
 @Repository
 public class PersoonRepository {
 
-    /**
-     * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
-     */
-    //unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
-    @PersistenceContext(unitName = "entityManagerFactory")
-    private EntityManager entityManager;
+	/**
+	 * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
+	 */
+	//unitName verwijst naar de naam van de bean in DatabaseConfig.java, entityManagerFactory.
+	@PersistenceContext(unitName = "entityManagerFactory")
+	private EntityManager entityManager;
 
-    /**
-     * Haalt een lijst van alle personen uit de database m.b.v. ornm.
-     *
-     * @return Lijst van personen.
-     */
-    @Transactional
-    public List<Persoon> getPersonen() {
-        TypedQuery<Persoon> getAllPersonen = entityManager.createQuery("SELECT persoon FROM Persoon persoon ", Persoon.class);
-        return getAllPersonen.getResultList();
-    }
+	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon ";
 
-    /**
-     * Haalt de persoon op op basis van het persoonnr.
-     *
-     * @param persoonnr het persoonnr van de op te halen persoon.
-     * @return de opgehaalde persoon.
-     */
-    @Transactional
-    public Persoon getPersoonById(Integer persoonnr) {
-        return entityManager.find(Persoon.class, persoonnr);
-    }
+	/**
+	 * Haalt een lijst van alle personen uit de database m.b.v. ornm.
+	 *
+	 * @return Lijst van personen.
+	 */
+	@Transactional
+	public List<Persoon> getPersonen() {
+		TypedQuery<Persoon> getAllPersonen = entityManager.createQuery(GET_PERSONEN, Persoon.class);
+		return getAllPersonen.getResultList();
+	}
 
+	/**
+	 * Haalt de persoon op op basis van het persoonnr.
+	 *
+	 * @param persoonnr het persoonnr van de op te halen persoon.
+	 * @return de opgehaalde persoon.
+	 */
+	@Transactional
+	public Persoon getPersoonById(Integer persoonnr) {
+		return entityManager.find(Persoon.class, persoonnr);
+	}
     /**
      * Voegt een nieuwe persoon toe.
      *
@@ -49,6 +50,17 @@ public class PersoonRepository {
     @Transactional
     public Persoon addPersoon(Persoon persoon) {
         entityManager.persist(persoon);
+        return persoon;
+    }
+
+    /**
+     * wijzigd een bestaande persoon.
+     *
+     * @param persoon de te wijzigen persoon.
+     */
+    @Transactional
+    public Persoon updatePersoonById(Persoon persoon) {
+        entityManager.merge(persoon);
         return persoon;
     }
 }

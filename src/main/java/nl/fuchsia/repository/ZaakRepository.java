@@ -1,13 +1,14 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Zaak;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.List;
+
+import nl.fuchsia.model.Persoon;
+import nl.fuchsia.model.Zaak;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class ZaakRepository {
@@ -19,6 +20,10 @@ public class ZaakRepository {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
+    private static final String GET_ZAKEN = "SELECT zaak FROM Zaak zaak ";
+    private static final String GET_ZAKEN_BY_PERSOON = GET_ZAKEN + "where zaak.persoon=:persoon";
+
+
     @Transactional
     public Zaak addZaak(Zaak zaak) {
         entityManager.persist(zaak);
@@ -27,12 +32,20 @@ public class ZaakRepository {
 
     @Transactional
     public List<Zaak> getZaken() {
-        TypedQuery<Zaak> getAllZaken = entityManager.createQuery("SELECT zaak FROM Zaak zaak ", Zaak.class);
+        TypedQuery<Zaak> getAllZaken = entityManager.createQuery(GET_ZAKEN, Zaak.class);
         return getAllZaken.getResultList();
     }
 
     @Transactional
     public Zaak getZaakById(Integer zaakNr) {
         return entityManager.find(Zaak.class, zaakNr);
+    }
+
+    @Transactional
+    public List<Zaak> getZakenByPersoon(Persoon persoon) {
+
+        TypedQuery<Zaak> zakenByPersoon = entityManager.createQuery(GET_ZAKEN_BY_PERSOON, Zaak.class);
+        zakenByPersoon.setParameter("persoon", persoon);
+        return zakenByPersoon.getResultList();
     }
 }

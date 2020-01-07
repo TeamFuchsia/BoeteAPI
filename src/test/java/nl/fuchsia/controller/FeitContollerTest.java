@@ -11,29 +11,29 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class FeitContollerTest {
-    @Mock
-    FeitService feitService;
-    @InjectMocks
-    FeitContoller feitContoller;
+	@Mock
+	FeitService feitService;
+	@InjectMocks
+	FeitContoller feitContoller;
 
-    @BeforeEach
-    public void setUp() {
-        initMocks(this);
-    }
+	@BeforeEach
+	public void setUp() {
+		initMocks(this);
+	}
 
-    @Test
-    public void testAddFeit() {
-        Feit feit = new Feit();
+	@Test
+	public void testAddFeit() {
+		Feit feit = new Feit();
 
-        feitContoller.addFeit(feit);
+		feitContoller.addFeit(feit);
 
-        verify(feitService).addFeit(feit);
-    }
+		verify(feitService).addFeit(feit);
+	}
 
-    @Test
-    public void testGetFeiten() {
-        feitContoller.getFeiten();
+	@Test
+	public void testGetFeiten() {
+		feitContoller.getFeiten();
 
-        verify(feitService).getFeiten();
-    }
+		verify(feitService).getFeiten();
+	}
 }

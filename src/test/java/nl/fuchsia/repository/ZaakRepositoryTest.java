@@ -2,7 +2,9 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Zaak;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,33 +16,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ZaakRepositoryTest {
 
-    @Autowired
-    private ZaakRepository zaakRepository;
+	@Autowired
+	private ZaakRepository zaakRepository;
 
-    @Test
-    @Order(1)
-    void addZaak() {
-        zaakRepository.addZaak(new Zaak(LocalDate.of(2019, 12, 12), "Drachten"));
+	@BeforeAll
+	public void setup() {
 
-        assertThat(zaakRepository.getZaken()).hasSize(1);
+		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
+		zaakRepository.addZaak(zaak);
+	}
 
-        zaakRepository.addZaak(new Zaak(1, LocalDate.of(2019, 12, 12), "Sneek"));
+	@Test
+	void addZaak() {
+		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
+		zaakRepository.addZaak(zaak);
 
-        assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
-    }
+		assertThat(zaakRepository.getZaken()).hasSize(2);
 
-    @Test
-    @Order(2)
-    void getZakenById() {
-        assertThat(zaakRepository.getZaakById(1).getPleegLocatie()).isEqualTo("Drachten");
-    }
+	}
 
-    @Test
-    @Order(3)
-    void getzaken() {
-        assertThat(zaakRepository.getZaken()).hasSize(2);
-    }
+	@Test
+	void getZakenById() {
+		Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
+		zaakRepository.addZaak(zaakByIdtest);
+
+		assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
+	}
+
+	@Test
+	void getzaken() {
+		assertThat(zaakRepository.getZaken()).hasSize(3);
+	}
 }

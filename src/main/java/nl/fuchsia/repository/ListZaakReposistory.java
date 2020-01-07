@@ -13,7 +13,7 @@ public class ListZaakReposistory {
     private int nieuweZaakNr = 1;
 
     public void addZaak(Zaak zaak) {
-        zaak.setZaakNr(nieuweZaakNr);
+        zaak.setZaaknr(nieuweZaakNr);
         nieuweZaakNr += 1;
         zaakList.add(zaak);
     }

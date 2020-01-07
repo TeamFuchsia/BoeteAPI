@@ -1,6 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Persoon;
+import nl.fuchsia.repository.histRepos.JdbcPersoonRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

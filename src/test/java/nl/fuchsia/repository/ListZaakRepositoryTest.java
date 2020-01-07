@@ -1,6 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Zaak;
+import nl.fuchsia.repository.histRepos.ListZaakReposistory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

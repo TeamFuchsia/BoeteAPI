@@ -39,17 +39,18 @@ public class CitrusConfig {
                 .build();
     }
 
-    @Bean
-    public JdbcServer jdbcServer() {
-        return CitrusEndpoints.jdbc()
-                .server()
-                .host("localhost")
-                .databaseName("boeteapi")
-                .port(5432)
-                .autoStart(true) // TODO is dit nodig?
-                .build();
-    }
-
+    //
+//    @Bean
+//    public JdbcServer jdbcServer() {
+//        return CitrusEndpoints.jdbc()
+//                .server()
+//                .host("localhost")
+//                .databaseName("boeteapi")
+//                .port(5432)
+//                .autoStart(true) // TODO is dit nodig?
+//                .build();
+//    }
+//
     @Bean
     public SingleConnectionDataSource dataSource() {
         SingleConnectionDataSource dataSource = new SingleConnectionDataSource();

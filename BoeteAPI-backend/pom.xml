@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>BoeteAPI</artifactId>
+    <artifactId>BoeteAPI-backend</artifactId>
     <packaging>war</packaging>
 
     <properties>
@@ -107,5 +107,18 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>nl.fuchsia</groupId>
+            <artifactId>BoeteAPI</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>nl.fuchsia</groupId>
+            <artifactId>BoeteAPI</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 </project>

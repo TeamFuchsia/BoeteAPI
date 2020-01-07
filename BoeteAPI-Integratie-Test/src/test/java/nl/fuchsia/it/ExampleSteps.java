@@ -1,23 +1,8 @@
-/*
- * Copyright 2006-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package nl.fuchsia.it;
 
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
+import com.consol.citrus.config.CitrusSpringConfig;
 import com.consol.citrus.dsl.builder.HttpClientActionBuilder;
 import com.consol.citrus.dsl.junit.JUnit4CitrusTestRunner;
 import com.consol.citrus.dsl.runner.TestRunner;
@@ -29,14 +14,11 @@ import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
 
-/**
- * designer
- *
- * @author Christoph Deppisch
- */
+@ContextConfiguration(classes = CitrusSpringConfig.class)
 public class ExampleSteps extends JUnit4CitrusTestRunner {
 
     /**
@@ -48,9 +30,9 @@ public class ExampleSteps extends JUnit4CitrusTestRunner {
     @CitrusEndpoint
     private HttpClient boeteApiClient;
 
-    @CitrusEndpoint
-    private JdbcServer jdbcServer;
-
+    //    @CitrusEndpoint
+//    private JdbcServer jdbcServer;
+//
     @Autowired
     private DataSource dataSource;
 

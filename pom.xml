@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>BoeteAPI</module>
+        <module>BoeteAPI-backend</module>
         <module>BoeteAPI-Integratie-Test</module>
     </modules>
 
@@ -33,17 +33,19 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- Necessary to force Citrus to use the same version as us -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.5.2</version>
-                <scope>test</scope>
-            </dependency>
+
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
@@ -195,6 +197,16 @@
                 <artifactId>citrus-java-dsl</artifactId>
                 <version>${citrus.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.5.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

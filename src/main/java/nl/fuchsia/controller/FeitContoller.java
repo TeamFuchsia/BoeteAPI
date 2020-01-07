@@ -1,10 +1,7 @@
 package nl.fuchsia.controller;
 
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.FeitService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +45,6 @@ public class FeitContoller {
     @PutMapping
     public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
 
-        return ResponseEntity.ok(feitService.UpdateFeitById(feit));
+        return ResponseEntity.ok(feitService.updateFeitById(feit));
     }
 }

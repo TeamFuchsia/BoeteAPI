@@ -34,15 +34,16 @@ public class FeitService {
         return feitRepository.getFeiten();
     }
 
-    public Feit UpdateFeitById(Feit feit) {
+    public Feit updateFeitById(Feit feit) {
 
         try {
             if (feitRepository.getFeitById(feit.getFeitNr()) == null) {
                 throw new NotFoundException("Persoonnummer: " + feit.getFeitNr() + " bestaat niet!");
             }
-            if (feitRepository.getFeitById(feit.getFeitNr()).getFeitcode().equals(feit.getFeitcode()) ){
-
+            if (!(feitRepository.getFeitById(feit.getFeitNr()).getFeitcode().equals(feit.getFeitcode()) )){
+                throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " mag niet gewijzigd worden");
             }
+
             feitRepository.updateFeitById(feit);
 
         } catch (TransactionSystemException e) {

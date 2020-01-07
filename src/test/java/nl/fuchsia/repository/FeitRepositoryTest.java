@@ -2,6 +2,7 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,5 +52,17 @@ public class FeitRepositoryTest {
 
 		assertThat(feitRepository.getFeiten()).hasSize(1);
 		assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
+	}
+	@Test
+	public void testUpdateFeitById() {
+		Feit feit = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+		feitRepository.getFeiten();
+
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(feit.getBedrag());
+
+		Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(),"VBF-002", "Test", 5000));
+
+		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
 	}
 }

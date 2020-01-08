@@ -1,7 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Persoon;
-import nl.fuchsia.repository.histRepos.ListPersoonRepository;
+import nl.fuchsia.repository.historie.ListPersoonRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.model.Feit;
-import nl.fuchsia.repository.histRepos.ListFeitRepository;
+import nl.fuchsia.repository.historie.ListFeitRepository;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 

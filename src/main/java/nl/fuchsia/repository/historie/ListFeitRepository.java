@@ -1,4 +1,4 @@
-package nl.fuchsia.repository.histRepos;
+package nl.fuchsia.repository.historie;
 
 import nl.fuchsia.model.Feit;
 import org.springframework.stereotype.Repository;

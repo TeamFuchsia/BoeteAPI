@@ -4,9 +4,11 @@ import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
+import nl.fuchsia.model.Status;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
+import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,13 @@ public class ZaakService {
 	private ZaakRepository zaakRepository;
 	private PersoonRepository persoonRepository;
 	private FeitRepository feitRepository;
+	private StatusRepository statusRepository;
 
-	public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository) {
+	public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository) {
 		this.zaakRepository = zaakRepository;
 		this.persoonRepository = persoonRepository;
 		this.feitRepository = feitRepository;
+		this.statusRepository = statusRepository;
 	}
 
 	/**
@@ -52,10 +56,14 @@ public class ZaakService {
 		if (exceptions.size()>0){
 			throw new NotFoundException(exceptions.toString());
 		}
+		List<Status> statussen = new ArrayList<>();
+		statussen.add(new Status(1,"Open"));
+
 		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
 		zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
 		zaak.setPersoon(persoon);
 		zaak.setFeiten(feiten);
+		zaak.setStatus(statussen);
 		return zaakRepository.addZaak(zaak);
 	}
 

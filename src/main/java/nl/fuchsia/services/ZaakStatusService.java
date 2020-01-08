@@ -1,13 +1,11 @@
 package nl.fuchsia.services;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.ZaakStatus;
 import nl.fuchsia.repository.ZaakStatusRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ZaakStatusService {

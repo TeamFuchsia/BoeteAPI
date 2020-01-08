@@ -17,8 +17,6 @@ public class ZaakStatus {
     @JsonProperty("veranderdatum")
     private LocalDate veranderdatum;
 
-    //uitzoeken!!!!!!!
-
     @ManyToOne
     @JoinColumn(name= "statusnr")
     private int statusnr;
@@ -26,8 +24,6 @@ public class ZaakStatus {
     @ManyToOne
     @JoinColumn(name = "zaaknr")
     private int zaaknr;
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public ZaakStatus() {
     }

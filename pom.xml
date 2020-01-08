@@ -8,6 +8,7 @@
     <artifactId>BoeteAPI-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>BoeteAPI-backend</module>
         <module>BoeteAPI-Integratie-Test</module>
@@ -28,6 +29,7 @@
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
         <jetty-maven-plugin.version>9.4.20.v20190813</jetty-maven-plugin.version>
+        <postgresql.version>42.2.8</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -52,6 +54,7 @@
                 <version>3.14.0</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -101,7 +104,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.2.8</version>
+                <version>${postgresql.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -166,6 +169,12 @@
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-java</artifactId>
+                <version>${cucumber.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-spring</artifactId>
                 <version>${cucumber.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -242,11 +251,6 @@
                     <!--You used to need a web.xml file, but now we can do it with just Java-->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty-maven-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>

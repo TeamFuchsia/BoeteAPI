@@ -16,17 +16,13 @@
 
 package nl.fuchsia.it;
 
-import com.consol.citrus.db.driver.JdbcDriver;
 import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.jdbc.server.JdbcServer;
+import org.postgresql.Driver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-/**
- * @author Christoph Deppisch
- */
 @Configuration
 public class CitrusConfig {
 
@@ -39,23 +35,11 @@ public class CitrusConfig {
                 .build();
     }
 
-    //
-//    @Bean
-//    public JdbcServer jdbcServer() {
-//        return CitrusEndpoints.jdbc()
-//                .server()
-//                .host("localhost")
-//                .databaseName("boeteapi")
-//                .port(5432)
-//                .autoStart(true) // TODO is dit nodig?
-//                .build();
-//    }
-//
     @Bean
     public SingleConnectionDataSource dataSource() {
         SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
-        dataSource.setDriverClassName(JdbcDriver.class.getName());
-        dataSource.setUrl("jdbc:citrus:http://localhost:5432/boeteapi");
+        dataSource.setDriverClassName(Driver.class.getName());
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
         return dataSource;

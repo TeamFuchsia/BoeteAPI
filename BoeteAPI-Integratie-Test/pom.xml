@@ -26,7 +26,7 @@
                     <deployables>
                         <deployable>
                             <groupId>nl.fuchsia</groupId>
-                            <artifactId>BoeteAPI</artifactId>
+                            <artifactId>BoeteAPI-backend</artifactId>
                             <type>war</type>
                             <properties>
                                 <context>/</context>
@@ -87,11 +87,6 @@
 
         <dependency>
             <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-db-driver</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-jdbc</artifactId>
         </dependency>
 
@@ -111,16 +106,27 @@
         </dependency>
 
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>nl.fuchsia</groupId>
-            <artifactId>BoeteAPI</artifactId>
+            <artifactId>BoeteAPI-backend</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
+
     </dependencies>
 
 </project>

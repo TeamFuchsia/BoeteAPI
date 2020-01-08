@@ -3,23 +3,21 @@ package nl.fuchsia.it;
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.config.CitrusSpringConfig;
-import com.consol.citrus.dsl.builder.HttpClientActionBuilder;
-import com.consol.citrus.dsl.junit.JUnit4CitrusTestRunner;
 import com.consol.citrus.dsl.runner.TestRunner;
 import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.jdbc.server.JdbcServer;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import cucumber.api.java.nl.Als;
+import cucumber.api.java.nl.Dan;
+import cucumber.api.java.nl.Gegeven;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
+import java.util.Random;
 
 @ContextConfiguration(classes = CitrusSpringConfig.class)
-public class ExampleSteps extends JUnit4CitrusTestRunner {
+public class ExampleSteps {
 
     /**
      * Test runner filled with actions by step definitions
@@ -30,22 +28,10 @@ public class ExampleSteps extends JUnit4CitrusTestRunner {
     @CitrusEndpoint
     private HttpClient boeteApiClient;
 
-    //    @CitrusEndpoint
-//    private JdbcServer jdbcServer;
-//
     @Autowired
     private DataSource dataSource;
 
-    private HttpClientActionBuilder.HttpClientReceiveActionBuilder response;
-
-    @Given("^the user is authenticated with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void authenticate(String user, String password) {
-        System.out.println(user);
-        System.out.println(password);
-        // authenticate
-    }
-
-    @When("^the client makes a GET request to \"([^\"]*)\"$")
+    @Als("de client een GET request maakt naar {string}")
     public void callUrl(String url) {
         runner.http(
                 httpActionBuilder -> httpActionBuilder
@@ -55,17 +41,7 @@ public class ExampleSteps extends JUnit4CitrusTestRunner {
         );
     }
 
-    @Then("^the HTTP status code should be (\\d+)$")
-    public void expectedHttpStatus(int status) {
-        runner.http(
-                httpActionBuilder -> httpActionBuilder
-                        .client(boeteApiClient)
-                        .receive()
-                        .response(HttpStatus.valueOf(status))
-        );
-    }
-
-    @Then("^the content should be valid$")
+    @Dan("^the content should be valid$")
     public void verifyContent() {
         runner.http(
                 httpActionBuilder -> httpActionBuilder
@@ -77,20 +53,32 @@ public class ExampleSteps extends JUnit4CitrusTestRunner {
         );
     }
 
-    @Given("there are {int} people in the database")
+    @Gegeven("er zitten {int} personen in de database")
     public void generateRandomPeople(int nrOfPeople) {
-        createRandomPersoon();
+        runner.plsql(sqlBuilder -> sqlBuilder
+                .dataSource(dataSource)
+                .statement("DELETE FROM persoon")
+        );
+        createRandomPersonen(nrOfPeople);
     }
 
-    @Then("the HTTP status code should be {int} and the result should contain {int} elements")
-    public void theHTTPStatusCodeShouldBeAndTheResultShouldContainElements(int arg0, int arg1) {
+    @Dan("moet de HTTP status code {int} zijn en moeten er {int} elementen in de response zitten")
+    public void verifyResponse(int httpStatusCode, int numberOfElements) {
+        runner.http(httpActionBuilder -> httpActionBuilder
+                .client(boeteApiClient)
+                .receive()
+                .response(HttpStatus.valueOf(httpStatusCode))
+                .validate("$.length()", String.valueOf(numberOfElements))
+        );
     }
 
-    private void createRandomPersoon() {
-        this.run(plsql(sqlBuilder -> {
-            sqlBuilder
+    private void createRandomPersonen(int nrOfPeople) {
+        Random random = new Random();
+        for (int i = 0; i < nrOfPeople; i++) {
+            String bsn = String.valueOf(random.nextInt(899999999) + 100000000);
+            runner.plsql(sqlBuilder -> sqlBuilder
                     .dataSource(dataSource)
-                    .statement("INSERT INTO public.persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) VALUES ('Fred', 'Derf', 'Fredstraat', '10', '1234 KL', 'Groningen', '123456789', '01-01-2000')");
-        }));
+                    .statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) VALUES ('Fred', 'Derf', 'Fredstraat', '10', '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
+        }
     }
 }

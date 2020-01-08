@@ -1,6 +1,10 @@
-Feature: Integration test
+# language: nl
 
-  Scenario: Call an endpoint
-    Given there are 3 people in the database
-    When the client makes a GET request to "/personen"
-    Then the HTTP status code should be 200 and the result should contain 3 elements
+Functionaliteit: Integratie test
+
+  Achtergrond:
+    Gegeven er zitten 3 personen in de database
+
+  Scenario: Roep een endpoint aan
+    Als de client een GET request maakt naar "/personen"
+    Dan moet de HTTP status code 200 zijn en moeten er 3 elementen in de response zitten

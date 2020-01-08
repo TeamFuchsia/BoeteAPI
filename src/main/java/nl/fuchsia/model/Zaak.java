@@ -3,16 +3,7 @@ package nl.fuchsia.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "zaak")
@@ -41,13 +32,8 @@ public class Zaak {
             @JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
     private List<Feit> feiten;
 
-    @ManyToMany
-    @JoinTable(name = "zaakstatus",
-            joinColumns =
-            @JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
-            inverseJoinColumns =
-            @JoinColumn(name = "statusnr", referencedColumnName = "statusnr"))
-    private List<Status> status;
+    @OneToMany(mappedBy = "zaak" ,cascade ={CascadeType.PERSIST})
+    private List<ZaakStatus> zaakStatus;
 
     public Zaak() {
     }
@@ -62,20 +48,20 @@ public class Zaak {
         this.zaaknr = zaaknr;
     }
 
-    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<Status> status) {
+    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
         this.overtredingsdatum = overtredingsdatum;
         this.pleeglocatie = pleeglocatie;
         this.persoon = persoon;
         this.feiten = feiten;
-        this.status = status;
+        this.zaakStatus = zaakStatus;
     }
 
-    public List<Status> getStatus() {
-        return status;
+    public List<ZaakStatus> getZaakStatus() {
+        return zaakStatus;
     }
 
-    public void setStatus(List<Status> status) {
-        this.status = status;
+    public void setZaakStatus(List<ZaakStatus> zaakStatus) {
+        this.zaakStatus = zaakStatus;
     }
 
     public int getZaaknr() {
@@ -126,7 +112,7 @@ public class Zaak {
                 ", pleeglocatie='" + pleeglocatie + '\'' +
                 ", persoon=" + persoon +
                 ", feiten=" + feiten +
-                ", status=" + status +
+                ", zaakStatus=" + zaakStatus +
                 '}';
     }
 
@@ -140,11 +126,11 @@ public class Zaak {
                 Objects.equals(pleeglocatie, zaak.pleeglocatie) &&
                 Objects.equals(persoon, zaak.persoon) &&
                 Objects.equals(feiten, zaak.feiten) &&
-                Objects.equals(status, zaak.status);
+                Objects.equals(zaakStatus, zaak.zaakStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zaaknr, overtredingsdatum, pleeglocatie, persoon, feiten, status);
+        return Objects.hash(zaaknr, overtredingsdatum, pleeglocatie, persoon, feiten, zaakStatus);
     }
 }

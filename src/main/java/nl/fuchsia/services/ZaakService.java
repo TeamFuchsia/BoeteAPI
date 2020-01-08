@@ -1,14 +1,12 @@
 package nl.fuchsia.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
-import nl.fuchsia.model.Feit;
-import nl.fuchsia.model.Persoon;
-import nl.fuchsia.model.Status;
-import nl.fuchsia.model.Zaak;
+import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
@@ -56,14 +54,18 @@ public class ZaakService {
 		if (exceptions.size()>0){
 			throw new NotFoundException(exceptions.toString());
 		}
-		List<Status> statussen = new ArrayList<>();
-		statussen.add(new Status(1,"Open"));
+		List<ZaakStatus> zaakStatussen = new ArrayList<>();
+		ZaakStatus zaakStatus = new ZaakStatus();
+		zaakStatus.setStatus(new Status(1,"Open"));
+		zaakStatus.setVeranderdatum(LocalDate.now());
+		zaakStatus.setZaak(zaak);
+		zaakStatussen.add(zaakStatus);
 
 		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
 		zaak.setPleeglocatie(zaakAddDto.getPleeglocatie());
 		zaak.setPersoon(persoon);
 		zaak.setFeiten(feiten);
-		zaak.setStatus(statussen);
+		zaak.setZaakStatus(zaakStatussen);
 		return zaakRepository.addZaak(zaak);
 	}
 

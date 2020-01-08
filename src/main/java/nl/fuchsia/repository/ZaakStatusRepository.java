@@ -23,8 +23,7 @@ public class ZaakStatusRepository {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
-    private static final String UPDATE_DATUM_ZAAKSTATUS = "UPDATE zaakstatus e SET e.veranderdatum = '09-01-2020'"+
-            "WHERE e.zaakstatusnr = 5";
+    private static final String UPDATE_DATUM_ZAAKSTATUS = "UPDATE zaakstatus SET zaakstatus.veranderdatum = {d '2020-01-09'} WHERE zaakstatus.zaakstatusnr = 5";
 
     //"UPDATE Employee e SET e.salary = e.salary + :increment "
     //              + "WHERE e.dept = :dept");

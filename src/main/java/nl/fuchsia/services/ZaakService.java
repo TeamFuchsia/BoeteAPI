@@ -108,4 +108,5 @@ public class ZaakService {
 		zaak.setFeiten(feiten);
 		return zaak;
 	}
+
 }

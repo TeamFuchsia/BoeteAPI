@@ -1,6 +1,7 @@
 package nl.fuchsia.repository;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
+import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,4 +51,13 @@ public class ZaakRepositoryTest {
 	void getzaken() {
 		assertThat(zaakRepository.getZaken()).hasSize(3);
 	}
+
+//	@Test
+//	void testaddFeitToZaak(){
+//		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
+//		zaakRepository.addFeitToZaak(zaak);
+//
+//		assertThat(zaakRepository.getZaken()).hasSize(2);
+//
+//	}
 }

@@ -1,6 +1,7 @@
 package nl.fuchsia.controller;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.services.ZaakService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,5 +46,15 @@ public class ZaakControllerTest {
 		zaakController.getZaken(persoonnr);
 
 		verify(zaakService).getZakenByPersoon(persoonnr);
+	}
+
+	@Test
+	void testAddFeitToZaak() {
+		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto();
+		Integer zaakNr = 4;
+
+		zaakController.updZaakFeit(zaakNr, zaakAddFeitDto);
+
+		verify(zaakService).updZaakFeit(zaakNr, zaakAddFeitDto);
 	}
 }

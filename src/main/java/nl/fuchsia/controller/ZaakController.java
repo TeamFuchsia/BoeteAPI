@@ -4,17 +4,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/zaken")
@@ -46,8 +41,18 @@ public class ZaakController {
         return ResponseEntity.ok().body(zaken);
     }
 
-    @GetMapping(value = "/{zaakNr}")
-    public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
-        return zaakService.getZaakById(zaakNr);
+	@GetMapping(value = "/{zaakNr}")
+	public Zaak getZaakById(@PathVariable("zaakNr") Integer zaakNr, @RequestParam(value = "feitnr" , required = false) Integer feitNr) {
+    	return zaakService.getZaakById(zaakNr);
+	}
+
+	@PutMapping(value = "/{zaakNr}/feiten")
+	public ResponseEntity<Zaak> updZaakFeit(@PathVariable("zaakNr") Integer zaakNr, @RequestBody ZaakAddFeitDto zaakAddFeitDto ){
+    	return ResponseEntity.ok(zaakService.updZaakFeit(zaakNr, zaakAddFeitDto));
     }
+
+//	@PutMapping(value = "/{zaakNr}/feiten")
+//	public ResponseEntity<Zaak> updZaakFeit(@PathVariable("zaakNr") Integer zaakNr, @RequestBody List<ZaakAddFeitDto> zaakAddFeitDto ){
+//		return ResponseEntity.ok(zaakService.updZaakFeit(zaakNr, zaakAddFeitDto));
+//	}
 }

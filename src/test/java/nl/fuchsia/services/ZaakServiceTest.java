@@ -122,4 +122,9 @@ public class ZaakServiceTest {
 		assertThatThrownBy(() -> zaakService.getZakenByPersoon(persoon.getPersoonnr()))
 				.isInstanceOf(NotFoundException.class).hasMessage("Persoonnr " + persoon.getPersoonnr() + " bestaat niet");
 	}
+
+	@Test
+	public void testaddFeitToZaak(){
+
+	}
 }

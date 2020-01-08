@@ -19,7 +19,7 @@ public class PersoonRepository {
 	@PersistenceContext(unitName = "entityManagerFactory")
 	private EntityManager entityManager;
 
-	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon ";
+	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon";
 
 	/**
 	 * Haalt een lijst van alle personen uit de database m.b.v. ornm.

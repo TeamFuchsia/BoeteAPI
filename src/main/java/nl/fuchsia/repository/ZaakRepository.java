@@ -22,6 +22,7 @@ public class ZaakRepository {
 
     private static final String GET_ZAKEN = "SELECT zaak FROM Zaak zaak ";
     private static final String GET_ZAKEN_BY_PERSOON = GET_ZAKEN + "where zaak.persoon=:persoon";
+    private static final String ADD_FEIT = "";
 
 
     @Transactional

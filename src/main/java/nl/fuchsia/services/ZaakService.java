@@ -1,5 +1,8 @@
 package nl.fuchsia.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
@@ -12,9 +15,6 @@ import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ZaakService {

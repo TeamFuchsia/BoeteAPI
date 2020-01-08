@@ -2,7 +2,6 @@ package nl.fuchsia.services;
 
 import java.time.LocalDate;
 
-import nl.fuchsia.dto.PersoonEditDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -69,11 +68,10 @@ public class PersoonServiceTest {
     @Test
     public void testUpdatePersoonById() {
         Persoon persoon = new Persoon(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
-        PersoonEditDto persoonEditDto = new PersoonEditDto(1, "Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
 
         when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
 
-        persoonService.updatePersoonById(persoonEditDto);
+        persoonService.updatePersoonById(persoon);
 
         verify(persoonRepository).getPersoonById(1);
         verify(persoonRepository).updatePersoonById(persoon);
@@ -83,10 +81,10 @@ public class PersoonServiceTest {
      * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
      */
     @Test
-    public void testNonUniekBsnExeption() {
+    public void testNonUniekBsnExeptionAddPersoon() {
 		when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 
@@ -97,7 +95,18 @@ public class PersoonServiceTest {
     public void testBestaanPersoonnr() {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(new PersoonEditDto(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.updatePersoonById(new Persoon(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(NotFoundException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
+    }
+
+    @Test
+    public void testNonUniekBsnExeptionUpdatePersoon() {
+        Persoon persoon = new Persoon(1, "Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+
+        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
+
+        assertThatThrownBy(() -> persoonService.updatePersoonById(persoon))
+                .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 }

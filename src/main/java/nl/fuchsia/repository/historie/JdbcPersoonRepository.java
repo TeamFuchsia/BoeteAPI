@@ -1,4 +1,4 @@
-package nl.fuchsia.repository;
+package nl.fuchsia.repository.historie;
 
 import nl.fuchsia.model.Persoon;
 import org.springframework.beans.factory.annotation.Autowired;

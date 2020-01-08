@@ -1,12 +1,16 @@
 package nl.fuchsia.controller;
 
+import javax.validation.Valid;
+
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.services.FeitService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/feiten")
@@ -35,7 +39,8 @@ public class FeitContoller {
      * @return een lijst met alle feiten
      */
     @GetMapping
-    public ResponseEntity<List<Feit>> getFeiten() {
-        return ResponseEntity.ok().body(feitService.getFeiten());
+    public ResponseEntity<Payload<Feit>> getFeiten() {
+        Payload<Feit> payload = new Payload<>(feitService.getFeiten());
+        return ResponseEntity.ok().body(payload);
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
@@ -28,17 +29,17 @@ public class ZaakController {
         return ResponseEntity.ok(zaakService.addZaak(zaakAddDto));
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
-        List<Zaak> zaken;
+    @GetMapping
+    public ResponseEntity<Payload<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
+        Payload<Zaak> payload;
 
         if (persoonnr != null) {
-            zaken = zaakService.getZakenByPersoon(persoonnr);
+            payload = new Payload<>(zaakService.getZakenByPersoon(persoonnr));
         } else {
-            zaken = zaakService.getZaken();
+            payload = new Payload<>(zaakService.getZaken());
         }
 
-        return ResponseEntity.ok().body(zaken);
+        return ResponseEntity.ok().body(payload);
     }
 
 	@GetMapping(value = "/{zaakNr}")
@@ -51,4 +52,3 @@ public class ZaakController {
     	return ResponseEntity.ok(zaakService.updZaakFeit(zaakNr, zaakAddFeitDto));
     }
 }
-

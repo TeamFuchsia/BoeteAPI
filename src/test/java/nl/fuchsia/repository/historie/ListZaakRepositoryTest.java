@@ -1,6 +1,7 @@
-package nl.fuchsia.repository;
+package nl.fuchsia.repository.historie;
 
 import nl.fuchsia.model.Zaak;
+import nl.fuchsia.repository.historie.ListZaakReposistory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -16,9 +17,10 @@ public class ListZaakRepositoryTest {
         Zaak zaakEen = new Zaak();
         Zaak zaakTwee = new Zaak();
         zaakEen.setOvertredingsdatum(LocalDate.of(2019, 3, 12));
-        zaakEen.setPleeglocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden");
+        String pleegLocatie = "A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden";
+        zaakEen.setPleeglocatie(pleegLocatie);
         zaakTwee.setOvertredingsdatum(LocalDate.of(2019, 3, 12));
-        zaakTwee.setPleeglocatie("A32, ter hoogte van hectometerpaal 13.4 richting Leeuwarden"); // TODO d.c.
+        zaakTwee.setPleeglocatie(pleegLocatie);
 
         listZaakReposistory.addZaak(zaakEen);
         listZaakReposistory.addZaak(zaakTwee);

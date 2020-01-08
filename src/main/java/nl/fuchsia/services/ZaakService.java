@@ -1,5 +1,8 @@
 package nl.fuchsia.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.model.Feit;
@@ -11,9 +14,6 @@ import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ZaakService {
@@ -75,7 +75,7 @@ public class ZaakService {
 		return zaakRepository.getZaakById(zaakNr);
 	}
 
-	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+	public List<Zaak> getZakenByPersoon(Integer persoonnr) {
 
 		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 

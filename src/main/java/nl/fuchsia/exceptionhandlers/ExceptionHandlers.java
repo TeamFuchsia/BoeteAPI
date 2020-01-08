@@ -1,14 +1,14 @@
 package nl.fuchsia.exceptionhandlers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Deze klasse handelt de validatie exceptions af.
@@ -38,29 +38,14 @@ public class ExceptionHandlers {
 	/**
 	 * De annotatie {@link ResponseStatus} geeft de waarde 500 terug via {@link HttpStatus#INTERNAL_SERVER_ERROR} methode
 	 *
-	 * @param uniekVeldException de exception klasse die de unieke invoer validate afhandelt.
+	 * @param exception de exception klasse die de unieke invoer validate afhandelt.
 	 * @return de holder {@link ErrorResponse} van de exception.
 	 */
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(UniekVeldException.class)
-	public ErrorResponse sqlUniekVeldException(UniekVeldException uniekVeldException) {
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler({UniekVeldException.class,NotFoundException.class,MissingIdExeption.class})
+	public ErrorResponse invalidInputHandler(Exception exception) {
 		List<String> list = new ArrayList<>();
-		String message = uniekVeldException.getMessage();
-		list.add(0, message);
-		return new ErrorResponse(list);
-	}
-
-	/**
-	 * De annotatie {@link ResponseStatus} geeft de waarde 500 terug via {@link HttpStatus#INTERNAL_SERVER_ERROR} methode
-	 *
-	 * @param notFoundException de exception klasse die de unieke invoer validate afhandelt.
-	 * @return de holder {@link ErrorResponse} van de exception.
-	 */
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(NotFoundException.class)
-	public ErrorResponse sqlNullException(NotFoundException notFoundException) {
-		List<String> list = new ArrayList<>();
-		String message = notFoundException.getMessage();
+		String message = exception.getMessage();
 		list.add(0, message);
 		return new ErrorResponse(list);
 	}

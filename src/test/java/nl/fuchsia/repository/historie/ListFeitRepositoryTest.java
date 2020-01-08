@@ -1,4 +1,4 @@
-package nl.fuchsia.repository;
+package nl.fuchsia.repository.historie;
 
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.repository.historie.ListFeitRepository;

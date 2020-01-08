@@ -10,7 +10,6 @@ import cucumber.api.java.nl.Dan;
 import cucumber.api.java.nl.Gegeven;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
@@ -38,18 +37,6 @@ public class ExampleSteps {
                         .client(boeteApiClient)
                         .send()
                         .get(url)
-        );
-    }
-
-    @Dan("^the content should be valid$")
-    public void verifyContent() {
-        runner.http(
-                httpActionBuilder -> httpActionBuilder
-                        .client(boeteApiClient)
-                        .receive()
-                        .response()
-                        .contentType(MediaType.APPLICATION_JSON.toString())
-                        .payload("{}")
         );
     }
 

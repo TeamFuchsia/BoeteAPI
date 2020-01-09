@@ -1,8 +1,5 @@
 package nl.fuchsia.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.fuchsia.dto.ZaakAddDto;
 import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
@@ -15,6 +12,9 @@ import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ZaakService {
@@ -82,9 +82,10 @@ public class ZaakService {
 
 	/**
 	 * Voegt 1 of meer bestaande feiten toe aan een bestaande zaak.
-	 * @param zaakNr de betreffende bestaande zaak
+	 *
+	 * @param zaakNr             de betreffende bestaande zaak
 	 * @param listZaakAddFeitDto de toe te voegen feit(en)
-	 * @return
+	 * @return de geupdate zaak.
 	 */
 	@Transactional
 	public Zaak updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
@@ -95,7 +96,7 @@ public class ZaakService {
 		if (zaakRepository.getZaakById(zaakNr) == null) {
 			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
 		}
-		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
 			if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
 				notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
 			}
@@ -106,7 +107,7 @@ public class ZaakService {
 		}
 		Zaak zaak = zaakRepository.getZaakById(zaakNr);
 		List<Feit> zaakFeiten = zaak.getFeiten();
-		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
 			int feitNrDto = zaakAddFeitDto.getFeitNr();
 			for (Feit feit : zaakFeiten) {
 				if (feit.getFeitNr() == feitNrDto) {
@@ -118,7 +119,7 @@ public class ZaakService {
 			uniekVeldExceptions.add("geen feit(en) toegevoegd");
 			throw new UniekVeldException(uniekVeldExceptions.toString());
 		}
-		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto){
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
 			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
 			zaak.setFeiten(zaakFeiten);
 		}

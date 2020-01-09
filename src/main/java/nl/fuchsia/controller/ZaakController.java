@@ -47,7 +47,7 @@ public class ZaakController {
     	return zaakService.getZaakById(zaakNr);
 	}
 
-	@PutMapping(value = "/{zaakNr}/feiten")
+	@PostMapping(value = "/{zaakNr}/feiten")
 	public ResponseEntity<Zaak> updZaakFeit(@PathVariable("zaakNr") Integer zaakNr, @RequestBody List<ZaakAddFeitDto> listZaakAddFeitDto ){
 		return ResponseEntity.ok(zaakService.updZaakFeit(zaakNr, listZaakAddFeitDto));
 	}

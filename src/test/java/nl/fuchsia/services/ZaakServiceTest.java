@@ -123,7 +123,7 @@ public class ZaakServiceTest {
 	}
 
 	@Test
-	public void testaddFeitToZaak(){
+	public void testUpdZaakFeit(){
 
 	}
 }

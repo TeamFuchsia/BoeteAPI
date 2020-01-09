@@ -47,4 +47,15 @@ public class FeitRepository {
         TypedQuery<Feit> getAllFeiten = entityManager.createQuery(GET_FEITEN, Feit.class);
         return getAllFeiten.getResultList();
     }
+
+    /**
+     * wijzigt een bestaand feit.
+     *
+     * @param feit de te wijzigen feit.
+     */
+    @Transactional
+    public Feit updateFeitById(Feit feit) {
+        entityManager.merge(feit);
+        return feit;
+    }
 }

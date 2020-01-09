@@ -8,6 +8,7 @@ import nl.fuchsia.services.FeitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +43,14 @@ public class FeitContoller {
     public ResponseEntity<Payload<Feit>> getFeiten() {
         Payload<Feit> payload = new Payload<>(feitService.getFeiten());
         return ResponseEntity.ok().body(payload);
+    }
+
+    /**
+     * Wijzigt het feit op bassis van de meegegeven ID nummer in Json object.
+     */
+    @PutMapping
+    public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
+
+        return ResponseEntity.ok(feitService.updateFeitById(feit));
     }
 }

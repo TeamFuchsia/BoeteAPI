@@ -1,6 +1,6 @@
 package nl.fuchsia.controller;
 
-import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.services.ZaakService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,11 +31,11 @@ public class ZaakControllerTest {
 
     @Test
     public void testAddZaak() {
-        ZaakAddDto zaakAddDto = new ZaakAddDto();
+        ZaakDto zaakDto = new ZaakDto();
 
-        zaakController.addZaak(zaakAddDto);
+        zaakController.addZaak(zaakDto);
 
-        verify(zaakService).addZaak(zaakAddDto);
+        verify(zaakService).addZaak(zaakDto);
     }
 
 	@Test

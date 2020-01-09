@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ZaakAddDtoTest {
+class ZaakDtoTest {
 
 	private static Validator validator;
-	private static ZaakAddDto zaakAddDto;
+	private static ZaakDto zaakDto;
 
 	@BeforeAll
 	public static void setupAll() {
@@ -28,10 +28,10 @@ class ZaakAddDtoTest {
 
 	@Test
 	public void pleegLocatieHasToManyCharacters() {
-		zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), new String(new byte[101]), 1, new ArrayList<>(Arrays.asList(1, 2)));
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[101]), 1, new ArrayList<>(Arrays.asList(1, 2)));
 
-		Set<ConstraintViolation<ZaakAddDto>> constraintViolations =
-			validator.validate(zaakAddDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations =
+			validator.validate(zaakDto);
 
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten");
@@ -39,10 +39,10 @@ class ZaakAddDtoTest {
 
 	@Test
 	public void testOvertredingsdatumIsNull() {
-		zaakAddDto = new ZaakAddDto(1, null, new String(new byte[10]), 1, new ArrayList<>(Arrays.asList(1, 2)));
+		zaakDto = new ZaakDto(1, null, new String(new byte[10]), 1, new ArrayList<>(Arrays.asList(1, 2)));
 
-		Set<ConstraintViolation<ZaakAddDto>> constraintViolations =
-			validator.validate(zaakAddDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations =
+			validator.validate(zaakDto);
 
 		assertThat(constraintViolations).hasSize(1);
 		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Overtredingsdatum dient te zijn gevuld!");
@@ -50,10 +50,10 @@ class ZaakAddDtoTest {
 
 	@Test
 	public void testFeitListNotNull() {
-		zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, null);
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, null);
 
-		Set<ConstraintViolation<ZaakAddDto>> constraintViolations =
-			validator.validate(zaakAddDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations =
+			validator.validate(zaakDto);
 
 		assertThat(constraintViolations).hasSize(1);
 		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");
@@ -61,10 +61,10 @@ class ZaakAddDtoTest {
 
 	@Test
 	public void testFeitListIsEmpty() {
-		zaakAddDto = new ZaakAddDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, new ArrayList<>(Collections.emptyList()));
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, new ArrayList<>(Collections.emptyList()));
 
-		Set<ConstraintViolation<ZaakAddDto>> constraintViolations =
-			validator.validate(zaakAddDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations =
+			validator.validate(zaakDto);
 
 		assertThat(constraintViolations).hasSize(1);
 		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");

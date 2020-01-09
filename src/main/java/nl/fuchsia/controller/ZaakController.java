@@ -2,7 +2,8 @@ package nl.fuchsia.controller;
 
 import javax.validation.Valid;
 
-import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakDto;
+import nl.fuchsia.dto.ZaakAddStatusDto;
 import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.services.ZaakService;
@@ -29,8 +30,13 @@ public class ZaakController {
     }
 
     @PostMapping
-    public ResponseEntity<Zaak> addZaak(@Valid @RequestBody ZaakAddDto zaakAddDto) {
-        return ResponseEntity.ok(zaakService.addZaak(zaakAddDto));
+    public ResponseEntity<ZaakDto> addZaak(@Valid @RequestBody ZaakDto zaakDto) {
+        return ResponseEntity.ok(zaakService.addZaak(zaakDto));
+    }
+
+    @PostMapping (value = "/{zaakNr}/statussen")
+    public ResponseEntity<ZaakDto> addZaakStatus(@PathVariable("zaakNr") Integer zaakNr, @RequestBody ZaakAddStatusDto zaakAddStatusDto) {
+        return ResponseEntity.ok(zaakService.updZaakStatus(zaakNr, zaakAddStatusDto));
     }
 
     @GetMapping

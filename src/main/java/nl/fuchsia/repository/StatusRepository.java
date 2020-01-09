@@ -1,6 +1,5 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Status;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +23,5 @@ public class StatusRepository {
     public Status getStatusById(Integer statusnr){
         return entityManager.find(Status.class, statusnr);
     }
-
 
 }

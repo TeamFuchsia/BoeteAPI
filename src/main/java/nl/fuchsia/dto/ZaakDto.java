@@ -11,7 +11,7 @@ import nl.fuchsia.util.JsonDate;
 /**
  * De binnenkomende zaakDto in Json formaat.
  */
-public class ZaakAddDto {
+public class ZaakDto {
 
     private int zaaknr;
 
@@ -30,12 +30,12 @@ public class ZaakAddDto {
     private List<Integer> feitnrs;
 
 
-    private int statusnr;
+    private List<Integer> zaakstatusnr;
 
-    public ZaakAddDto() {
+    public ZaakDto() {
     }
 
-    public ZaakAddDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
+    public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
         this.zaaknr = zaaknr;
         this.overtredingsdatum = overtredingsdatum;
         this.pleeglocatie = pleeglocatie;
@@ -82,5 +82,13 @@ public class ZaakAddDto {
 
     public void setFeitnrs(List<Integer> feitnrs) {
         this.feitnrs = feitnrs;
+    }
+
+    public List<Integer> getZaakstatusnr() {
+        return zaakstatusnr;
+    }
+
+    public void setZaakstatusnr(List<Integer> zaakstatusnr) {
+        this.zaakstatusnr = zaakstatusnr;
     }
 }

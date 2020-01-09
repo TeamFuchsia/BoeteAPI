@@ -81,32 +81,42 @@ public class ZaakService {
 	}
 
 	@Transactional
-	public Zaak updZaakFeit(Integer zaakNr, ZaakAddFeitDto zaakAddFeitDto) {
-		List<String> exceptions = new ArrayList<>();
+	public Zaak updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+		List<String> notFoundExceptions = new ArrayList<>();
+		List<String> uniekVeldExceptions = new ArrayList<>();
+
 
 		if (zaakRepository.getZaakById(zaakNr) == null) {
-			exceptions.add("ZaakNummer: " + zaakNr + " bestaat niet!");
+			notFoundExceptions.add("ZaakNummer: " + zaakNr + " bestaat niet");
 		}
-		if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
-			exceptions.add("FeitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet!");
-		}
-		if (exceptions.size() > 0) {
-			throw new NotFoundException(exceptions.toString());
-		}
-
-		int feitNrDto = zaakAddFeitDto.getFeitNr();
-		Zaak zaak = zaakRepository.getZaakById(zaakNr);
-		Feit feitDto = feitRepository.getFeitById(feitNrDto);
-
-		List<Feit> feiten = zaak.getFeiten();
-		for (Feit feit : feiten) {
-			if (feit.getFeitNr() == feitNrDto) {
-				throw new UniekVeldException("FeitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak.");
+		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+				notFoundExceptions.add("FeitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
 			}
 		}
-		feiten.add(feitDto);
-		zaak.setFeiten(feiten);
+		if (notFoundExceptions.size() > 0) {
+			notFoundExceptions.add(" Geen feit(en) toegevoegd");
+			throw new NotFoundException(notFoundExceptions.toString());
+		}
+		Zaak zaak = zaakRepository.getZaakById(zaakNr);
+		List<Feit> zaakFeiten = zaak.getFeiten();
+		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			int feitNrDto = zaakAddFeitDto.getFeitNr();
+			for (Feit feit : zaakFeiten) {
+				if (feit.getFeitNr() == feitNrDto) {
+					uniekVeldExceptions.add("FeitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
+				}
+			}
+		}
+		if (uniekVeldExceptions.size() > 0) {
+			uniekVeldExceptions.add(" Geen feit(en) toegevoegd");
+			throw new UniekVeldException(uniekVeldExceptions.toString());
+		}
+		for(ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto){
+			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+			zaak.setFeiten(zaakFeiten);
+		}
 		return zaak;
 	}
-
 }
+

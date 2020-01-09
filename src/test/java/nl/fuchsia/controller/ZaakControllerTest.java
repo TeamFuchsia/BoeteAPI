@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -50,11 +53,13 @@ public class ZaakControllerTest {
 
 	@Test
 	void testAddFeitToZaak() {
+		List <ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
 		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto();
+		listZaakAddFeitDto.add(zaakAddFeitDto);
 		Integer zaakNr = 4;
 
-		zaakController.updZaakFeit(zaakNr, zaakAddFeitDto);
+		zaakController.updZaakFeit(zaakNr, listZaakAddFeitDto);
 
-		verify(zaakService).updZaakFeit(zaakNr, zaakAddFeitDto);
+		verify(zaakService).updZaakFeit(zaakNr, listZaakAddFeitDto);
 	}
 }

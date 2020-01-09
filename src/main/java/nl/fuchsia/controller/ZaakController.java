@@ -40,7 +40,7 @@ public class ZaakController {
     }
 
     @GetMapping
-    public ResponseEntity<Payload<Zaak>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
+    public ResponseEntity<Payload<ZaakDto>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
         Payload<Zaak> payload;
 
         if (persoonnr != null) {
@@ -53,7 +53,7 @@ public class ZaakController {
     }
 
     @GetMapping(value = "/{zaakNr}")
-    public ResponseEntity<Zaak> getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
+    public ResponseEntity<ZaakDto> getZaakById(@PathVariable("zaakNr") Integer zaakNr) {
         return ResponseEntity.ok(zaakService.getZaakById(zaakNr));
     }
 }

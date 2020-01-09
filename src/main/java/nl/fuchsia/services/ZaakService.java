@@ -69,14 +69,7 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
-        List<Integer> zaakStatusnrs = new ArrayList<>();
-        for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
-            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
-            zaakStatusnrs.add(dtoZaakStatusnr);
-        }
-        zaakDto.setZaakstatusnr(zaakStatusnrs);
-        zaakDto.setZaaknr(zaak.getZaaknr());
-        return zaakDto;
+        return setZaakDto(zaak, zaakDto);
     }
 
     @Transactional
@@ -103,7 +96,7 @@ public class ZaakService {
         List<ZaakStatus> zaakStatussen = zaak.getZaakStatus();
         zaakStatussen.add(zaakStatus);
         zaak.setZaakStatus(zaakStatussen);
-        //zaakRepository.addZaak(zaak);
+        zaakRepository.addZaak(zaak);
 
         ZaakDto zaakDto = new ZaakDto();
         zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
@@ -116,6 +109,11 @@ public class ZaakService {
             feitnrs.add(dtoFeitnr);
         }
         zaakDto.setFeitnrs(feitnrs);
+        return setZaakDto(zaak, zaakDto);
+
+    }
+
+    private ZaakDto setZaakDto(Zaak zaak, ZaakDto zaakDto) {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
             int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
@@ -125,10 +123,17 @@ public class ZaakService {
 
         zaakDto.setZaaknr(zaak.getZaaknr());
         return zaakDto;
-
     }
 
-    public List<Zaak> getZaken() {
+    public List<ZaakDto> getZaken() {
+        List<Zaak> zaken = zaakRepository.getZaken();
+        List<ZaakDto> zaakDtos = new ArrayList<>();
+
+        for (Zaak zaak : zaak.getZaakStatus()) {
+            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
+            zaakStatusnrs.add(dtoZaakStatusnr);
+        }
+
         return zaakRepository.getZaken();
     }
 
@@ -136,7 +141,7 @@ public class ZaakService {
         return zaakRepository.getZaakById(zaakNr);
     }
 
-    public List<Zaak> getZakenByPersoon(Integer persoonnr) {
+    public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
 
         Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 

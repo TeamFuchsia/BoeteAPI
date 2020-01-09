@@ -54,7 +54,7 @@ public class PersoonRepository {
     }
 
     /**
-     * wijzigd een bestaande persoon.
+     * wijzigt een bestaande persoon.
      *
      * @param persoon de te wijzigen persoon.
      */

@@ -49,11 +49,11 @@ public class FeitRepository {
     }
 
     /**
-     * wijzigd een bestaand feit.
+     * wijzigt een bestaand feit.
      *
      * @param feit de te wijzigen feit.
      */
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public Feit updateFeitById(Feit feit) {
         entityManager.merge(feit);
         return feit;

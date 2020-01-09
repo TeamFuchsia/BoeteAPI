@@ -1,5 +1,6 @@
 package nl.fuchsia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -58,7 +59,7 @@ public class ZaakStatus {
     public void setStatus(Status status) {
         this.status = status;
     }
-
+    @JsonIgnore
     public Zaak getZaak() {
         return zaak;
     }

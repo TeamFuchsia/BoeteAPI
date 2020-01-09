@@ -41,7 +41,7 @@ public class ZaakController {
 
     @GetMapping
     public ResponseEntity<Payload<ZaakDto>> getZaken(@RequestParam(value = "persoonnr", required = false) Integer persoonnr) {
-        Payload<Zaak> payload;
+        Payload<ZaakDto> payload;
 
         if (persoonnr != null) {
             payload = new Payload<>(zaakService.getZakenByPersoon(persoonnr));

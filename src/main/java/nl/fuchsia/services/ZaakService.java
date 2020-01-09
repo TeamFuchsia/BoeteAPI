@@ -69,7 +69,9 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
-        return setZaakDto(zaak, zaakDto);
+        SetZaakStatusDto(zaakDto, zaak);
+
+        return zaakDto;
     }
 
     @Transactional
@@ -98,7 +100,43 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
+        return SetZaakDto(zaak);
+    }
+
+    private ZaakDto SetZaakDto(Zaak zaak) {
         ZaakDto zaakDto = new ZaakDto();
+        SetFeitnrsDto(zaak, zaakDto);
+        return zaakDto;
+    }
+
+    public List<ZaakDto> getZaken() {
+        List<Zaak> zaken = zaakRepository.getZaken();
+        return setZakenDtos(zaken);
+    }
+
+    public ZaakDto getZaakById(Integer zaakNr) {
+
+        if (zaakRepository.getZaakById(zaakNr) == null) {
+            throw new NotFoundException("ZaakNummer: " + zaakNr + " bestaat niet");
+        }
+
+        Zaak zaak = zaakRepository.getZaakById(zaakNr);
+
+        return SetZaakDto(zaak);
+    }
+
+    public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
+
+        Persoon persoon = persoonRepository.getPersoonById(persoonnr);
+
+        if (persoon == null) {
+            throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
+        }
+        List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
+        return setZakenDtos(zaken);
+    }
+
+    private void SetFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
         zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
         zaakDto.setPleeglocatie(zaak.getPleeglocatie());
         zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
@@ -109,11 +147,25 @@ public class ZaakService {
             feitnrs.add(dtoFeitnr);
         }
         zaakDto.setFeitnrs(feitnrs);
-        return setZaakDto(zaak, zaakDto);
 
+        SetZaakStatusDto(zaakDto, zaak);
     }
 
-    private ZaakDto setZaakDto(Zaak zaak, ZaakDto zaakDto) {
+    private List<ZaakDto> setZakenDtos(List<Zaak> zaken) {
+        List<ZaakDto> zaakDtos = new ArrayList<>();
+
+        for (Zaak zaak : zaken) {
+            ZaakDto dtoZaken = new ZaakDto();
+            dtoZaken.setZaaknr(zaak.getZaaknr());
+
+            SetFeitnrsDto(zaak, dtoZaken);
+
+            zaakDtos.add(dtoZaken);
+        }
+        return zaakDtos;
+    }
+
+    private void SetZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
             int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
@@ -122,33 +174,5 @@ public class ZaakService {
         zaakDto.setZaakstatusnr(zaakStatusnrs);
 
         zaakDto.setZaaknr(zaak.getZaaknr());
-        return zaakDto;
-    }
-
-    public List<ZaakDto> getZaken() {
-        List<Zaak> zaken = zaakRepository.getZaken();
-        List<ZaakDto> zaakDtos = new ArrayList<>();
-
-        for (Zaak zaak : zaak.getZaakStatus()) {
-            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
-            zaakStatusnrs.add(dtoZaakStatusnr);
-        }
-
-        return zaakRepository.getZaken();
-    }
-
-    public Zaak getZaakById(Integer zaakNr) {
-        return zaakRepository.getZaakById(zaakNr);
-    }
-
-    public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
-
-        Persoon persoon = persoonRepository.getPersoonById(persoonnr);
-
-        if (persoon == null) {
-            throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
-        }
-
-        return zaakRepository.getZakenByPersoon(persoon);
     }
 }

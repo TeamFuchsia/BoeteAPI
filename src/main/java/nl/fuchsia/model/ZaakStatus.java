@@ -40,6 +40,11 @@ public class ZaakStatus {
         this.zaak = zaak;
     }
 
+	public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
+		this(veranderdatum,status,zaak);
+    	this.zaakstatusnr = zaakstatusnr;
+	}
+
     public Integer getZaakstatusnr() {
         return zaakstatusnr;
     }

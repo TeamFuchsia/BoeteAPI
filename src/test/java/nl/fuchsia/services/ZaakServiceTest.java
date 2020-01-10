@@ -131,7 +131,7 @@ public class ZaakServiceTest {
 		feiten.add(feit);
 		List<ZaakStatus> listZaakStatus = new ArrayList<>();
 		Zaak zaak = new Zaak(LocalDate.of(2019, 2, 18),"Leeuwarden",persoon,feiten,listZaakStatus);
-		ZaakStatus zaakstatus = new ZaakStatus(LocalDate.now(),new Status(1, "Open"),zaak);
+		ZaakStatus zaakstatus = new ZaakStatus(1, LocalDate.now(),new Status(1, "Open"),zaak);
 		listZaakStatus.add(zaakstatus);
 		zaak.setZaakStatus(listZaakStatus);
 		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
@@ -142,8 +142,8 @@ public class ZaakServiceTest {
 		when(feitRepository.getFeitById(feitTwee.getFeitNr())).thenReturn(feitTwee);
 		assertThat(zaak.getFeiten()).hasSize(1);
 
-//		Zaak zaakDtoReturn = zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto);
-//		assertThat(zaakDtoReturn.getFeiten()).hasSize(2);
+		ZaakDto zaakDtoReturn = zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto);
+		assertThat(zaakDtoReturn.getFeitnrs()).hasSize(2);
 	}
 
 	@Test

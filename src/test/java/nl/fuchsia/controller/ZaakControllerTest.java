@@ -50,16 +50,4 @@ public class ZaakControllerTest {
 
 		verify(zaakService).getZakenByPersoon(persoonnr);
 	}
-
-	@Test
-	void testAddFeitToZaak() {
-		List <ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
-		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto();
-		listZaakAddFeitDto.add(zaakAddFeitDto);
-		Integer zaakNr = 4;
-
-		zaakController.updZaakFeit(zaakNr, listZaakAddFeitDto);
-
-		verify(zaakService).updZaakFeit(zaakNr, listZaakAddFeitDto);
-	}
 }

@@ -129,63 +129,73 @@ public class ZaakServiceTest {
 	public void testUpdZaakFeit() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
+		Feit feit = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
+		feiten.add(feit);
 		Zaak zaak = new Zaak(4, LocalDate.of(2020, 1, 2), "A6", persoon, feiten);
-		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(1);
+		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
 		List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
 		listZaakAddFeitDto.add(zaakAddFeitDto);
-		Feit feit1 = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
-		when(zaakRepository.getZaakById(4)).thenReturn(zaak);
-		when(feitRepository.getFeitById(1)).thenReturn(feit1);
+		Feit feit2 = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
+		when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
+		when(feitRepository.getFeitById(feit2.getFeitNr())).thenReturn(feit2);
+		assertThat(zaak.getFeiten()).hasSize(1);
 
-		Zaak zaakReturn = zaakService.updZaakFeit(4, listZaakAddFeitDto);
-
-		assertThat(zaakReturn.getFeiten()).hasSize(1);
+		Zaak zaakReturn = zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto);
+		assertThat(zaakReturn.getFeiten()).hasSize(2);
 	}
 
 	@Test
 	public void testNotFoundZaak() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
+		Feit feit = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
+		feiten.add(feit);
 		Zaak zaak = new Zaak(4, LocalDate.of(2020, 1, 2), "A6", persoon, feiten);
-		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(1);
+		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
 		List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
 		listZaakAddFeitDto.add(zaakAddFeitDto);
-		Feit feit1 = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
-		when(zaakRepository.getZaakById(5)).thenReturn(zaak);
-		when(feitRepository.getFeitById(1)).thenReturn(feit1);
+		Feit feit2 = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
+		when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
+		when(feitRepository.getFeitById(feit2.getFeitNr())).thenReturn(feit2);
+		assertThat(zaak.getFeiten()).hasSize(1);
 
-		assertThatThrownBy(() -> zaakService.updZaakFeit(4, listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[zaakNummer: 4 bestaat niet, geen feit(en) toegevoegd]");
+		assertThatThrownBy(() -> zaakService.updZaakFeit(5, listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[zaakNummer: 5 bestaat niet, geen feit(en) toegevoegd]");
 	}
 
 	@Test
 	public void testNotFoundFeit() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
+		Feit feit = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
+		feiten.add(feit);
 		Zaak zaak = new Zaak(4, LocalDate.of(2020, 1, 2), "A6", persoon, feiten);
-		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(1);
+		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
 		List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
 		listZaakAddFeitDto.add(zaakAddFeitDto);
-		Feit feit1 = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
-		when(zaakRepository.getZaakById(4)).thenReturn(zaak);
-		when(feitRepository.getFeitById(10)).thenReturn(feit1);
+		Feit feit2 = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
+		when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
+		when(feitRepository.getFeitById(feit2.getFeitNr())).thenReturn(feit2);
+		assertThat(zaak.getFeiten()).hasSize(1);
 
-		assertThatThrownBy(() -> zaakService.updZaakFeit(4, listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[feitNummer: 1 bestaat niet, geen feit(en) toegevoegd]");
+		ZaakAddFeitDto zaakAddFeitDto1 = new ZaakAddFeitDto(3);
+		listZaakAddFeitDto.add(zaakAddFeitDto1);
+		assertThatThrownBy(() -> zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[feitNummer: 3 bestaat niet, geen feit(en) toegevoegd]");
 	}
 
 	@Test
 	public void testFeitAlreadyAdded() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
+		Feit feit = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
+		feiten.add(feit);
 		Zaak zaak = new Zaak(4, LocalDate.of(2020, 1, 2), "A6", persoon, feiten);
 		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(1);
 		List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
 		listZaakAddFeitDto.add(zaakAddFeitDto);
-		Feit feit1 = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);
-		feiten.add(feit1);
-		zaak.setFeiten(feiten);
-		when(zaakRepository.getZaakById(4)).thenReturn(zaak);
-		when(feitRepository.getFeitById(1)).thenReturn(feit1);
+		when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
+		when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+		assertThat(zaak.getFeiten()).hasSize(1);
 
-		assertThatThrownBy(() -> zaakService.updZaakFeit(4, listZaakAddFeitDto)).isInstanceOf(UniekVeldException.class).hasMessage("[feitNummer: 1 is reeds toegevoegd aan deze zaak, geen feit(en) toegevoegd]");
+		assertThatThrownBy(() -> zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto)).isInstanceOf(UniekVeldException.class).hasMessage("[feitNummer: 1 is reeds toegevoegd aan deze zaak, geen feit(en) toegevoegd]");
 	}
 }

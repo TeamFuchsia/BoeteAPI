@@ -55,10 +55,14 @@ public class Zaak {
 		this.persoon = persoon;
 	}
 
-    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
-		this(overtredingsdatum, pleeglocatie);
+    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+        this(overtredingsdatum, pleeglocatie);
         this.persoon = persoon;
         this.feiten = feiten;
+    }
+
+    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
+		this(overtredingsdatum, pleeglocatie,persoon,feiten);
         this.zaakStatus = zaakStatus;
     }
 

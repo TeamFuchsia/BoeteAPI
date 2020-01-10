@@ -35,6 +35,11 @@ public class ZaakStatus {
         this.zaak = zaak;
     }
 
+    public ZaakStatus (LocalDate veranderdatum, Status status) {
+        this.veranderdatum = veranderdatum;
+        this.status = status;
+    }
+
 	public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
 		this(veranderdatum,status,zaak);
     	this.zaakstatusnr = zaakstatusnr;
@@ -64,6 +69,7 @@ public class ZaakStatus {
         this.status = status;
     }
 
+    @JsonIgnore
     public Zaak getZaak() {
         return zaak;
     }

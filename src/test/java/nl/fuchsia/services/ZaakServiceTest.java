@@ -39,6 +39,9 @@ public class ZaakServiceTest {
     @Mock
     private FeitRepository feitRepository;
 
+    @Mock
+    private ZaakDtoService zaakDtoService;
+
     @InjectMocks
     private ZaakService zaakService;
 
@@ -47,33 +50,36 @@ public class ZaakServiceTest {
         initMocks(this);
     }
 
-//	@Test
-//	public void testAddZaak() {
-//        Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
-//        List<Feit> feiten = new ArrayList<>();
-//        List<Integer> feitnrs = new ArrayList<>();
-//        Feit feit = new Feit(1, "VBF-003", "Test", 4.00);
-//        feiten.add(feit);
-//        feitnrs.add(feit.getFeitNr());
-//        Zaak zaak = new Zaak(1, LocalDate.now(),"Leeuwarden",persoon,feiten);
-//        List<ZaakStatus> zaakStatussen = new ArrayList<>();
-//        List<Integer> zaakStatusnrs = new ArrayList<>();
-//        ZaakStatus zaakStatus = new ZaakStatus(1,LocalDate.now(),new Status(1, "Open"),zaak);
-//        zaakStatussen.add(zaakStatus);
-//        zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
-//        zaak.setZaakStatus(zaakStatussen);
-//        ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(),zaak.getOvertredingsdatum(),zaak.getPleeglocatie(),persoon.getPersoonnr(),feitnrs,zaakStatusnrs);
-//
-//        when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
-//        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
-//
-//
-//		zaakService.addZaak(zaakDto);
-//
-//		verify(persoonRepository).getPersoonById(persoon.getPersoonnr());
-//		verify(feitRepository).getFeitById(feit.getFeitNr());
-//		verify(zaakRepository).addZaak(zaak);
-//	}
+	@Test
+	public void testAddZaak() {
+        Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+        List<Feit> feiten = new ArrayList<>();
+        List<Integer> feitnrs = new ArrayList<>();
+        Feit feit = new Feit(1, "VBF-003", "Test", 4.00);
+        feiten.add(feit);
+        feitnrs.add(feit.getFeitNr());
+        Zaak zaak = new Zaak( LocalDate.now(),"Leeuwarden",persoon,feiten);
+        List<ZaakStatus> zaakStatussen = new ArrayList<>();
+        List<Integer> zaakStatusnrs = new ArrayList<>();
+        ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(),new Status(1, "Open"));
+        zaakStatussen.add(zaakStatus);
+        zaakStatussen.clear();
+        zaakStatus.setZaakstatusnr(1);
+        zaakStatussen.add(zaakStatus);
+        zaak.setZaakStatus(zaakStatussen);
+        zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
+        ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(),zaak.getOvertredingsdatum(),zaak.getPleeglocatie(),persoon.getPersoonnr(),feitnrs);
+        zaakDto.setZaakstatusnr(zaakStatusnrs);
+        when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
+        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(zaakDtoService.SetZaakStatusDto(any(),any())).thenReturn(zaakDto);
+
+		zaakService.addZaak(zaakDto);
+
+		verify(persoonRepository).getPersoonById(persoon.getPersoonnr());
+		verify(feitRepository).getFeitById(feit.getFeitNr());
+		verify(zaakRepository).addZaak(zaak);
+	}
 
     @Test
     public void testAddZaakPersoonDoesNotExist() {

@@ -1,26 +1,34 @@
-//package nl.fuchsia.dto;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Set;
-//import javax.validation.ConstraintViolation;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//class ZaakAddStatusDtoTest {
-//
-//    @Test
-//    void statusNrIsNull() {
-//        ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto(0);
-//
-//        Set<ConstraintViolation<ZaakDto>> constraintViolations =
-//                validator.validate(zaakDto);
-//
-//        assertThat(constraintViolations).hasSize(1);
-//        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Overtredingsdatum dient te zijn gevuld!");
-//
-//    }
-//}
+package nl.fuchsia.dto;
+
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ZaakAddStatusDtoTest {
+
+    private static Validator validator;
+
+    @BeforeAll
+    public static void setupAll() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+
+    @Test
+    void statusNrIsNull() {
+        ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto(0);
+
+        Set<ConstraintViolation<ZaakAddStatusDto>> constraintViolations =
+                validator.validate(zaakAddStatusDto);
+
+        assertThat(constraintViolations).hasSize(1);
+        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Statusnummer dient groter dan 0 te zijn");
+    }
+}

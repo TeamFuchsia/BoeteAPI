@@ -22,7 +22,6 @@ public class Status {
     }
 
     public Status(String omschrijving) {
-
         this.omschrijving = omschrijving;
     }
 

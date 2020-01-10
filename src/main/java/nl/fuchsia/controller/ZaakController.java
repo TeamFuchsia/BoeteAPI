@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 
 import nl.fuchsia.dto.ZaakDto;

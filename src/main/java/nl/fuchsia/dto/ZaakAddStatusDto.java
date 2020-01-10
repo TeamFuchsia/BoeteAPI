@@ -1,10 +1,10 @@
 package nl.fuchsia.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
 
 public class ZaakAddStatusDto {
 
-    @NotNull(message = ("Statusnummer dient te zijn ingevuld!"))
+    @Min(value = 1,message = ("Statusnummer dient groter dan 0 te zijn"))
     private int statusnr;
 
     public int getStatusNr() {

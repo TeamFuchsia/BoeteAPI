@@ -29,7 +29,6 @@ public class ZaakDto {
     @Size(min = 1, message = "Voeg minimaal 1 feit toe.")
     private List<Integer> feitnrs;
 
-
     private List<Integer> zaakstatusnr;
 
     public ZaakDto() {
@@ -41,7 +40,6 @@ public class ZaakDto {
         this.pleeglocatie = pleeglocatie;
         this.persoonnr = persoonnr;
         this.feitnrs = feitnrs;
-
     }
 
     public int getZaaknr() {

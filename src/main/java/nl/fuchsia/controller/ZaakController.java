@@ -35,7 +35,7 @@ public class ZaakController {
     }
 
     @PostMapping (value = "/{zaakNr}/statussen")
-    public ResponseEntity<ZaakDto> addZaakStatus(@PathVariable("zaakNr") Integer zaakNr, @RequestBody ZaakAddStatusDto zaakAddStatusDto) {
+    public ResponseEntity<ZaakDto> addZaakStatus(@PathVariable("zaakNr") Integer zaakNr, @Valid @RequestBody ZaakAddStatusDto zaakAddStatusDto) {
         return ResponseEntity.ok(zaakService.updZaakStatus(zaakNr, zaakAddStatusDto));
     }
 

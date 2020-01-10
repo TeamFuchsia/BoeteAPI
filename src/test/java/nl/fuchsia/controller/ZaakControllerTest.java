@@ -1,5 +1,6 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.ZaakAddStatusDto;
 import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.services.ZaakService;
@@ -62,4 +63,20 @@ public class ZaakControllerTest {
 
 		verify(zaakService).updZaakFeit(zaakNr, listZaakAddFeitDto);
 	}
+
+    @Test
+    void testGetZaakById(){
+        zaakService.getZaakById(1);
+
+        verify(zaakService).getZaakById(1);
+    }
+
+    @Test
+    void addZaakStatus() {
+        ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto();
+
+        zaakController.addZaakStatus(1, zaakAddStatusDto);
+
+        verify(zaakService).updZaakStatus(1,zaakAddStatusDto);
+    }
 }

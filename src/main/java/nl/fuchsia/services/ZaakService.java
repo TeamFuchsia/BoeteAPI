@@ -212,7 +212,7 @@ public class ZaakService {
         return zaakDtos;
     }
 
-    private void SetZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
+    public void SetZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
             int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();

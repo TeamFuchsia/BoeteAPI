@@ -1,16 +1,11 @@
 package nl.fuchsia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class ZaakStatus {
@@ -79,17 +74,23 @@ public class ZaakStatus {
 
     @Override
     public String toString() {
-        return "ZaakStatus{" + "zaakstatusnr=" + zaakstatusnr + ", veranderdatum=" + veranderdatum + ", status=" + status + ", zaak=" + zaak + '}';
+        return "ZaakStatus{" +
+                "zaakstatusnr=" + zaakstatusnr +
+                ", veranderdatum=" + veranderdatum +
+                ", status=" + status +
+                ", zaak=" + zaak +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ZaakStatus that = (ZaakStatus) o;
-        return Objects.equals(zaakstatusnr, that.zaakstatusnr) && Objects.equals(veranderdatum, that.veranderdatum) && Objects.equals(status, that.status) && Objects.equals(zaak, that.zaak);
+        return Objects.equals(zaakstatusnr, that.zaakstatusnr) &&
+                Objects.equals(veranderdatum, that.veranderdatum) &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(zaak, that.zaak);
     }
 
     @Override

@@ -43,6 +43,11 @@ public class ZaakDto {
 	}
 
 
+    public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs, List<Integer> zaakstatusnr) {
+        this(zaaknr,overtredingsdatum,pleeglocatie,persoonnr,feitnrs);
+        this.zaakstatusnr = zaakstatusnr;
+    }
+
     public int getZaaknr() {
         return zaaknr;
     }

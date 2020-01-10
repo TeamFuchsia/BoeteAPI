@@ -59,4 +59,13 @@ public class ZaakRepositoryTest {
     void testGetzaken() {
         assertThat(zaakRepository.getZaken()).hasSize(1);
     }
+
+//	@Test
+//	void testaddFeitToZaak(){
+//		Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
+//		zaakRepository.addFeitToZaak(zaak);
+//
+//		assertThat(zaakRepository.getZaken()).hasSize(2);
+//
+//	}
 }

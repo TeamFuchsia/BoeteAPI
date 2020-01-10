@@ -61,6 +61,12 @@ public class Zaak {
 		this.feiten = feiten;
 	}
 
+	public Zaak (int zaaknr,LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+		this(overtredingsdatum, pleeglocatie, persoon, feiten);
+		this.zaaknr = zaaknr;
+
+	}
+
 	public int getZaaknr() {
 		return zaaknr;
 	}

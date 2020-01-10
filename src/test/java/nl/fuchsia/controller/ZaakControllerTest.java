@@ -1,11 +1,15 @@
 package nl.fuchsia.controller;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.services.ZaakService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;

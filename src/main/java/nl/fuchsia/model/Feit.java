@@ -66,7 +66,7 @@ public class Feit {
     	this.feitNr = feitNr;
     }
 
-	public String getFeitcode() {
+    public String getFeitcode() {
         return feitcode;
     }
 

@@ -43,26 +43,26 @@ public class ZaakServiceTest {
 		initMocks(this);
 	}
 
-//	@Test
-//	public void testAddZaak() {
-//		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
-//		List<Feit> feiten = new ArrayList<>();
-//		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
-//		ZaakDto zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
-//		List<Integer> feitnrs = zaakDto.getFeitnrs();
-//		for (int feitnr : feitnrs) {
-//			Feit feit = new Feit(feitnr, "VBF-003", "Test", 4.00);
-//			when(feitRepository.getFeitById(feitnr)).thenReturn(feit);
-//			feiten.add(feit);
-//		}
-//		Zaak zaak = new Zaak(LocalDate.of(2019, 2, 18), "Leeuwarden", persoon, feiten);
-//
-//		zaakService.addZaak(zaakDto);
-//
-//		verify(persoonRepository).getPersoonById(1);
-//		verify(feitRepository).getFeitById(1);
-//		verify(zaakRepository).addZaak(zaak);
-//	}
+	@Test
+	public void testAddZaak() {
+		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+		List<Feit> feiten = new ArrayList<>();
+		when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
+		ZaakDto zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1, 2)));
+		List<Integer> feitnrs = zaakDto.getFeitnrs();
+		for (int feitnr : feitnrs) {
+			Feit feit = new Feit(feitnr, "VBF-003", "Test", 4.00);
+			when(feitRepository.getFeitById(feitnr)).thenReturn(feit);
+			feiten.add(feit);
+		}
+		Zaak zaak = new Zaak(LocalDate.of(2019, 2, 18), "Leeuwarden", persoon, feiten);
+
+		zaakService.addZaak(zaakDto);
+
+		verify(persoonRepository).getPersoonById(1);
+		verify(feitRepository).getFeitById(1);
+		verify(zaakRepository).addZaak(zaak);
+	}
 
 	@Test
 	public void testAddZaakPersoonDoesNotExist() {
@@ -147,7 +147,7 @@ public class ZaakServiceTest {
 	}
 
 	@Test
-	public void testNotFoundZaak() {
+	public void testNotFoundZaakUpdZaakFeit() {
 		Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 		List<Feit> feiten = new ArrayList<>();
 		Feit feit = new Feit(1, "VBF-001", "Te hard gereden hoor...", 45.0);

@@ -145,7 +145,7 @@ public class ZaakService {
 	 * @return de geupdate zaak.
 	 */
 	@Transactional
-	public Zaak updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+	public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
 		List<String> notFoundExceptions = new ArrayList<>();
 		List<String> uniekVeldExceptions = new ArrayList<>();
 
@@ -180,7 +180,7 @@ public class ZaakService {
 			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
 			zaak.setFeiten(zaakFeiten);
 		}
-		return zaak;
+		return SetZaakDto(zaak);
 	}
 
     private void SetFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {

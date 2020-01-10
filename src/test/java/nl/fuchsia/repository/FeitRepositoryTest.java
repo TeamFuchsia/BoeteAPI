@@ -61,4 +61,16 @@ public class FeitRepositoryTest {
 		assertThat(feitRepository.getFeiten()).hasSize(2);
 		assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
 	}
+	@Test
+	public void testUpdateFeitById() {
+		Feit feit = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+		feitRepository.getFeiten();
+
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(feit.getBedrag());
+
+		Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(),"VBF-002", "Test", 5000));
+
+		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
+	}
 }

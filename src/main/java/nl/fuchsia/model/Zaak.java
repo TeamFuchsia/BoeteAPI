@@ -48,9 +48,15 @@ public class Zaak {
         this.zaaknr = zaaknr;
     }
 
+	public Zaak (int zaaknr,LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+		this(overtredingsdatum, pleeglocatie);
+		this.feiten = feiten;
+		this.zaaknr = zaaknr;
+		this.persoon = persoon;
+	}
+
     public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
-        this.overtredingsdatum = overtredingsdatum;
-        this.pleeglocatie = pleeglocatie;
+		this(overtredingsdatum, pleeglocatie);
         this.persoon = persoon;
         this.feiten = feiten;
         this.zaakStatus = zaakStatus;
@@ -64,9 +70,9 @@ public class Zaak {
         this.zaakStatus = zaakStatus;
     }
 
-    public int getZaaknr() {
-        return zaaknr;
-    }
+	public int getZaaknr() {
+		return zaaknr;
+	}
 
     public void setZaaknr(int zaakNr) {
         this.zaaknr = zaakNr;

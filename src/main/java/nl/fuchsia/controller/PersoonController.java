@@ -59,7 +59,7 @@ public class PersoonController {
     }
 
     /**
-     * Wijzigd de persoon op bassis van de meegegeven ID nummer in Json object.
+     * Wijzigt de persoon op bassis van de meegegeven ID nummer in Json object.
      */
     @PutMapping
     public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody Persoon persoon) {

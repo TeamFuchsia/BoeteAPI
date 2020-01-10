@@ -2,7 +2,8 @@ package nl.fuchsia.services;
 
 import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.dto.ZaakAddStatusDto;
-import nl.fuchsia.exceptionhandlers.NotFoundException;
+import nl.fuchsia.dto.ZaakAddFeitDto;
+import nl.fuchsia.exceptionhandlers.*;
 import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
@@ -135,6 +136,52 @@ public class ZaakService {
         List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
         return setZakenDtos(zaken);
     }
+
+	/**
+	 * Voegt 1 of meer bestaande feiten toe aan een bestaande zaak.
+	 *
+	 * @param zaakNr             de betreffende bestaande zaak
+	 * @param listZaakAddFeitDto de toe te voegen feit(en)
+	 * @return de geupdate zaak.
+	 */
+	@Transactional
+	public Zaak updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+		List<String> notFoundExceptions = new ArrayList<>();
+		List<String> uniekVeldExceptions = new ArrayList<>();
+
+
+		if (zaakRepository.getZaakById(zaakNr) == null) {
+			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
+		}
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+				notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
+			}
+		}
+		if (notFoundExceptions.size() > 0) {
+			notFoundExceptions.add("geen feit(en) toegevoegd");
+			throw new NotFoundException(notFoundExceptions.toString());
+		}
+		Zaak zaak = zaakRepository.getZaakById(zaakNr);
+		List<Feit> zaakFeiten = zaak.getFeiten();
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			int feitNrDto = zaakAddFeitDto.getFeitNr();
+			for (Feit feit : zaakFeiten) {
+				if (feit.getFeitNr() == feitNrDto) {
+					uniekVeldExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
+				}
+			}
+		}
+		if (uniekVeldExceptions.size() > 0) {
+			uniekVeldExceptions.add("geen feit(en) toegevoegd");
+			throw new UniekVeldException(uniekVeldExceptions.toString());
+		}
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+			zaak.setFeiten(zaakFeiten);
+		}
+		return zaak;
+	}
 
     private void SetFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
         zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());

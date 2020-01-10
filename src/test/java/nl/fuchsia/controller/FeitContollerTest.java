@@ -36,4 +36,13 @@ public class FeitContollerTest {
 
 		verify(feitService).getFeiten();
 	}
+
+	@Test
+	public void testUpdateFeitById() {
+		Feit feit = new Feit();
+
+		feitContoller.updateFeitById(feit);
+
+		verify(feitService).updateFeitById(feit);
+	}
 }

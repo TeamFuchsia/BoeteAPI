@@ -73,6 +73,7 @@ public class ZaakServiceTest {
         when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
         when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
         when(zaakDtoService.SetZaakStatusDto(any(),any())).thenReturn(zaakDto);
+        when(zaakRepository.addZaak(any())).thenReturn(zaak);
 
 		zaakService.addZaak(zaakDto);
 

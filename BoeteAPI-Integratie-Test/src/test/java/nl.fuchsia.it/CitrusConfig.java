@@ -22,7 +22,7 @@ public class CitrusConfig {
 	public SingleConnectionDataSource dataSource(){
 		SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
 		dataSource.setDriverClassName(Driver.class.getName());
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi-IT");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi_IT");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres");
 		return dataSource;

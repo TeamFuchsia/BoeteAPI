@@ -1,4 +1,4 @@
-CREATE DATABASE Boeteapi-IT;
+CREATE DATABASE Boeteapi_IT;
 
 /* switch naar database Boeteapi-IT in intelliJ */
 

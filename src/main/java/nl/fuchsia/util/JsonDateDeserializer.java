@@ -28,8 +28,7 @@ public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
             .withResolverStyle(ResolverStyle.STRICT); // En maak de formatter strict
 
     @Override
-    public LocalDate deserialize(JsonParser p,
-                                 DeserializationContext ctxt) throws IOException {
+    public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         String value = p.getValueAsString();
         return LocalDate.parse(value, FORMATTER);
     }

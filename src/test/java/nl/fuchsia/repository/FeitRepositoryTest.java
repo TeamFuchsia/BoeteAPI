@@ -1,54 +1,76 @@
 package nl.fuchsia.repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import nl.fuchsia.configuration.TestDatabaseConfig;
 import nl.fuchsia.model.Feit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.transaction.Transactional;
-import java.util.List;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
-@Transactional
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FeitRepositoryTest {
+
+	@PersistenceContext(unitName = "entityManagerFactory")
+	private EntityManager entityManager;
 
 	@Autowired
 	private FeitRepository feitRepository;
 
+	@BeforeEach
+	public void setup() {
+		entityManager.createQuery("Delete FROM Feit").executeUpdate();
+
+		Feit feit = new Feit("VBF-001", "Test", 500);
+		feitRepository.addFeit(feit);
+	}
+
 	@Test
-	public void testAddGetFeit() {
-		feitRepository.addFeit(new Feit("VBF-001", "Test", 500));
-
-		assertThat(feitRepository.getFeiten()).hasSize(1);
-
+	public void testAddFeit() {
 		feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
-		feitRepository.addFeit(new Feit("VBF-003", "Test", 500));
-		feitRepository.addFeit(new Feit("VBF-004", "Test", 500));
 
-		List<Feit> allefeiten = feitRepository.getFeiten();
-		Feit eersteFeit = allefeiten.get(0);
-		Feit tweedeFeit = allefeiten.get(1);
-		Feit derdeFeit = allefeiten.get(2);
-		Feit vierdeFeit = allefeiten.get(3);
+		assertThat(feitRepository.getFeiten()).hasSize(2);
 
-		assertThat(allefeiten).hasSize(4);
-		assertThat(eersteFeit.getFeitcode()).isEqualTo("VBF-001");
-		assertThat(tweedeFeit.getFeitcode()).isNotEqualTo("VBF-001");
-		assertThat(derdeFeit.getOmschrijving()).isEqualTo("Test");
-		assertThat(vierdeFeit.getBedrag()).isEqualTo(500);
+		Feit feit = feitRepository.addFeit(new Feit("VBF-003", "Test", 500));
+
+		assertThat(feitRepository.getFeiten()).hasSize(3);
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getFeitcode()).isEqualTo("VBF-003");
+	}
+
+	@Test
+	public void testGetFeit() {
+		assertThat(feitRepository.getFeiten()).hasSize(1);
 	}
 
 	@Test()
-	public void testGetPersoonById() {
+	public void testGetPFeitById() {
 		Feit feitId = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
 
-		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeiten()).hasSize(2);
 		assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
+	}
+	@Test
+	public void testUpdateFeitById() {
+		Feit feit = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+		feitRepository.getFeiten();
+
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(feit.getBedrag());
+
+		Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(),"VBF-002", "Test", 5000));
+
+		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
 	}
 }

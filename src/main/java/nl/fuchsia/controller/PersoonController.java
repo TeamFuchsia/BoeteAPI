@@ -1,15 +1,19 @@
 package nl.fuchsia.controller;
 
-import nl.fuchsia.dto.PersoonEditDto;
+import javax.validation.Valid;
+
+import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/personen")
@@ -28,8 +32,9 @@ public class PersoonController {
      * @return - Roept de methode getPersonen aan in persoonService.
      */
     @GetMapping
-    public ResponseEntity<List<Persoon>> getPersonen() {
-        return ResponseEntity.ok(persoonService.getPersonen());
+    public ResponseEntity<Payload<Persoon>> getPersonen() {
+        Payload<Persoon> payload = new Payload<>(persoonService.getPersonen());
+        return ResponseEntity.ok(payload);
     }
 
     /**
@@ -48,19 +53,17 @@ public class PersoonController {
      * verkrijgt  één persoon op bassis van de meegegeven ID nummer.
      */
     @GetMapping(value = "/{persoonnr}")
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Persoon getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
+    public ResponseEntity<Persoon> getPersoonById(@PathVariable("persoonnr") Integer persoonnr) {
 
-        return persoonService.getPersoonById(persoonnr);
+        return ResponseEntity.ok(persoonService.getPersoonById(persoonnr));
     }
 
     /**
-     * Wijzigd de persoon op bassis van de meegegeven ID nummer in Json object.
+     * Wijzigt de persoon op bassis van de meegegeven ID nummer in Json object.
      */
     @PutMapping
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody PersoonEditDto persoonEditDto) {
+    public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody Persoon persoon) {
 
-        return ResponseEntity.ok(persoonService.updatePersoonById(persoonEditDto));
+        return ResponseEntity.ok(persoonService.updatePersoonById(persoon));
     }
 }

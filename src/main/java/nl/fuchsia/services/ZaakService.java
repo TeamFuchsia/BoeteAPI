@@ -1,7 +1,9 @@
 package nl.fuchsia.services;
 
 import nl.fuchsia.dto.ZaakAddDto;
+import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Zaak;
@@ -9,6 +11,7 @@ import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +49,9 @@ public class ZaakService {
 			Feit feit = feitRepository.getFeitById(feitNr);
 			if (feit == null) {
 				exceptions.add("Feitnr " + feitNr + " bestaat niet");
-			}
-			else feiten.add(feit);
+			} else feiten.add(feit);
 		}
-		if (exceptions.size()>0){
+		if (exceptions.size() > 0) {
 			throw new NotFoundException(exceptions.toString());
 		}
 		zaak.setOvertredingsdatum(zaakAddDto.getOvertredingsdatum());
@@ -67,7 +69,7 @@ public class ZaakService {
 		return zaakRepository.getZaakById(zaakNr);
 	}
 
-	public List<Zaak>  getZakenByPersoon(Integer persoonnr) {
+	public List<Zaak> getZakenByPersoon(Integer persoonnr) {
 
 		Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 
@@ -76,5 +78,51 @@ public class ZaakService {
 		}
 
 		return zaakRepository.getZakenByPersoon(persoon);
+	}
+
+	/**
+	 * Voegt 1 of meer bestaande feiten toe aan een bestaande zaak.
+	 *
+	 * @param zaakNr             de betreffende bestaande zaak
+	 * @param listZaakAddFeitDto de toe te voegen feit(en)
+	 * @return de geupdate zaak.
+	 */
+	@Transactional
+	public Zaak updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+		List<String> notFoundExceptions = new ArrayList<>();
+		List<String> uniekVeldExceptions = new ArrayList<>();
+
+
+		if (zaakRepository.getZaakById(zaakNr) == null) {
+			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
+		}
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+				notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
+			}
+		}
+		if (notFoundExceptions.size() > 0) {
+			notFoundExceptions.add("geen feit(en) toegevoegd");
+			throw new NotFoundException(notFoundExceptions.toString());
+		}
+		Zaak zaak = zaakRepository.getZaakById(zaakNr);
+		List<Feit> zaakFeiten = zaak.getFeiten();
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			int feitNrDto = zaakAddFeitDto.getFeitNr();
+			for (Feit feit : zaakFeiten) {
+				if (feit.getFeitNr() == feitNrDto) {
+					uniekVeldExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
+				}
+			}
+		}
+		if (uniekVeldExceptions.size() > 0) {
+			uniekVeldExceptions.add("geen feit(en) toegevoegd");
+			throw new UniekVeldException(uniekVeldExceptions.toString());
+		}
+		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+			zaak.setFeiten(zaakFeiten);
+		}
+		return zaak;
 	}
 }

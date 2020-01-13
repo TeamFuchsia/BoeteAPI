@@ -1,9 +1,18 @@
 package nl.fuchsia.model;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "zaak")
@@ -50,6 +59,12 @@ public class Zaak {
 		this.pleeglocatie = pleeglocatie;
 		this.persoon = persoon;
 		this.feiten = feiten;
+	}
+
+	public Zaak (int zaaknr,LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+		this(overtredingsdatum, pleeglocatie, persoon, feiten);
+		this.zaaknr = zaaknr;
+
 	}
 
 	public int getZaaknr() {

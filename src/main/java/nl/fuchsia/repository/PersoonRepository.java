@@ -1,13 +1,13 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Persoon;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.List;
+
+import nl.fuchsia.model.Persoon;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class PersoonRepository {
@@ -19,7 +19,7 @@ public class PersoonRepository {
 	@PersistenceContext(unitName = "entityManagerFactory")
 	private EntityManager entityManager;
 
-	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon ";
+	private static final String GET_PERSONEN = "SELECT persoon FROM Persoon persoon";
 
 	/**
 	 * Haalt een lijst van alle personen uit de database m.b.v. ornm.
@@ -54,7 +54,7 @@ public class PersoonRepository {
     }
 
     /**
-     * wijzigd een bestaande persoon.
+     * wijzigt een bestaande persoon.
      *
      * @param persoon de te wijzigen persoon.
      */

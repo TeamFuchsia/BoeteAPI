@@ -1,13 +1,13 @@
 package nl.fuchsia.model;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-
+import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +22,7 @@ public class FeitTest {
     }
 
     @Test
-    public void feitIsValid() {
+    public void testFeitIsValid() {
         Feit feit = new Feit(1, "VBF-000", "Test", 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -31,7 +31,7 @@ public class FeitTest {
     }
 
     @Test
-    public void feitcodeIsNull() {
+    public void testFeitcodeIsNull() {
         Feit feit = new Feit(1, null, "Test", 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -41,7 +41,7 @@ public class FeitTest {
     }
 
     @Test
-    public void feitcodeWrongPattern() {
+    public void testFeitcodeWrongPattern() {
         //test voor getal missend in feit inclusief goede tekst afdrukken
         Feit feit = new Feit(1, "VBF-00", "Test", 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
@@ -87,7 +87,7 @@ public class FeitTest {
     }
 
     @Test
-    public void omschrijvingIsNull() {
+    public void testOmschrijvingIsNull() {
         Feit feit = new Feit(1, "VBF-000", null, 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -97,7 +97,7 @@ public class FeitTest {
     }
 
     @Test
-    public void omschrijvingIsToLong() {
+    public void testOmschrijvingIsToLong() {
         Feit feit =  new Feit(1, "VBF-000", new String(new char[5001]).replace('\0','F'), 4.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -107,7 +107,7 @@ public class FeitTest {
     }
 
     @Test
-    public void bedragIsNull() {
+    public void testBedragIsNull() {
         Feit feit = new Feit(1, "VBF-000", "test", 0.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -117,7 +117,7 @@ public class FeitTest {
     }
 
     @Test
-    public void bedragIsNegative() {
+    public void testBedragIsNegative() {
         Feit feit = new Feit(1, "VBF-000", "test", -1.23);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -127,7 +127,7 @@ public class FeitTest {
     }
 
     @Test
-    public void bedragIsToLong() {
+    public void testBedragIsToLong() {
         Feit feit = new Feit(1, "VBF-000", "test", 100000000000.00);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);
@@ -136,9 +136,8 @@ public class FeitTest {
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Bedrag moet 2 decimalen bevatten en kleiner dan 100.000.000.000");
     }
 
-
     @Test
-    public void bedragHasToManyDecimals() {
+    public void testBedragHasToManyDecimals() {
         Feit feit = new Feit(1, "VBF-000", "test", 5.111);
         Set<ConstraintViolation<Feit>> constraintViolations =
                 validator.validate(feit);

@@ -1,13 +1,13 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Feit;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.List;
+
+import nl.fuchsia.model.Feit;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class FeitRepository {
@@ -46,5 +46,16 @@ public class FeitRepository {
     public List<Feit> getFeiten() {
         TypedQuery<Feit> getAllFeiten = entityManager.createQuery(GET_FEITEN, Feit.class);
         return getAllFeiten.getResultList();
+    }
+
+    /**
+     * wijzigt een bestaand feit.
+     *
+     * @param feit de te wijzigen feit.
+     */
+    @Transactional
+    public Feit updateFeitById(Feit feit) {
+        entityManager.merge(feit);
+        return feit;
     }
 }

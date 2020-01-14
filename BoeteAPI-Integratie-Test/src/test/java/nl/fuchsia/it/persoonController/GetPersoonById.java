@@ -1,5 +1,6 @@
 package nl.fuchsia.it.persoonController;
 
+import com.consol.citrus.actions.ExecutePLSQLAction;
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.dsl.runner.TestRunner;
@@ -27,13 +28,20 @@ public class GetPersoonById {
 	@Autowired
 	private DataSource dataSource;
 
+	private String persoonr = "112";
+
 	@Gegeven("er zitten {int} personen in de database.")
 	public void generateRandomPeople(int nrOfPeople) {
-		runner.plsql(sqlBuilder -> sqlBuilder
-			.dataSource(dataSource)
-			.statement("DELETE FROM persoon")
-		);
-		createRandomPersonen(nrOfPeople);
+//		runner.plsql(sqlBuilder -> sqlBuilder
+//			.dataSource(dataSource)
+//			.statement("DELETE FROM persoon")
+//		);
+//		createRandomPersonen(nrOfPeople);
+//		ExecutePLSQLAction persoonnr = runner.plsql(sqlBuilder -> sqlBuilder
+//			.dataSource(dataSource)
+//			.statement("SELECT persoonnr FROM public.persoon LIMIT 1")
+//		);
+//		return this.persoonr = persoonnr.toString();
 	}
 
 	@Als("de client een GETbyID request maakt naar {string}")
@@ -42,7 +50,7 @@ public class GetPersoonById {
 			httpActionBuilder -> httpActionBuilder
 				.client(boeteApiClient)
 				.send()
-				.get(url)
+				.get(url.concat(persoonr))
 		);
 	}
 

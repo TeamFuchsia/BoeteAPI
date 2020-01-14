@@ -68,9 +68,9 @@ public class ZaakService {
         zaak.setPersoon(persoon);
         zaak.setFeiten(feiten);
         zaak.setZaakStatus(zaakStatussen);
-        zaakRepository.addZaak(zaak);
+        Zaak savedZaak = zaakRepository.addZaak(zaak);
 
-        SetZaakStatusDto(zaakDto, zaak);
+        SetZaakStatusDto(zaakDto, savedZaak);
 
         return zaakDto;
     }
@@ -215,6 +215,7 @@ public class ZaakService {
     public void SetZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
+
             int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
             zaakStatusnrs.add(dtoZaakStatusnr);
         }

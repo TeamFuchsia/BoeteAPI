@@ -64,8 +64,9 @@ public class ZaakStatus {
         this.status = status;
     }
 
-    public Zaak getZaak() {
-        return zaak;
+
+    public int getZaak() {
+        return zaak.getZaaknr();
     }
 
     public void setZaak(Zaak zaak) {
@@ -78,7 +79,7 @@ public class ZaakStatus {
                 "zaakstatusnr=" + zaakstatusnr +
                 ", veranderdatum=" + veranderdatum +
                 ", status=" + status +
-                ", zaak=" + zaak +
+                ", zaak=" + zaak.getZaaknr() +
                 '}';
     }
 

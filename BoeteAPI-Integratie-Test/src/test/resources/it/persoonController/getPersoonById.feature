@@ -18,7 +18,7 @@ Functionaliteit: Integratie test
             "huisnummer": "10",
             "postcode": "1234 KL",
             "woonplaats": "Groningen",
-            "bsn": "123456789",
+            "bsn": "987654320",
             "geboortedatum": "01-01-2000"
         }
         """

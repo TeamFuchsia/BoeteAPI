@@ -7,6 +7,7 @@ import com.consol.citrus.dsl.runner.TestRunner;
 import com.consol.citrus.http.client.HttpClient;
 import cucumber.api.java.nl.Als;
 import cucumber.api.java.nl.Dan;
+import cucumber.api.java.nl.En;
 import cucumber.api.java.nl.Gegeven;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class GetPersoonById {
 	@Autowired
 	private DataSource dataSource;
 
-	private String persoonr = "112";
+	private String persoonr = "46";
 
 	@Gegeven("er zitten {int} personen in de database.")
 	public void generateRandomPeople(int nrOfPeople) {
@@ -63,6 +64,8 @@ public class GetPersoonById {
 			.validate("$.length()", String.valueOf(numberOfElements))
 		);
 	}
+
+	@En("the response is:")
 
 
 	private void createRandomPersonen(int nrOfPeople) {

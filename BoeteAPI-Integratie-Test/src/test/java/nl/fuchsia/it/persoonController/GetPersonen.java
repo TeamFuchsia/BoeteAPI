@@ -62,7 +62,7 @@ public class GetPersonen {
     private void createRandomPersonen(int nrOfPeople) {
         Random random = new Random();
         for (int i = 0; i < nrOfPeople; i++) {
-            String bsn = String.valueOf(random.nextInt(899999999) + 100000000);
+            String bsn = String.valueOf("98765432" + i);
             runner.plsql(sqlBuilder -> sqlBuilder
                     .dataSource(dataSource)
                     .statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) VALUES ('Fred', 'Derf', 'Fredstraat', '10', '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));

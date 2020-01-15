@@ -33,6 +33,11 @@
                             </properties>
                         </deployable>
                     </deployables>
+                    <configuration>
+                        <properties>
+                            <cargo.jvmargs>-Dspring.profiles.active=test</cargo.jvmargs>
+                        </properties>
+                    </configuration>
                 </configuration>
                 <executions>
                     <execution>

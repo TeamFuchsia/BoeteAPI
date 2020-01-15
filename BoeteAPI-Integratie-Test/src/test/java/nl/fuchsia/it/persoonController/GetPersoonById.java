@@ -61,7 +61,7 @@ public class GetPersoonById {
 			.client(boeteApiClient)
 			.receive()
 			.response(HttpStatus.valueOf(httpStatusCode))
-			.validate("$.length()", String.valueOf(numberOfElements))
+			.validate("$.payload.length()", String.valueOf(numberOfElements))
 		);
 	}
 

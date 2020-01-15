@@ -2,14 +2,11 @@ package nl.fuchsia.it.FeitController;
 
 import javax.sql.DataSource;
 
-import com.consol.citrus.annotations.CitrusEndpoint;
-import com.consol.citrus.annotations.CitrusResource;
+import com.consol.citrus.annotations.*;
 import com.consol.citrus.config.CitrusSpringConfig;
 import com.consol.citrus.dsl.runner.TestRunner;
 import com.consol.citrus.http.client.HttpClient;
-import cucumber.api.java.nl.Als;
-import cucumber.api.java.nl.Dan;
-import cucumber.api.java.nl.Gegeven;
+import cucumber.api.java.nl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;

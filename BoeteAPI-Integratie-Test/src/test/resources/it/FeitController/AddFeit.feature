@@ -6,5 +6,5 @@ Functionaliteit: Integratie test
     Gegeven er zitten 4 feiten in de database
 
   Scenario: Roep een endpoint aan
-    Als de client een GET request maakt naar "/feiten"
-    Dan moet de HTTP status code 200 zijn en moeten er 4 elementen in de response zitten
+    Als de client een Post request maakt naar "/feiten"
+    Dan moet de HTTP status code 200 zijn en moeten er 1 elementen in de response zitten

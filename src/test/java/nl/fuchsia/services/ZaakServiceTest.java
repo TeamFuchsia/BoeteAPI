@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -66,12 +67,13 @@ public class ZaakServiceTest {
         zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
         zaak.setZaakStatus(zaakStatussen);
         ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
-        zaakStatussen.clear();
-        zaakStatussen.add(savedZaakStatus);
-        savedZaak.setZaakStatus(zaakStatussen);
+        List<ZaakStatus> savedZaakStatussen = new ArrayList<>();
+
+        savedZaakStatussen.add(savedZaakStatus);
+        savedZaak.setZaakStatus(savedZaakStatussen);
 
         when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
-        when(zaakRepository.addZaak(zaak)).thenReturn(new Zaak(1,LocalDate.now(), "Leeuwarden", persoon, feiten,zaakStatussen));
+        when(zaakRepository.addZaak(any())).thenReturn(savedZaak);
         when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
 
         zaakService.addZaak(zaakDto);

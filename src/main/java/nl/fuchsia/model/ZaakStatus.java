@@ -91,7 +91,7 @@ public class ZaakStatus {
         return Objects.equals(zaakstatusnr, that.zaakstatusnr) &&
                 Objects.equals(veranderdatum, that.veranderdatum) &&
                 Objects.equals(status, that.status) &&
-                Objects.equals(zaak, that.zaak);
+                Objects.equals(zaak.getZaaknr(), that.zaak.getZaaknr());
     }
 
     @Override

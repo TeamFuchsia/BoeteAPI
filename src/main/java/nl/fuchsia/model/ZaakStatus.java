@@ -35,11 +35,6 @@ public class ZaakStatus {
         this.zaak = zaak;
     }
 
-    public ZaakStatus (LocalDate veranderdatum, Status status) {
-        this.veranderdatum = veranderdatum;
-        this.status = status;
-    }
-
 	public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
 		this(veranderdatum,status,zaak);
     	this.zaakstatusnr = zaakstatusnr;
@@ -69,9 +64,9 @@ public class ZaakStatus {
         this.status = status;
     }
 
-    @JsonIgnore
-    public Zaak getZaak() {
-        return zaak;
+
+    public int getZaak() {
+        return zaak.getZaaknr();
     }
 
     public void setZaak(Zaak zaak) {
@@ -84,7 +79,7 @@ public class ZaakStatus {
                 "zaakstatusnr=" + zaakstatusnr +
                 ", veranderdatum=" + veranderdatum +
                 ", status=" + status +
-                ", zaak=" + zaak +
+                ", zaak=" + zaak.getZaaknr() +
                 '}';
     }
 
@@ -96,7 +91,7 @@ public class ZaakStatus {
         return Objects.equals(zaakstatusnr, that.zaakstatusnr) &&
                 Objects.equals(veranderdatum, that.veranderdatum) &&
                 Objects.equals(status, that.status) &&
-                Objects.equals(zaak, that.zaak);
+                Objects.equals(zaak.getZaaknr(), that.zaak.getZaaknr());
     }
 
     @Override

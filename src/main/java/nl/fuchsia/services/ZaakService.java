@@ -23,14 +23,12 @@ public class ZaakService {
     private PersoonRepository persoonRepository;
     private FeitRepository feitRepository;
     private StatusRepository statusRepository;
-    private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository) {
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
         this.feitRepository = feitRepository;
         this.statusRepository = statusRepository;
-        this.zaakDtoService = zaakDtoService;
     }
 
     /**
@@ -70,9 +68,11 @@ public class ZaakService {
         zaak.setPersoon(persoon);
         zaak.setFeiten(feiten);
         zaak.setZaakStatus(zaakStatussen);
-        zaakRepository.addZaak(zaak);
+        Zaak savedZaak = zaakRepository.addZaak(zaak);
 
-        return zaakDtoService.SetZaakStatusDto(zaakDto, zaak);
+        setZaakStatusDto(zaakDto, savedZaak);
+
+        return zaakDto;
     }
 
     @Transactional
@@ -101,12 +101,18 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
-        return zaakDtoService.SetZaakDto(zaak);
+        return SetZaakDto(zaak);
+    }
+
+    private ZaakDto SetZaakDto(Zaak zaak) {
+        ZaakDto zaakDto = new ZaakDto();
+        SetFeitnrsDto(zaak, zaakDto);
+        return zaakDto;
     }
 
     public List<ZaakDto> getZaken() {
         List<Zaak> zaken = zaakRepository.getZaken();
-        return zaakDtoService.setZakenDtos(zaken);
+        return setZakenDtos(zaken);
     }
 
     public ZaakDto getZaakById(Integer zaakNr) {
@@ -117,7 +123,7 @@ public class ZaakService {
 
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-        return zaakDtoService.SetZaakDto(zaak);
+        return SetZaakDto(zaak);
     }
 
     public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
@@ -128,7 +134,7 @@ public class ZaakService {
             throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
         }
         List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
-        return zaakDtoService.setZakenDtos(zaken);
+        return setZakenDtos(zaken);
     }
 
 	/**
@@ -174,7 +180,47 @@ public class ZaakService {
 			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
 			zaak.setFeiten(zaakFeiten);
 		}
-		return zaakDtoService.SetZaakDto(zaak);
+		return SetZaakDto(zaak);
 	}
 
+    private void SetFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
+        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
+        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
+        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
+
+        List<Integer> feitnrs = new ArrayList<>();
+        for (Feit feiten : zaak.getFeiten()) {
+            int dtoFeitnr = feiten.getFeitNr();
+            feitnrs.add(dtoFeitnr);
+        }
+        zaakDto.setFeitnrs(feitnrs);
+
+        setZaakStatusDto(zaakDto, zaak);
+    }
+
+    private List<ZaakDto> setZakenDtos(List<Zaak> zaken) {
+        List<ZaakDto> zaakDtos = new ArrayList<>();
+
+        for (Zaak zaak : zaken) {
+            ZaakDto dtoZaken = new ZaakDto();
+            dtoZaken.setZaaknr(zaak.getZaaknr());
+
+            SetFeitnrsDto(zaak, dtoZaken);
+
+            zaakDtos.add(dtoZaken);
+        }
+        return zaakDtos;
+    }
+
+    public void setZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
+        List<Integer> zaakStatusnrs = new ArrayList<>();
+        for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
+
+            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
+            zaakStatusnrs.add(dtoZaakStatusnr);
+        }
+        zaakDto.setZaakstatusnr(zaakStatusnrs);
+
+        zaakDto.setZaaknr(zaak.getZaaknr());
+    }
 }

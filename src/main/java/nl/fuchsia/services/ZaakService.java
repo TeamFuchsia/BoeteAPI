@@ -38,7 +38,7 @@ public class ZaakService {
      * @return de gemaakte zaak inclusief persoon en feit(en).
      */
     public ZaakDto addZaak(ZaakDto zaakDto) {
-        Zaak zaak = new Zaak();
+
         List<String> exceptions = new ArrayList<>();
 
         Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
@@ -56,17 +56,12 @@ public class ZaakService {
         if (exceptions.size() > 0) {
             throw new NotFoundException(exceptions.toString());
         }
+
+        Zaak zaak = new Zaak(zaakDto.getOvertredingsdatum(),zaakDto.getPleeglocatie(),persoon,feiten);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
-        ZaakStatus zaakStatus = new ZaakStatus();
-        zaakStatus.setStatus(new Status(1, "Open"));
-        zaakStatus.setVeranderdatum(LocalDate.now());
-        zaakStatus.setZaak(zaak);
+        ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(),new Status(1, "Open"),zaak);
         zaakStatussen.add(zaakStatus);
 
-        zaak.setOvertredingsdatum(zaakDto.getOvertredingsdatum());
-        zaak.setPleeglocatie(zaakDto.getPleeglocatie());
-        zaak.setPersoon(persoon);
-        zaak.setFeiten(feiten);
         zaak.setZaakStatus(zaakStatussen);
         Zaak savedZaak = zaakRepository.addZaak(zaak);
 
@@ -101,14 +96,11 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
-        return SetZaakDto(zaak);
-    }
+        ZaakDto zaakDto = setZaakDto(zaak);
 
-    private ZaakDto SetZaakDto(Zaak zaak) {
-        ZaakDto zaakDto = new ZaakDto();
-        SetFeitnrsDto(zaak, zaakDto);
         return zaakDto;
     }
+
 
     public List<ZaakDto> getZaken() {
         List<Zaak> zaken = zaakRepository.getZaken();
@@ -123,7 +115,7 @@ public class ZaakService {
 
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-        return SetZaakDto(zaak);
+        return setZaakDto(zaak);
     }
 
     public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
@@ -148,7 +140,6 @@ public class ZaakService {
 	public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
 		List<String> notFoundExceptions = new ArrayList<>();
 		List<String> uniekVeldExceptions = new ArrayList<>();
-
 
 		if (zaakRepository.getZaakById(zaakNr) == null) {
 			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
@@ -180,23 +171,9 @@ public class ZaakService {
 			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
 			zaak.setFeiten(zaakFeiten);
 		}
-		return SetZaakDto(zaak);
+		return setZaakDto(zaak);
 	}
 
-    private void SetFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
-        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
-        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
-        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
-
-        List<Integer> feitnrs = new ArrayList<>();
-        for (Feit feiten : zaak.getFeiten()) {
-            int dtoFeitnr = feiten.getFeitNr();
-            feitnrs.add(dtoFeitnr);
-        }
-        zaakDto.setFeitnrs(feitnrs);
-
-        setZaakStatusDto(zaakDto, zaak);
-    }
 
     private List<ZaakDto> setZakenDtos(List<Zaak> zaken) {
         List<ZaakDto> zaakDtos = new ArrayList<>();
@@ -205,7 +182,7 @@ public class ZaakService {
             ZaakDto dtoZaken = new ZaakDto();
             dtoZaken.setZaaknr(zaak.getZaaknr());
 
-            SetFeitnrsDto(zaak, dtoZaken);
+            setFeitnrsDto(zaak, dtoZaken);
 
             zaakDtos.add(dtoZaken);
         }
@@ -222,5 +199,27 @@ public class ZaakService {
         zaakDto.setZaakstatusnr(zaakStatusnrs);
 
         zaakDto.setZaaknr(zaak.getZaaknr());
+    }
+
+    public ZaakDto setZaakDto(Zaak zaak) {
+        ZaakDto zaakDto = new ZaakDto();
+        setFeitnrsDto(zaak, zaakDto);
+
+        return zaakDto;
+    }
+
+    private void setFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
+        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
+        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
+        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
+
+        List<Integer> feitnrs = new ArrayList<>();
+        for (Feit feiten : zaak.getFeiten()) {
+            int dtoFeitnr = feiten.getFeitNr();
+            feitnrs.add(dtoFeitnr);
+        }
+        zaakDto.setFeitnrs(feitnrs);
+
+        setZaakStatusDto(zaakDto, zaak);
     }
 }

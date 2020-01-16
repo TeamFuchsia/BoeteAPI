@@ -150,18 +150,26 @@ public class ZaakServiceTest {
         Feit feit = new Feit(1, "VBF-003", "Test", 4.00);
         feiten.add(feit);
         feitnrs.add(feit.getFeitNr());
-        Zaak zaak = new Zaak(1, LocalDate.now(), "Leeuwarden", persoon, feiten);
+        Zaak zaak = new Zaak(0,LocalDate.now(), "Leeuwarden", persoon, feiten);
+        Zaak savedZaak = new Zaak(1,LocalDate.now(), "Leeuwarden", persoon, feiten);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
         List<Integer> zaakStatusnrs = new ArrayList<>();
-        ZaakStatus zaakStatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
+        ZaakStatus zaakStatus = new ZaakStatus(null,LocalDate.now(), new Status(1, "Open"), zaak);
+        ZaakStatus savedZaakStatus = new ZaakStatus(1,LocalDate.now(), new Status(1, "Open"), zaak);
         zaakStatussen.add(zaakStatus);
         zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
         zaak.setZaakStatus(zaakStatussen);
-        ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
-        Status status = new Status(1, "Open");
+        ZaakDto zaakDto = new ZaakDto(savedZaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
+        List<ZaakStatus> savedZaakStatussen = new ArrayList<>();
+
+        savedZaakStatussen.add(savedZaakStatus);
+        savedZaak.setZaakStatus(savedZaakStatussen);
+        Status status = new Status(2, "In Behandeling");
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(statusRepository.getStatusById(status.getStatusnr())).thenReturn(new Status(2, "In Behandeling"));
+        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(statusRepository.getStatusById(status.getStatusnr())).thenReturn(status);
+        when(zaakService.setZaakDto(savedZaak)).thenReturn(zaakDto);
 
         assertThat(zaak.getZaakStatus()).hasSize(1);
 

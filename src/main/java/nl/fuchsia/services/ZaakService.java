@@ -23,12 +23,14 @@ public class ZaakService {
     private PersoonRepository persoonRepository;
     private FeitRepository feitRepository;
     private StatusRepository statusRepository;
+    private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
         this.feitRepository = feitRepository;
         this.statusRepository = statusRepository;
+        this.zaakDtoService = zaakDtoService;
     }
 
     /**
@@ -65,7 +67,7 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         Zaak savedZaak = zaakRepository.addZaak(zaak);
 
-        setZaakStatusDto(zaakDto, savedZaak);
+        zaakDtoService.setZaakStatusDto(zaakDto, savedZaak);
 
         return zaakDto;
     }
@@ -73,12 +75,14 @@ public class ZaakService {
     @Transactional
     public ZaakDto updZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
         List<String> notFoundExceptions = new ArrayList<>();
+        Status status = statusRepository.getStatusById(zaakAddStatusDto.getStatusNr());
+        Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-        if (zaakRepository.getZaakById(zaakNr) == null) {
+        if (zaak == null) {
             notFoundExceptions.add("ZaakNummer: " + zaakNr + " bestaat niet");
         }
 
-        if (statusRepository.getStatusById(zaakAddStatusDto.getStatusNr()) == null) {
+        if (status == null) {
             notFoundExceptions.add("StatusNummer: " + zaakAddStatusDto.getStatusNr() + " bestaat niet");
         }
 
@@ -86,9 +90,6 @@ public class ZaakService {
             throw new NotFoundException(notFoundExceptions.toString());
         }
 
-        Status status = statusRepository.getStatusById(zaakAddStatusDto.getStatusNr());
-
-        Zaak zaak = zaakRepository.getZaakById(zaakNr);
         ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), status, zaak);
 
         List<ZaakStatus> zaakStatussen = zaak.getZaakStatus();
@@ -96,7 +97,7 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
-        ZaakDto zaakDto = setZaakDto(zaak);
+        ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);
 
         return zaakDto;
     }
@@ -104,7 +105,7 @@ public class ZaakService {
 
     public List<ZaakDto> getZaken() {
         List<Zaak> zaken = zaakRepository.getZaken();
-        return setZakenDtos(zaken);
+        return zaakDtoService.setZakenDtos(zaken);
     }
 
     public ZaakDto getZaakById(Integer zaakNr) {
@@ -115,7 +116,7 @@ public class ZaakService {
 
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-        return setZaakDto(zaak);
+        return zaakDtoService.setZaakDto(zaak);
     }
 
     public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
@@ -126,7 +127,7 @@ public class ZaakService {
             throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
         }
         List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
-        return setZakenDtos(zaken);
+        return zaakDtoService.setZakenDtos(zaken);
     }
 
 	/**
@@ -140,8 +141,9 @@ public class ZaakService {
 	public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
 		List<String> notFoundExceptions = new ArrayList<>();
 		List<String> uniekVeldExceptions = new ArrayList<>();
+        Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-		if (zaakRepository.getZaakById(zaakNr) == null) {
+		if (zaak == null) {
 			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
 		}
 		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
@@ -153,7 +155,7 @@ public class ZaakService {
 			notFoundExceptions.add("geen feit(en) toegevoegd");
 			throw new NotFoundException(notFoundExceptions.toString());
 		}
-		Zaak zaak = zaakRepository.getZaakById(zaakNr);
+
 		List<Feit> zaakFeiten = zaak.getFeiten();
 		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
 			int feitNrDto = zaakAddFeitDto.getFeitNr();
@@ -171,55 +173,7 @@ public class ZaakService {
 			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
 			zaak.setFeiten(zaakFeiten);
 		}
-		return setZaakDto(zaak);
-	}
-
-
-    private List<ZaakDto> setZakenDtos(List<Zaak> zaken) {
-        List<ZaakDto> zaakDtos = new ArrayList<>();
-
-        for (Zaak zaak : zaken) {
-            ZaakDto dtoZaken = new ZaakDto();
-            dtoZaken.setZaaknr(zaak.getZaaknr());
-
-            setFeitnrsDto(zaak, dtoZaken);
-
-            zaakDtos.add(dtoZaken);
-        }
-        return zaakDtos;
-    }
-
-    public void setZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
-        List<Integer> zaakStatusnrs = new ArrayList<>();
-        for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
-
-            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
-            zaakStatusnrs.add(dtoZaakStatusnr);
-        }
-        zaakDto.setZaakstatusnr(zaakStatusnrs);
-
-        zaakDto.setZaaknr(zaak.getZaaknr());
-    }
-
-    public ZaakDto setZaakDto(Zaak zaak) {
-        ZaakDto zaakDto = new ZaakDto();
-        setFeitnrsDto(zaak, zaakDto);
-
+        ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);
         return zaakDto;
-    }
-
-    private void setFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
-        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
-        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
-        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
-
-        List<Integer> feitnrs = new ArrayList<>();
-        for (Feit feiten : zaak.getFeiten()) {
-            int dtoFeitnr = feiten.getFeitNr();
-            feitnrs.add(dtoFeitnr);
-        }
-        zaakDto.setFeitnrs(feitnrs);
-
-        setZaakStatusDto(zaakDto, zaak);
-    }
+	}
 }

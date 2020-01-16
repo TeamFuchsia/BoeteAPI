@@ -1,23 +1,23 @@
 package nl.fuchsia.it.persoonController;
 
+import com.consol.citrus.TestAction;
 import com.consol.citrus.actions.ExecuteSQLQueryAction;
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
-import com.consol.citrus.config.CitrusSpringConfig;
 import com.consol.citrus.dsl.runner.TestRunner;
 import com.consol.citrus.http.client.HttpClient;
+import com.consol.citrus.message.MessageType;
 import cucumber.api.java.nl.Als;
 import cucumber.api.java.nl.Dan;
 import cucumber.api.java.nl.Gegeven;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
 import java.util.Random;
 
-@ContextConfiguration(classes = CitrusSpringConfig.class)
-public class GetPersoonById {
+public class AddPersoon {
 	/**
 	 * Test runner filled with actions by step definitions
 	 */
@@ -32,44 +32,41 @@ public class GetPersoonById {
 
 	private String persoonnr;
 
-	@Gegeven("er zitten {int} personen in de database.")
+	@Gegeven("er zit {int} personen in de database.")
 	public void generateRandomPeople(int nrOfPeople) {
 		runner.plsql(sqlBuilder -> sqlBuilder
 			.dataSource(dataSource)
 			.statement("DELETE FROM persoon")
 		);
-		createRandomPersonen(nrOfPeople);
-		ExecuteSQLQueryAction query = runner.query(action -> action
-			.dataSource(dataSource)
-			.statement("SELECT PERSOONNR FROM public.persoon LIMIT 1")
-			.extract("PERSOONNR", "selectPersoonnr")
-		);
-		persoonnr = runner.variable("selectPersoonnr", "${selectPersoonnr}");
+		createRandomPersonenAdd(nrOfPeople);
 	}
 
-	@Als("de client een GETbyID request maakt naar {string} met persoonnr")
+	@Als("de client een nieuwe persoon toevoegt via {string}")
 	public void callUrl(String url) {
-		String urlPersoonnr =url.concat(persoonnr);
-		runner.http(
-			httpActionBuilder -> httpActionBuilder
-				.client(boeteApiClient)
-				.send()
-				.get(urlPersoonnr)
+		TestAction testing = runner.http(httpActionBuilder -> httpActionBuilder
+			.client(boeteApiClient)
+			.send()
+			.post(url)
+			.messageType(MessageType.JSON)
+			.contentType(ContentType.APPLICATION_JSON.getMimeType())
+			.payload("{ \"voornaam\": \"Hans\", \"achternaam\": \"Anders\", \"straat\": \"Kerkstraat\"," +
+				" \"huisnummer\": \"88\", \"postcode\": \"2201 EB\", \"woonplaats\": \"Leeuwarden\", \"bsn\": \"777654111\"," +
+				" \"geboortedatum\": \"02-12-1958\"}")
 		);
 		System.out.println("Hallo");
 	}
 
-	@Dan("moet de HTTP status code {int} zijn en huisnummer moet {int} zijn in de response")
-	public void verifyResponse(int httpStatusCode, int huisnummer) {
+	@Dan("moet de HTTP status code {int} zijn en huisnummer moet {int} zijn in de response.")
+	public void verifyResponse(int httpStatusCode, int numberOfElements) {
 		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
 			.receive()
 			.response(HttpStatus.valueOf(httpStatusCode))
-			.validate("$.huisnummer", String.valueOf(huisnummer))
+			.validate("$.huisnummer", String.valueOf(numberOfElements))
 		);
 	}
 
-	private void createRandomPersonen(int nrOfPeople) {
+	private void createRandomPersonenAdd(int nrOfPeople) {
 		Random random = new Random();
 		for (int i = 0; i < nrOfPeople; i++) {
 			String bsn = String.valueOf(random.nextInt(899999999) + 100000000);
@@ -77,7 +74,7 @@ public class GetPersoonById {
 			runner.plsql(sqlBuilder -> sqlBuilder
 				.dataSource(dataSource)
 				.statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) " +
-					"VALUES ('Gerard', 'Derf', 'Fredstraat', " + huisnummer + ", '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
+					"VALUES ('Karel', 'Derf', 'Fredstraat', " + huisnummer + ", '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
 		}
 	}
 }

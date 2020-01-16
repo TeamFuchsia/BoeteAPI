@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import javax.sql.DataSource;
 import java.util.Random;
 
-@ContextConfiguration(classes = CitrusSpringConfig.class)
+//@ContextConfiguration(classes = CitrusSpringConfig.class)
 public class GetPersonen {
 
     /**
@@ -49,7 +49,7 @@ public class GetPersonen {
         );
     }
 
-    @Dan("moet de HTTP status code {int} zijn en moet er {int} payload in de response zitten")
+    @Dan("moet de HTTP status code {int} zijn en moeten {int} elementen in de response zitten")
     public void verifyResponse(int httpStatusCode, int numberOfElements) {
         runner.http(httpActionBuilder -> httpActionBuilder
                 .client(boeteApiClient)
@@ -65,7 +65,8 @@ public class GetPersonen {
             String bsn = String.valueOf("98765432" + i);
             runner.plsql(sqlBuilder -> sqlBuilder
                     .dataSource(dataSource)
-                    .statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) VALUES ('Fred', 'Derf', 'Fredstraat', '10', '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
+                    .statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) " +
+						"VALUES ('Fred', 'Derf', 'Fredstraat', '10', '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
         }
     }
 }

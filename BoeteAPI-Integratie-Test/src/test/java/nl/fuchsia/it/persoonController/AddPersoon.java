@@ -1,7 +1,5 @@
 package nl.fuchsia.it.persoonController;
 
-import com.consol.citrus.TestAction;
-import com.consol.citrus.actions.ExecuteSQLQueryAction;
 import com.consol.citrus.annotations.CitrusEndpoint;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.dsl.runner.TestRunner;
@@ -42,8 +40,8 @@ public class AddPersoon {
 	}
 
 	@Als("de client een nieuwe persoon toevoegt via {string}")
-	public void callUrl(String url) {
-		TestAction testing = runner.http(httpActionBuilder -> httpActionBuilder
+	public void addCorrectPersoon (String url) {
+		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
 			.send()
 			.post(url)
@@ -53,8 +51,29 @@ public class AddPersoon {
 				" \"huisnummer\": \"88\", \"postcode\": \"2201 EB\", \"woonplaats\": \"Leeuwarden\", \"bsn\": \"777654111\"," +
 				" \"geboortedatum\": \"02-12-1958\"}")
 		);
-		System.out.println("Hallo");
 	}
+
+	@Als("de client een nieuwe persoon toevoegt via {string} met een bestaand BSN")
+	public void addPersoonBsnBestaat (String url) {
+//		runner.query(action -> action
+//			.dataSource(dataSource)
+//			.statement("SELECT bsn FROM public.persoon LIMIT 1")
+//			.extract("bsn", "selectedBsn")
+//		);
+//		String bsn = runner.variable("selectedBsn", "${selectedBsn}");
+		String bsn = "899999999";
+		runner.http(httpActionBuilder -> httpActionBuilder
+			.client(boeteApiClient)
+			.send()
+			.post(url)
+			.messageType(MessageType.JSON)
+			.contentType(ContentType.APPLICATION_JSON.getMimeType())
+			.payload("{ \"voornaam\": \"Hans\", \"achternaam\": \"Anders\", \"straat\": \"Kerkstraat\"," +
+				" \"huisnummer\": \"88\", \"postcode\": \"2201 EB\", \"woonplaats\": \"Leeuwarden\", \"bsn\": \"" + bsn + "\"," +
+				" \"geboortedatum\": \"02-12-1958\"}")
+		);
+	}
+
 
 	@Dan("moet de HTTP status code {int} zijn en huisnummer moet {int} zijn in de response.")
 	public void verifyResponse(int httpStatusCode, int numberOfElements) {
@@ -66,10 +85,22 @@ public class AddPersoon {
 		);
 	}
 
+	@Dan("moet de HTTP status code {int} zijn en de response is {string}.")
+	public void verifyResponse(int httpStatusCode, String bsnError) {
+		runner.http(httpActionBuilder -> httpActionBuilder
+			.client(boeteApiClient)
+			.receive()
+			.response(HttpStatus.valueOf(httpStatusCode))
+			.validate("$.error", (bsnError))
+		);
+	}
+
+
 	private void createRandomPersonenAdd(int nrOfPeople) {
-		Random random = new Random();
+		//Random random = new Random();
 		for (int i = 0; i < nrOfPeople; i++) {
-			String bsn = String.valueOf(random.nextInt(899999999) + 100000000);
+			//String bsn = String.valueOf(random.nextInt(899999999) + 100000000);
+			String bsn = String.valueOf(899999999 + i);
 			int huisnummer = 50 + i;
 			runner.plsql(sqlBuilder -> sqlBuilder
 				.dataSource(dataSource)

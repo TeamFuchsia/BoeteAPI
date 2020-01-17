@@ -15,12 +15,16 @@ public class ZaakDtoService {
         List<ZaakDto> zaakDtos = new ArrayList<>();
 
         for (Zaak zaak : zaken) {
-            ZaakDto dtoZaken = new ZaakDto();
-            dtoZaken.setZaaknr(zaak.getZaaknr());
+            ZaakDto zaakDto = new ZaakDto();
+            zaakDto.setZaaknr(zaak.getZaaknr());
+            zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
+            zaakDto.setPleeglocatie(zaak.getPleeglocatie());
+            zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
 
-            setFeitnrsDto(zaak, dtoZaken);
+            setFeitnrsDto(zaak, zaakDto);
+            setZaakStatusDto(zaakDto,zaak);
 
-            zaakDtos.add(dtoZaken);
+            zaakDtos.add(zaakDto);
         }
         return zaakDtos;
     }
@@ -45,10 +49,6 @@ public class ZaakDtoService {
     }
 
     void setFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
-        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
-        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
-        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
-
         List<Integer> feitnrs = new ArrayList<>();
         for (Feit feiten : zaak.getFeiten()) {
             int dtoFeitnr = feiten.getFeitNr();

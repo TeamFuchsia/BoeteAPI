@@ -70,7 +70,7 @@ public class FeitRepositoryTest {
 
 		Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(),"VBF-002", "Test", 5000));
 
-		assertThat(feitRepository.getFeiten()).hasSize(1);
+		assertThat(feitRepository.getFeiten()).hasSize(2);
 		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
 	}
 }

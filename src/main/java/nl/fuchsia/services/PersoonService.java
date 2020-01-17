@@ -48,12 +48,13 @@ public class PersoonService {
      * @param persoonnr - ID de op te halen persoon.
      */
     public Persoon getPersoonById(Integer persoonnr) {
+Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 
-        if (persoonRepository.getPersoonById(persoonnr) == null) {
-            throw new NotFoundException("ZaakNummer: " + persoonnr + " bestaat niet");
+        if (persoon == null) {
+            throw new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet");
         }
 
-        return persoonRepository.getPersoonById(persoonnr);
+        return persoon;
     }
 
     /**

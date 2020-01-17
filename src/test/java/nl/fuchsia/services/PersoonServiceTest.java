@@ -57,7 +57,11 @@ public class PersoonServiceTest {
      */
     @Test
     public void testGetPersoonById() {
-        persoonService.getPersoonById(1);
+        Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
+
+        when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
+
+        persoonService.getPersoonById(persoon.getPersoonnr());
 
         verify(persoonRepository).getPersoonById(1);
     }

@@ -83,7 +83,6 @@ public class UpdatePersoonById {
 					" \"huisnummer\": \"${HUISNUMMER}\", \"postcode\": \"${POSTCODE}\", \"woonplaats\": \"${WOONPLAATS}\", \"bsn\": \"" + existBsn + "\"," +
 					" \"geboortedatum\": \"" + geboortedatum + "\"}");
 				break;
-
 		}
 		String finalPayload = payload;
 		TestAction httpPut = runner.http(httpActionBuilder -> httpActionBuilder

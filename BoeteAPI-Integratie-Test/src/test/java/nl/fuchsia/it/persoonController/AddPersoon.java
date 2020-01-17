@@ -106,6 +106,7 @@ public class AddPersoon {
 				.dataSource(dataSource)
 				.statement("INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) " +
 					"VALUES ('Karel', 'Derf', 'Fredstraat', " + huisnummer + ", '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
+
 		}
 	}
 }

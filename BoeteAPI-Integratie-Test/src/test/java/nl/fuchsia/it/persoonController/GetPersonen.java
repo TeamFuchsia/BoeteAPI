@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import javax.sql.DataSource;
 import java.util.Random;
 
-//@ContextConfiguration(classes = CitrusSpringConfig.class)
 public class GetPersonen {
 
     /**

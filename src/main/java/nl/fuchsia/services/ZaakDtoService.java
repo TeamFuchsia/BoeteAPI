@@ -11,25 +11,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ZaakDtoService {
-    public List<ZaakDto> setZakenDtos(List<Zaak> zaken) {
-        List<ZaakDto> zaakDtos = new ArrayList<>();
 
-        for (Zaak zaak : zaken) {
-            ZaakDto zaakDto = new ZaakDto();
-            zaakDto.setZaaknr(zaak.getZaaknr());
-            zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
-            zaakDto.setPleeglocatie(zaak.getPleeglocatie());
-            zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
+    /**
+     * SetZaakDto zet een Zaak om in een ZaakDto
+     * @param zaak is de te verwerken zaak
+     * @return een ZaakDto met alle velden ingevoerd
+     */
+    public ZaakDto setZaakDto(Zaak zaak) {
+        ZaakDto zaakDto = new ZaakDto();
+        zaakDto.setOvertredingsdatum(zaak.getOvertredingsdatum());
+        zaakDto.setPleeglocatie(zaak.getPleeglocatie());
+        zaakDto.setPersoonnr(zaak.getPersoon().getPersoonnr());
 
-            setFeitnrsDto(zaak, zaakDto);
-            setZaakStatusDto(zaakDto,zaak);
-
-            zaakDtos.add(zaakDto);
+        List<Integer> feitnrs = new ArrayList<>();
+        for (Feit feiten : zaak.getFeiten()) {
+            int dtoFeitnr = feiten.getFeitNr();
+            feitnrs.add(dtoFeitnr);
         }
-        return zaakDtos;
-    }
+        zaakDto.setFeitnrs(feitnrs);
 
-    public void setZaakStatusDto(ZaakDto zaakDto, Zaak zaak) {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
 
@@ -39,23 +39,7 @@ public class ZaakDtoService {
         zaakDto.setZaakstatusnr(zaakStatusnrs);
 
         zaakDto.setZaaknr(zaak.getZaaknr());
-    }
-
-    public ZaakDto setZaakDto(Zaak zaak) {
-        ZaakDto zaakDto = new ZaakDto();
-        setFeitnrsDto(zaak, zaakDto);
 
         return zaakDto;
-    }
-
-    void setFeitnrsDto(Zaak zaak, ZaakDto zaakDto) {
-        List<Integer> feitnrs = new ArrayList<>();
-        for (Feit feiten : zaak.getFeiten()) {
-            int dtoFeitnr = feiten.getFeitNr();
-            feitnrs.add(dtoFeitnr);
-        }
-        zaakDto.setFeitnrs(feitnrs);
-
-        setZaakStatusDto(zaakDto, zaak);
     }
 }

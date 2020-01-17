@@ -75,7 +75,7 @@ public class ZaakControllerTest {
     void addZaakStatus() {
         ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto();
 
-        zaakController.addZaakStatus(1, zaakAddStatusDto);
+        zaakController.updZaakStatus(1, zaakAddStatusDto);
 
         verify(zaakService).updZaakStatus(1,zaakAddStatusDto);
     }

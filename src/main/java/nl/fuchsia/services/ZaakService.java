@@ -67,11 +67,17 @@ public class ZaakService {
         zaak.setZaakStatus(zaakStatussen);
         Zaak savedZaak = zaakRepository.addZaak(zaak);
 
-        zaakDtoService.setZaakStatusDto(zaakDto, savedZaak);
+        zaakDto = zaakDtoService.setZaakDto(savedZaak);
 
         return zaakDto;
     }
 
+    /**
+     * Voegt 1 zaakStatus toe aan een bestaande zaak en hier een nieuwe historie voor statussen aan van de zaak.
+     * @param zaakNr de betreffende bestaande zaak
+     * @param zaakAddStatusDto de toe te voegen status
+     * @return de geupdate zaak.
+     */
     @Transactional
     public ZaakDto updZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
         List<String> notFoundExceptions = new ArrayList<>();
@@ -105,7 +111,11 @@ public class ZaakService {
 
     public List<ZaakDto> getZaken() {
         List<Zaak> zaken = zaakRepository.getZaken();
-        return zaakDtoService.setZakenDtos(zaken);
+        List<ZaakDto> zaakDtos = new ArrayList<>();
+        for (Zaak zaak : zaken) {
+            zaakDtos.add(zaakDtoService.setZaakDto(zaak));
+        }
+        return zaakDtos;
     }
 
     public ZaakDto getZaakById(Integer zaakNr) {
@@ -127,7 +137,12 @@ public class ZaakService {
             throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
         }
         List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
-        return zaakDtoService.setZakenDtos(zaken);
+        List<ZaakDto> zaakDtos = new ArrayList<>();
+        for (Zaak zaak : zaken) {
+            zaakDtos.add(zaakDtoService.setZaakDto(zaak));
+        }
+
+        return zaakDtos;
     }
 
 	/**

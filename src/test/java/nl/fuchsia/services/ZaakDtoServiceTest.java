@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.model.Status;
@@ -14,13 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ZaakDtoServiceTest {
 
-    ZaakDtoService zaakDtoService;
+    ZaakDtoService zaakDtoService = new ZaakDtoService();
 
     @Test
-    void setZakenDtos() {
+    void setZaakDto() {
         //Maak een persoon aan om toe te voegen aan zaak
         Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 
@@ -38,21 +38,6 @@ class ZaakDtoServiceTest {
         zaakStatussen.add(zaakStatus);
         zaak.setZaakStatus(zaakStatussen);
 
-        List<Zaak> zaken = new ArrayList<>();
-        zaken.add(zaak);
-
-        assertThat(zaakDtoService.setZakenDtos(zaken)).hasSize(1);
-    }
-
-    @Test
-    void setZaakStatusDto() {
-    }
-
-    @Test
-    void setZaakDto() {
-    }
-
-    @Test
-    void setFeitnrsDto() {
+        assertThat(zaakDtoService.setZaakDto(zaak).getPersoonnr()).isEqualTo(persoon.getPersoonnr());
     }
 }

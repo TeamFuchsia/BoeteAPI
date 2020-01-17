@@ -1,10 +1,11 @@
 package nl.fuchsia.configuration;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.vendor.Database;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig extends AbstractDatabaseConfig {
@@ -15,13 +16,25 @@ public class DatabaseConfig extends AbstractDatabaseConfig {
      *
      * @return De connectie naar de database
      */
+    @Value("${datasource.driver}")
+	private String driver;
+
+	@Value("${datasource.url}")
+	public String url;
+
+	@Value("${datasource.username}")
+	public String username;
+
+	@Value("${datasource.password}")
+	public String password;
+
     @Override
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:5432/boeteapi");
-        ds.setUsername("postgres");
-        ds.setPassword("postgres");
+        ds.setDriverClassName(driver);
+        ds.setUrl(url);
+        ds.setUsername(username);
+        ds.setPassword(password);
         return ds;
     }
 

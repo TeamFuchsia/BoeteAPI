@@ -2,8 +2,10 @@
 
 Functionaliteit: IT-getPersonen
 
+
     Achtergrond:
         Gegeven er zitten 3 personen in de database
+
 
     Scenario: Roep een endpoint aan
         Als de client een GET request maakt naar "/personen"

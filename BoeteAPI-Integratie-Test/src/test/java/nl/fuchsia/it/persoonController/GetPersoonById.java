@@ -19,7 +19,7 @@ import java.util.Random;
 @ContextConfiguration(classes = CitrusSpringConfig.class)
 public class GetPersoonById {
 	/**
-	 * Test runner filled with actions by step definitions
+	 * IT voor het opvragen van een persoon op persoonnr.
 	 */
 	@CitrusResource
 	private TestRunner runner;
@@ -49,14 +49,13 @@ public class GetPersoonById {
 
 	@Als("de client een GETbyID request maakt naar {string} met persoonnr")
 	public void callUrl(String url) {
-		String urlPersoonnr =url.concat(persoonnr);
+		String urlPersoonnr = url.concat(persoonnr);
 		runner.http(
 			httpActionBuilder -> httpActionBuilder
 				.client(boeteApiClient)
 				.send()
 				.get(urlPersoonnr)
 		);
-		System.out.println("Hallo");
 	}
 
 	@Dan("moet de HTTP status code {int} zijn en huisnummer moet {int} zijn in de response")

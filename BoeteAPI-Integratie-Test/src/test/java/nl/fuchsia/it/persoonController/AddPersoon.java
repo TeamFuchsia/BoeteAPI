@@ -13,11 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import javax.sql.DataSource;
-import java.util.Random;
 
 public class AddPersoon {
 	/**
-	 * Test runner filled with actions by step definitions
+	 * IT voor het toevoegen van personen
 	 */
 	@CitrusResource
 	private TestRunner runner;
@@ -27,8 +26,6 @@ public class AddPersoon {
 
 	@Autowired
 	private DataSource dataSource;
-
-	private String persoonnr;
 
 	@Gegeven("er zit {int} personen in de database.")
 	public void generateRandomPeople(int nrOfPeople) {
@@ -40,7 +37,7 @@ public class AddPersoon {
 	}
 
 	@Als("de client een nieuwe persoon toevoegt via {string}")
-	public void addCorrectPersoon (String url) {
+	public void addCorrectPersoon(String url) {
 		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
 			.send()
@@ -54,13 +51,7 @@ public class AddPersoon {
 	}
 
 	@Als("de client een nieuwe persoon toevoegt via {string} met een bestaand BSN")
-	public void addPersoonBsnBestaat (String url) {
-//		runner.query(action -> action
-//			.dataSource(dataSource)
-//			.statement("SELECT bsn FROM public.persoon LIMIT 1")
-//			.extract("bsn", "selectedBsn")
-//		);
-//		String bsn = runner.variable("selectedBsn", "${selectedBsn}");
+	public void addPersoonBsnBestaat(String url) {
 		String bsn = "899999999";
 		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
@@ -74,9 +65,8 @@ public class AddPersoon {
 		);
 	}
 
-
 	@Dan("moet de HTTP status code {int} zijn en huisnummer moet {int} zijn in de response.")
-	public void verifyResponse(int httpStatusCode, int numberOfElements) {
+	public void verifyHappyFlow(int httpStatusCode, int numberOfElements) {
 		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
 			.receive()
@@ -86,7 +76,7 @@ public class AddPersoon {
 	}
 
 	@Dan("moet de HTTP status code {int} zijn en de response is {string}.")
-	public void verifyResponse(int httpStatusCode, String bsnError) {
+	public void verifyBsnException(int httpStatusCode, String bsnError) {
 		runner.http(httpActionBuilder -> httpActionBuilder
 			.client(boeteApiClient)
 			.receive()
@@ -94,7 +84,6 @@ public class AddPersoon {
 			.validate("$.error", (bsnError))
 		);
 	}
-
 
 	private void createRandomPersonenAdd(int nrOfPeople) {
 		//Random random = new Random();

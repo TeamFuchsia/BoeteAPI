@@ -5,11 +5,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nl.fuchsia.dto.*;
+import nl.fuchsia.dto.ZaakAddFeitDto;
+import nl.fuchsia.dto.ZaakAddStatusDto;
+import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
-import nl.fuchsia.model.*;
-import nl.fuchsia.repository.*;
+import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
+import nl.fuchsia.model.Status;
+import nl.fuchsia.model.Zaak;
+import nl.fuchsia.model.ZaakStatus;
+import nl.fuchsia.repository.FeitRepository;
+import nl.fuchsia.repository.PersoonRepository;
+import nl.fuchsia.repository.StatusRepository;
+import nl.fuchsia.repository.ZaakRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -179,7 +188,7 @@ public class ZaakServiceTest {
         //Maakt een zaak aan zoals die in de database is gewijzigd
         Zaak savedZaak = new Zaak(1, LocalDate.now(), "Leeuwarden", persoon, feiten);
 
-       //Maakt een zaakDto aan en hangt hier een zaakstatus aan, deze wordt gebruikt om de uitvoer van setZaakDto te mocken
+        //Maakt een zaakDto aan en hangt hier een zaakstatus aan, deze wordt gebruikt om de uitvoer van setZaakDto te mocken
         ZaakDto zaakDto = new ZaakDto(savedZaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
         List<ZaakStatus> savedZaakStatussen = new ArrayList<>();
         savedZaakStatussen.add(savedZaakStatus);

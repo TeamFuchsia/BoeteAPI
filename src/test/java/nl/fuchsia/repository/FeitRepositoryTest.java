@@ -23,54 +23,55 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FeitRepositoryTest {
 
-	@PersistenceContext(unitName = "entityManagerFactory")
-	private EntityManager entityManager;
+    @PersistenceContext(unitName = "entityManagerFactory")
+    private EntityManager entityManager;
 
-	@Autowired
-	private FeitRepository feitRepository;
+    @Autowired
+    private FeitRepository feitRepository;
 
-	@BeforeEach
-	public void setup() {
-		entityManager.createQuery("Delete FROM Feit").executeUpdate();
+    @BeforeEach
+    public void setup() {
+        entityManager.createQuery("Delete FROM Feit").executeUpdate();
 
-		Feit feit = new Feit("VBF-001", "Test", 500);
-		feitRepository.addFeit(feit);
-	}
+        Feit feit = new Feit("VBF-001", "Test", 500);
+        feitRepository.addFeit(feit);
+    }
 
-	@Test
-	public void testAddFeit() {
-		feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+    @Test
+    public void testAddFeit() {
+        feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
 
-		assertThat(feitRepository.getFeiten()).hasSize(2);
+        assertThat(feitRepository.getFeiten()).hasSize(2);
 
-		Feit feit = feitRepository.addFeit(new Feit("VBF-003", "Test", 500));
+        Feit feit = feitRepository.addFeit(new Feit("VBF-003", "Test", 500));
 
-		assertThat(feitRepository.getFeiten()).hasSize(3);
-		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getFeitcode()).isEqualTo("VBF-003");
-	}
+        assertThat(feitRepository.getFeiten()).hasSize(3);
+        assertThat(feitRepository.getFeitById(feit.getFeitNr()).getFeitcode()).isEqualTo("VBF-003");
+    }
 
-	@Test
-	public void testGetFeit() {
-		assertThat(feitRepository.getFeiten()).hasSize(1);
-	}
+    @Test
+    public void testGetFeit() {
+        assertThat(feitRepository.getFeiten()).hasSize(1);
+    }
 
-	@Test()
-	public void testGetPFeitById() {
-		Feit feitId = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+    @Test()
+    public void testGetPFeitById() {
+        Feit feitId = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
 
-		assertThat(feitRepository.getFeiten()).hasSize(2);
-		assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
-	}
-	@Test
-	public void testUpdateFeitById() {
-		Feit feit = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
-		feitRepository.getFeiten();
+        assertThat(feitRepository.getFeiten()).hasSize(2);
+        assertThat(feitRepository.getFeitById(feitId.getFeitNr()).getFeitcode()).isEqualTo("VBF-002");
+    }
 
-		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(feit.getBedrag());
+    @Test
+    public void testUpdateFeitById() {
+        Feit feit = feitRepository.addFeit(new Feit("VBF-002", "Test", 500));
+        feitRepository.getFeiten();
 
-		Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(),"VBF-002", "Test", 5000));
+        assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(feit.getBedrag());
 
-		assertThat(feitRepository.getFeiten()).hasSize(2);
-		assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
-	}
+        Feit updatedFeit = feitRepository.updateFeitById(new Feit(feit.getFeitNr(), "VBF-002", "Test", 5000));
+
+        assertThat(feitRepository.getFeiten()).hasSize(2);
+        assertThat(feitRepository.getFeitById(feit.getFeitNr()).getBedrag()).isEqualTo(updatedFeit.getBedrag());
+    }
 }

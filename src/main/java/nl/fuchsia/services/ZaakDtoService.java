@@ -14,6 +14,7 @@ public class ZaakDtoService {
 
     /**
      * SetZaakDto zet een Zaak om in een ZaakDto
+     *
      * @param zaak is de te verwerken zaak
      * @return een ZaakDto met alle velden ingevoerd
      */

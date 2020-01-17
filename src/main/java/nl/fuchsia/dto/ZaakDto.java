@@ -35,16 +35,15 @@ public class ZaakDto {
     }
 
     public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs) {
-		this.zaaknr = zaaknr;
-		this.overtredingsdatum = overtredingsdatum;
-		this.pleeglocatie = pleeglocatie;
-		this.persoonnr = persoonnr;
-		this.feitnrs = feitnrs;
-	}
-
+        this.zaaknr = zaaknr;
+        this.overtredingsdatum = overtredingsdatum;
+        this.pleeglocatie = pleeglocatie;
+        this.persoonnr = persoonnr;
+        this.feitnrs = feitnrs;
+    }
 
     public ZaakDto(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, int persoonnr, List<Integer> feitnrs, List<Integer> zaakstatusnr) {
-        this(zaaknr,overtredingsdatum,pleeglocatie,persoonnr,feitnrs);
+        this(zaaknr, overtredingsdatum, pleeglocatie, persoonnr, feitnrs);
         this.zaakstatusnr = zaakstatusnr;
     }
 

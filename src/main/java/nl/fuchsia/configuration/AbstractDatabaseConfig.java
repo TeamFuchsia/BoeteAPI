@@ -27,7 +27,8 @@ public abstract class AbstractDatabaseConfig {
      * @return The connection to the database
      */
     @Bean
-    public abstract DataSource dataSource() throws Exception;
+    public abstract DataSource dataSource()
+            throws Exception;
 
     /**
      * Deze zorgt er voor dat de data door middel van een transactie in de database wordt geplaatst.

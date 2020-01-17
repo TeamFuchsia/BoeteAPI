@@ -25,8 +25,7 @@ class ZaakAddStatusDtoTest {
     void statusNrIsNull() {
         ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto(0);
 
-        Set<ConstraintViolation<ZaakAddStatusDto>> constraintViolations =
-                validator.validate(zaakAddStatusDto);
+        Set<ConstraintViolation<ZaakAddStatusDto>> constraintViolations = validator.validate(zaakAddStatusDto);
 
         assertThat(constraintViolations).hasSize(1);
         assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Statusnummer dient groter dan 0 te zijn");

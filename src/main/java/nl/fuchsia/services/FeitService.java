@@ -1,13 +1,13 @@
 package nl.fuchsia.services;
 
+import java.util.List;
+
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
 import nl.fuchsia.repository.FeitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
-
-import java.util.List;
 
 @Service
 public class FeitService {
@@ -19,7 +19,7 @@ public class FeitService {
 
     public Feit addFeit(Feit feit) {
         try {
-           return feitRepository.addFeit(feit);
+            return feitRepository.addFeit(feit);
         }
         //Vangt opgevoerde feiten met feitcodes die al in de database voor komt.
         catch (TransactionSystemException e) {
@@ -39,7 +39,7 @@ public class FeitService {
             if (feitOpgehaald == null) {
                 throw new NotFoundException("Feitnummer: " + feit.getFeitNr() + " bestaat niet!");
             }
-            if (!(feitOpgehaald.getFeitcode().equals(feit.getFeitcode()) )){
+            if (!(feitOpgehaald.getFeitcode().equals(feit.getFeitcode()))) {
                 throw new UniekVeldException("Feitcode: " + feitOpgehaald.getFeitcode() + " mag niet gewijzigd worden in " + feit.getFeitcode());
             }
 

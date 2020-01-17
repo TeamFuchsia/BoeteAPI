@@ -1,8 +1,12 @@
 package nl.fuchsia.model;
 
-import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "status")
@@ -14,7 +18,6 @@ public class Status {
 
     @Column
     private String omschrijving;
-
 
     public Status() {
     }
@@ -44,14 +47,14 @@ public class Status {
         this.omschrijving = omschrijving;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Status status = (Status) o;
-        return statusnr == status.statusnr &&
-                Objects.equals(omschrijving, status.omschrijving);
+        return statusnr == status.statusnr && Objects.equals(omschrijving, status.omschrijving);
     }
 
     @Override
@@ -61,12 +64,6 @@ public class Status {
 
     @Override
     public String toString() {
-        return "Status{" +
-                "statusnr=" + statusnr +
-                ", omschrijving='" + omschrijving + '\'' +
-                '}';
+        return "Status{" + "statusnr=" + statusnr + ", omschrijving='" + omschrijving + '\'' + '}';
     }
-
 }
-
-

@@ -1,20 +1,25 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.dto.ZaakDto;
-import nl.fuchsia.dto.ZaakAddStatusDto;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.fuchsia.dto.ZaakAddFeitDto;
-import nl.fuchsia.exceptionhandlers.*;
-import nl.fuchsia.model.*;
+import nl.fuchsia.dto.ZaakAddStatusDto;
+import nl.fuchsia.dto.ZaakDto;
+import nl.fuchsia.exceptionhandlers.NotFoundException;
+import nl.fuchsia.exceptionhandlers.UniekVeldException;
+import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
+import nl.fuchsia.model.Status;
+import nl.fuchsia.model.Zaak;
+import nl.fuchsia.model.ZaakStatus;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ZaakService {
@@ -53,15 +58,16 @@ public class ZaakService {
             Feit feit = feitRepository.getFeitById(feitNr);
             if (feit == null) {
                 exceptions.add("Feitnr " + feitNr + " bestaat niet");
-            } else feiten.add(feit);
+            } else
+                feiten.add(feit);
         }
         if (exceptions.size() > 0) {
             throw new NotFoundException(exceptions.toString());
         }
 
-        Zaak zaak = new Zaak(zaakDto.getOvertredingsdatum(),zaakDto.getPleeglocatie(),persoon,feiten);
+        Zaak zaak = new Zaak(zaakDto.getOvertredingsdatum(), zaakDto.getPleeglocatie(), persoon, feiten);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
-        ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(),new Status(1, "Open"),zaak);
+        ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
         zaakStatussen.add(zaakStatus);
 
         zaak.setZaakStatus(zaakStatussen);
@@ -74,7 +80,8 @@ public class ZaakService {
 
     /**
      * Voegt 1 zaakStatus toe aan een bestaande zaak en hier een nieuwe historie voor statussen aan van de zaak.
-     * @param zaakNr de betreffende bestaande zaak
+     *
+     * @param zaakNr           de betreffende bestaande zaak
      * @param zaakAddStatusDto de toe te voegen status
      * @return de geupdate zaak.
      */
@@ -107,7 +114,6 @@ public class ZaakService {
 
         return zaakDto;
     }
-
 
     public List<ZaakDto> getZaken() {
         List<Zaak> zaken = zaakRepository.getZaken();
@@ -145,50 +151,50 @@ public class ZaakService {
         return zaakDtos;
     }
 
-	/**
-	 * Voegt 1 of meer bestaande feiten toe aan een bestaande zaak.
-	 *
-	 * @param zaakNr             de betreffende bestaande zaak
-	 * @param listZaakAddFeitDto de toe te voegen feit(en)
-	 * @return de geupdate zaak.
-	 */
-	@Transactional
-	public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
-		List<String> notFoundExceptions = new ArrayList<>();
-		List<String> uniekVeldExceptions = new ArrayList<>();
+    /**
+     * Voegt 1 of meer bestaande feiten toe aan een bestaande zaak.
+     *
+     * @param zaakNr             de betreffende bestaande zaak
+     * @param listZaakAddFeitDto de toe te voegen feit(en)
+     * @return de geupdate zaak.
+     */
+    @Transactional
+    public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+        List<String> notFoundExceptions = new ArrayList<>();
+        List<String> uniekVeldExceptions = new ArrayList<>();
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
-		if (zaak == null) {
-			notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
-		}
-		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-			if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
-				notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
-			}
-		}
-		if (notFoundExceptions.size() > 0) {
-			notFoundExceptions.add("geen feit(en) toegevoegd");
-			throw new NotFoundException(notFoundExceptions.toString());
-		}
+        if (zaak == null) {
+            notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
+        }
+        for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+            if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+                notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
+            }
+        }
+        if (notFoundExceptions.size() > 0) {
+            notFoundExceptions.add("geen feit(en) toegevoegd");
+            throw new NotFoundException(notFoundExceptions.toString());
+        }
 
-		List<Feit> zaakFeiten = zaak.getFeiten();
-		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-			int feitNrDto = zaakAddFeitDto.getFeitNr();
-			for (Feit feit : zaakFeiten) {
-				if (feit.getFeitNr() == feitNrDto) {
-					uniekVeldExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
-				}
-			}
-		}
-		if (uniekVeldExceptions.size() > 0) {
-			uniekVeldExceptions.add("geen feit(en) toegevoegd");
-			throw new UniekVeldException(uniekVeldExceptions.toString());
-		}
-		for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-			zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
-			zaak.setFeiten(zaakFeiten);
-		}
+        List<Feit> zaakFeiten = zaak.getFeiten();
+        for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+            int feitNrDto = zaakAddFeitDto.getFeitNr();
+            for (Feit feit : zaakFeiten) {
+                if (feit.getFeitNr() == feitNrDto) {
+                    uniekVeldExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
+                }
+            }
+        }
+        if (uniekVeldExceptions.size() > 0) {
+            uniekVeldExceptions.add("geen feit(en) toegevoegd");
+            throw new UniekVeldException(uniekVeldExceptions.toString());
+        }
+        for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
+            zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+            zaak.setFeiten(zaakFeiten);
+        }
         ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);
         return zaakDto;
-	}
+    }
 }

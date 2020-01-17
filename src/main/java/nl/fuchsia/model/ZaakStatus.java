@@ -1,11 +1,16 @@
 package nl.fuchsia.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class ZaakStatus {
@@ -35,10 +40,10 @@ public class ZaakStatus {
         this.zaak = zaak;
     }
 
-	public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
-		this(veranderdatum,status,zaak);
-    	this.zaakstatusnr = zaakstatusnr;
-	}
+    public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
+        this(veranderdatum, status, zaak);
+        this.zaakstatusnr = zaakstatusnr;
+    }
 
     public Integer getZaakstatusnr() {
         return zaakstatusnr;
@@ -64,7 +69,6 @@ public class ZaakStatus {
         this.status = status;
     }
 
-
     public int getZaak() {
         return zaak.getZaaknr();
     }
@@ -75,23 +79,18 @@ public class ZaakStatus {
 
     @Override
     public String toString() {
-        return "ZaakStatus{" +
-                "zaakstatusnr=" + zaakstatusnr +
-                ", veranderdatum=" + veranderdatum +
-                ", status=" + status +
-                ", zaak=" + zaak.getZaaknr() +
-                '}';
+        return "ZaakStatus{" + "zaakstatusnr=" + zaakstatusnr + ", veranderdatum=" + veranderdatum + ", status=" + status + ", zaak=" + zaak.getZaaknr() + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ZaakStatus that = (ZaakStatus) o;
-        return Objects.equals(zaakstatusnr, that.zaakstatusnr) &&
-                Objects.equals(veranderdatum, that.veranderdatum) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(zaak.getZaaknr(), that.zaak.getZaaknr());
+        return Objects.equals(zaakstatusnr, that.zaakstatusnr) && Objects.equals(veranderdatum, that.veranderdatum) && Objects.equals(status, that.status) && Objects
+                .equals(zaak.getZaaknr(), that.zaak.getZaaknr());
     }
 
     @Override

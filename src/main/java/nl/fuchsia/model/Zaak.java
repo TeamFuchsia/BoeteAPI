@@ -3,6 +3,7 @@ package nl.fuchsia.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.*;
 
 @Entity
@@ -25,14 +26,10 @@ public class Zaak {
     private Persoon persoon;
 
     @ManyToMany
-    @JoinTable(name = "zaakregel",
-            joinColumns =
-            @JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"),
-            inverseJoinColumns =
-            @JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
+    @JoinTable(name = "zaakregel", joinColumns = @JoinColumn(name = "zaaknr", referencedColumnName = "zaaknr"), inverseJoinColumns = @JoinColumn(name = "feitnr", referencedColumnName = "feitnr"))
     private List<Feit> feiten;
 
-    @OneToMany(mappedBy = "zaak" ,cascade ={CascadeType.PERSIST})
+    @OneToMany(mappedBy = "zaak", cascade = { CascadeType.PERSIST })
     private List<ZaakStatus> zaakStatus;
 
     public Zaak() {
@@ -48,12 +45,12 @@ public class Zaak {
         this.zaaknr = zaaknr;
     }
 
-	public Zaak (int zaaknr,LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
-		this(overtredingsdatum, pleeglocatie);
-		this.feiten = feiten;
-		this.zaaknr = zaaknr;
-		this.persoon = persoon;
-	}
+    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+        this(overtredingsdatum, pleeglocatie);
+        this.feiten = feiten;
+        this.zaaknr = zaaknr;
+        this.persoon = persoon;
+    }
 
     public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
         this(overtredingsdatum, pleeglocatie);
@@ -62,16 +59,16 @@ public class Zaak {
     }
 
     public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
-		this(overtredingsdatum, pleeglocatie);
+        this(overtredingsdatum, pleeglocatie);
         this.persoon = persoon;
         this.feiten = feiten;
         this.zaakStatus = zaakStatus;
     }
 
-	public Zaak(int zaaknr,LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus){
-    	this(overtredingsdatum,pleeglocatie,persoon,feiten,zaakStatus);
-    	this.zaaknr = zaaknr;
-	}
+    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
+        this(overtredingsdatum, pleeglocatie, persoon, feiten, zaakStatus);
+        this.zaaknr = zaaknr;
+    }
 
     public List<ZaakStatus> getZaakStatus() {
         return zaakStatus;
@@ -81,9 +78,9 @@ public class Zaak {
         this.zaakStatus = zaakStatus;
     }
 
-	public int getZaaknr() {
-		return zaaknr;
-	}
+    public int getZaaknr() {
+        return zaaknr;
+    }
 
     public void setZaaknr(int zaakNr) {
         this.zaaknr = zaakNr;
@@ -123,27 +120,19 @@ public class Zaak {
 
     @Override
     public String toString() {
-        return "Zaak{" +
-                "zaaknr=" + zaaknr +
-                ", overtredingsdatum=" + overtredingsdatum +
-                ", pleeglocatie='" + pleeglocatie + '\'' +
-                ", persoon=" + persoon +
-                ", feiten=" + feiten +
-                ", zaakStatus=" + zaakStatus +
-                '}';
+        return "Zaak{" + "zaaknr=" + zaaknr + ", overtredingsdatum=" + overtredingsdatum + ", pleeglocatie='" + pleeglocatie + '\'' + ", persoon=" + persoon + ", feiten=" + feiten + ", zaakStatus="
+                + zaakStatus + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Zaak zaak = (Zaak) o;
-        return zaaknr == zaak.zaaknr &&
-                Objects.equals(overtredingsdatum, zaak.overtredingsdatum) &&
-                Objects.equals(pleeglocatie, zaak.pleeglocatie) &&
-                Objects.equals(persoon, zaak.persoon) &&
-                Objects.equals(feiten, zaak.feiten) &&
-                Objects.equals(zaakStatus, zaak.zaakStatus);
+        return zaaknr == zaak.zaaknr && Objects.equals(overtredingsdatum, zaak.overtredingsdatum) && Objects.equals(pleeglocatie, zaak.pleeglocatie) && Objects.equals(persoon, zaak.persoon) && Objects
+                .equals(feiten, zaak.feiten) && Objects.equals(zaakStatus, zaak.zaakStatus);
     }
 
     @Override

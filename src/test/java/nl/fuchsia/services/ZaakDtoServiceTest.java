@@ -10,10 +10,8 @@ import nl.fuchsia.model.Status;
 import nl.fuchsia.model.Zaak;
 import nl.fuchsia.model.ZaakStatus;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ZaakDtoServiceTest {
 

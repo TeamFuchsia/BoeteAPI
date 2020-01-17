@@ -24,9 +24,7 @@ public class TestDatabaseConfig extends AbstractDatabaseConfig {
      */
     @Override
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.H2)
-                .build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
     }
 
     /**

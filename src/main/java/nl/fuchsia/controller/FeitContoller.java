@@ -37,6 +37,7 @@ public class FeitContoller {
 
     /**
      * Haalt alle Feiten uit de database
+     *
      * @return een lijst met alle feiten
      */
     @GetMapping

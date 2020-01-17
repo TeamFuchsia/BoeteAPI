@@ -1,11 +1,11 @@
 package nl.fuchsia.repository;
 
-import nl.fuchsia.model.Status;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+
+import nl.fuchsia.model.Status;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class StatusRepository {
@@ -20,8 +20,7 @@ public class StatusRepository {
      * @return het opgehaalde feit.
      */
     @Transactional
-    public Status getStatusById(Integer statusnr){
+    public Status getStatusById(Integer statusnr) {
         return entityManager.find(Status.class, statusnr);
     }
-
 }

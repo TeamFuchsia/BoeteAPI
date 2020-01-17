@@ -86,7 +86,7 @@ public class PersoonServiceTest {
      */
     @Test
     public void testNonUniekBsnExeptionAddPersoon() {
-		when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
@@ -110,7 +110,6 @@ public class PersoonServiceTest {
         when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
         when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
 
-        assertThatThrownBy(() -> persoonService.updatePersoonById(persoon))
-                .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
+        assertThatThrownBy(() -> persoonService.updatePersoonById(persoon)).isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 }

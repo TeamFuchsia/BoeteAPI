@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FeitRepository {
 
+    private static final String GET_FEITEN = "SELECT feit FROM Feit feit";
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
-    private static final String GET_FEITEN ="SELECT feit FROM Feit feit";
-
     /**
      * Voegt een Feit toe aan de database
+     *
      * @param feit is het toe te voegen feit.
      */
     @Transactional
@@ -27,19 +27,20 @@ public class FeitRepository {
         return feit;
     }
 
-	/**
-	 * Haalt het strafbare feit op basis van het feitnr.
-	 *
-	 * @param feitnr het feitnr van de op te halen feiten.
-	 * @return het opgehaalde feit.
-	 */
-	@Transactional
-    public Feit getFeitById(Integer feitnr){
-    	return entityManager.find(Feit.class, feitnr);
-	}
+    /**
+     * Haalt het strafbare feit op basis van het feitnr.
+     *
+     * @param feitnr het feitnr van de op te halen feiten.
+     * @return het opgehaalde feit.
+     */
+    @Transactional
+    public Feit getFeitById(Integer feitnr) {
+        return entityManager.find(Feit.class, feitnr);
+    }
 
     /**
      * Haalt alle Feiten uit de database
+     *
      * @return een lijst met alle feiten
      */
     @Transactional

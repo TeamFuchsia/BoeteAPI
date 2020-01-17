@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class ZaakRepository {
 
+    private static final String GET_ZAKEN = "SELECT zaak FROM Zaak zaak ";
+    private static final String GET_ZAKEN_BY_PERSOON = GET_ZAKEN + "where zaak.persoon=:persoon";
+
     /**
      * maakt een {@link EntityManager} t.b.v. de {@link PersistenceContext}.
      */
@@ -20,12 +23,10 @@ public class ZaakRepository {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
-    private static final String GET_ZAKEN = "SELECT zaak FROM Zaak zaak ";
-    private static final String GET_ZAKEN_BY_PERSOON = GET_ZAKEN + "where zaak.persoon=:persoon";
-
     @Transactional
     public Zaak addZaak(Zaak zaak) {
         entityManager.persist(zaak);
+        entityManager.flush();
         return zaak;
     }
 

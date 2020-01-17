@@ -31,7 +31,7 @@ public class Feit {
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
      * Geen validatie op uniek, omdat dit later in de database ingesteld kan worden.
      */
-	@Column(unique = true)
+    @Column(unique = true)
     @NotBlank(message = "Feitcode mist, voeg deze nog toe")
     @Pattern(regexp = "VBF-\\d{3}$", message = "Feitcode moet voldoen aan de standaard opmaak, VBF- gevolgd door 3 cijfers, bv VBF-000")
     private String feitcode;
@@ -62,8 +62,8 @@ public class Feit {
     }
 
     public Feit(int feitNr, String feitcode, String omschrijving, double bedrag) {
-        this(feitcode,omschrijving,bedrag);
-    	this.feitNr = feitNr;
+        this(feitcode, omschrijving, bedrag);
+        this.feitNr = feitNr;
     }
 
     public String getFeitcode() {
@@ -100,23 +100,17 @@ public class Feit {
 
     @Override
     public String toString() {
-        return "Feit{" +
-                "feitNr=" + feitNr +
-                ", feitcode=" + feitcode +
-                ", omschrijving=" + omschrijving +
-                ", bedrag=" + bedrag +
-                '}';
+        return "Feit{" + "feitNr=" + feitNr + ", feitcode=" + feitcode + ", omschrijving=" + omschrijving + ", bedrag=" + bedrag + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Feit feit = (Feit) o;
-        return feitNr == feit.feitNr &&
-                Double.compare(feit.bedrag, bedrag) == 0 &&
-                Objects.equals(feitcode, feit.feitcode) &&
-                Objects.equals(omschrijving, feit.omschrijving);
+        return feitNr == feit.feitNr && Double.compare(feit.bedrag, bedrag) == 0 && Objects.equals(feitcode, feit.feitcode) && Objects.equals(omschrijving, feit.omschrijving);
     }
 
     @Override

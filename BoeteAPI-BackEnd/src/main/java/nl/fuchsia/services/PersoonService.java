@@ -48,20 +48,25 @@ public class PersoonService {
      * @param persoonnr - ID de op te halen persoon.
      */
     public Persoon getPersoonById(Integer persoonnr) {
+        Persoon persoon = persoonRepository.getPersoonById(persoonnr);
 
-        return persoonRepository.getPersoonById(persoonnr);
+        if (persoon == null) {
+            throw new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet");
+        }
 
+        return persoon;
     }
 
     /**
      * wijzigd de persoon in de database op bassis van de meegeven ID nummer in de persoon.
+     *
      * @param persoon zijn de gegevens waarin de persoon gewijzigd moet worden
      * @return de nieuwe persoon in de database
      */
     public Persoon updatePersoonById(Persoon persoon) {
 
         try {
-            if (persoon.getPersoonnr() == null){
+            if (persoon.getPersoonnr() == null) {
                 throw new MissingIdExeption("Geen Persoonnummer ingevoerd");
             }
             if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {

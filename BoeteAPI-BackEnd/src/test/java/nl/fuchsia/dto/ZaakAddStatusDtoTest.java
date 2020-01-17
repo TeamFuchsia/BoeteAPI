@@ -1,6 +1,5 @@
-package nl.fuchsia.model;
+package nl.fuchsia.dto;
 
-import java.time.LocalDate;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -12,10 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ZaakTest {
+class ZaakAddStatusDtoTest {
 
     private static Validator validator;
-    private static Zaak zaak;
 
     @BeforeAll
     public static void setupAll() {
@@ -24,11 +22,12 @@ public class ZaakTest {
     }
 
     @Test
-    public void testAddZaak() {
-        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
+    void statusNrIsNull() {
+        ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto(0);
 
-        Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
+        Set<ConstraintViolation<ZaakAddStatusDto>> constraintViolations = validator.validate(zaakAddStatusDto);
 
-        assertThat(constraintViolations.size()).isEqualTo(0);
+        assertThat(constraintViolations).hasSize(1);
+        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Statusnummer dient groter dan 0 te zijn");
     }
 }

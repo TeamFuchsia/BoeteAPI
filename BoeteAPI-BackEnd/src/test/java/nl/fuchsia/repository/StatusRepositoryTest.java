@@ -1,11 +1,10 @@
 package nl.fuchsia.repository;
 
-import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import nl.fuchsia.configuration.TestDatabaseConfig;
-import nl.fuchsia.model.Zaak;
+import nl.fuchsia.model.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,45 +17,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ZaakRepositoryTest {
+class StatusRepositoryTest {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
     @Autowired
-    private ZaakRepository zaakRepository;
+    private StatusRepository statusRepository;
 
     @BeforeEach
     public void setup() {
-        entityManager.createQuery("Delete FROM Zaak").executeUpdate();
-
-        Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Drachten");
-        zaakRepository.addZaak(zaak);
+        entityManager.persist(new Status(1, "Open"));
     }
 
     @Test
-    void testAddZaak() {
-        Zaak zaak = new Zaak(LocalDate.of(2019, 12, 12), "Leeuwarden");
-        zaakRepository.addZaak(zaak);
-
-        assertThat(zaakRepository.getZaken()).hasSize(2);
-    }
-
-    @Test
-    void testGetZakenById() {
-        Zaak zaakByIdtest = new Zaak(LocalDate.of(2019, 12, 12), "Heerenveen");
-        zaakRepository.addZaak(zaakByIdtest);
-
-        assertThat(zaakRepository.getZaken()).hasSize(2);
-        assertThat(zaakRepository.getZaakById(zaakByIdtest.getZaaknr()).getPleeglocatie()).isEqualTo("Heerenveen");
-    }
-
-    @Test
-    void testGetzaken() {
-        assertThat(zaakRepository.getZaken()).hasSize(1);
+    void getStatusById() {
+        assertThat(statusRepository.getStatusById(1).getOmschrijving()).isEqualTo("Open");
     }
 }

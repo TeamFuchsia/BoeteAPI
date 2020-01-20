@@ -64,22 +64,22 @@ public class UpdateFeitById {
                 .dataSource(dataSource)
                 .statement("SELECT * FROM public.feit LIMIT 1")
         );
-        String nieweFeitcode = "VBF-999";
-        String bestaandeFeitcode = "VBF-010";
+        String nieuweFeitCode = "VBF-999";
+        String bestaandeFeitcode = "VBF-011";
 
         String payload = "";
         switch(invoer){
             case "goede":
-                payload = ("{ \"feitnr\": ${selectFeitnr}, \"feitcode\": \"" + nieweFeitcode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${Bedrag} }");
+                payload = ("{ \"feitnr\": ${selectFeitnr}, \"feitcode\": \"" + nieuweFeitCode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${BEDRAG} }");
                 break;
             case "geen feitnr":
-                payload = ("{ \"feitcode\": \"" + nieweFeitcode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${Bedrag} }");
+                payload = ("{ \"feitcode\": \"" + nieuweFeitCode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${BEDRAG} }");
                 break;
             case "fout feitnr":
-                payload = ("{ \"feitnr\": 0, \"feitcode\": \"" + nieweFeitcode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${Bedrag} }");
+                payload = ("{ \"feitnr\": 0, \"feitcode\": \"" + nieuweFeitCode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${BEDRAG} }");
                 break;
             case "bestaand FeitCode":
-                payload = ("{ \"feitnr\": ${selectFeitnr}, \"feitcode\": \"" + bestaandeFeitcode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${Bedrag} }");
+                payload = ("{ \"feitnr\": ${selectFeitnr}, \"feitcode\": \"" + bestaandeFeitcode + "\", \"omschrijving\": \"${OMSCHRIJVING}\", \"bedrag\": ${BEDRAG} }");
                 break;
         }
         String finalPayload = payload;
@@ -94,14 +94,12 @@ public class UpdateFeitById {
     }
 
     @Dan("moet de HTTP status code {int} zijn en moet in de response o.a de gewijzigde feitcode {string} zitten")
-    public void verifyResponse(int httpStatusCode, String feitcode) {
+    public void verifyResponse(int httpStatusCode, String wrdFeitCode) {
         runner.http(httpActionBuilder -> httpActionBuilder
                 .client(boeteApiClient)
                 .receive()
                 .response(HttpStatus.valueOf(httpStatusCode))
-                .validate("$.feitcode", String.valueOf(feitcode))
-        );
-
+                .validate("$.feitcode", String.valueOf(wrdFeitCode)));
     }
 
 }

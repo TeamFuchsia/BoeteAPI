@@ -1,0 +1,60 @@
+# Created at 2020-01-20T11:20:04.745
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-01-20T11:20:04.745
+WARNING: Illegal reflective access by org.springframework.util.ReflectionUtils (file:/home/sthoor/.m2/repository/org/springframework/spring-core/5.1.8.RELEASE/spring-core-5.1.8.RELEASE.jar) to method java.lang.ClassLoader.findLoadedClass(java.lang.String)
+
+# Created at 2020-01-20T11:20:04.745
+WARNING: Please consider reporting this to the maintainers of org.springframework.util.ReflectionUtils
+
+# Created at 2020-01-20T11:20:04.745
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-01-20T11:20:04.745
+WARNING: All illegal access operations will be denied in a future release
+
+# Created at 2020-01-20T11:20:10.865
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-01-20T11:20:10.866
+WARNING: Illegal reflective access by org.springframework.util.ReflectionUtils (file:/home/sthoor/.m2/repository/org/springframework/spring-core/5.1.8.RELEASE/spring-core-5.1.8.RELEASE.jar) to method java.lang.ClassLoader.findLoadedClass(java.lang.String)
+
+# Created at 2020-01-20T11:20:10.866
+WARNING: Please consider reporting this to the maintainers of org.springframework.util.ReflectionUtils
+
+# Created at 2020-01-20T11:20:10.866
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-01-20T11:20:10.866
+WARNING: All illegal access operations will be denied in a future release
+
+# Created at 2020-01-20T11:20:13.195
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-01-20T11:20:13.195
+WARNING: Illegal reflective access by org.springframework.util.ReflectionUtils (file:/home/sthoor/.m2/repository/org/springframework/spring-core/5.1.8.RELEASE/spring-core-5.1.8.RELEASE.jar) to method java.lang.ClassLoader.findLoadedClass(java.lang.String)
+
+# Created at 2020-01-20T11:20:13.195
+WARNING: Please consider reporting this to the maintainers of org.springframework.util.ReflectionUtils
+
+# Created at 2020-01-20T11:20:13.195
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-01-20T11:20:13.196
+WARNING: All illegal access operations will be denied in a future release
+
+# Created at 2020-01-20T11:20:15.745
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-01-20T11:20:15.746
+WARNING: Illegal reflective access by org.springframework.util.ReflectionUtils (file:/home/sthoor/.m2/repository/org/springframework/spring-core/5.1.8.RELEASE/spring-core-5.1.8.RELEASE.jar) to method java.lang.ClassLoader.findLoadedClass(java.lang.String)
+
+# Created at 2020-01-20T11:20:15.746
+WARNING: Please consider reporting this to the maintainers of org.springframework.util.ReflectionUtils
+
+# Created at 2020-01-20T11:20:15.746
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-01-20T11:20:15.746
+WARNING: All illegal access operations will be denied in a future release
+

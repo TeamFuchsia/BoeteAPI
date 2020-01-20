@@ -22,6 +22,9 @@
                     <container>
                         <containerId>tomcat9x</containerId>
                         <type>embedded</type>
+                        <systemProperties>
+                            <spring.profiles.active>test</spring.profiles.active>
+                        </systemProperties>
                     </container>
                     <deployables>
                         <deployable>
@@ -33,11 +36,6 @@
                             </properties>
                         </deployable>
                     </deployables>
-                    <configuration>
-                        <properties>
-                            <cargo.jvmargs>-Dspring.profiles.active=test</cargo.jvmargs>
-                        </properties>
-                    </configuration>
                 </configuration>
                 <executions>
                     <execution>
@@ -46,7 +44,6 @@
                         <goals>
                             <goal>start</goal>
                         </goals>
-
                     </execution>
                     <execution>
                         <id>stop</id>

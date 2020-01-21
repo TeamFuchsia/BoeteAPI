@@ -30,13 +30,13 @@ public class GetPersoonById {
 
     private String persoonnr;
 
-    @Gegeven("er zitten {int} personen in de database.")
+    @Gegeven("er zitten {int} personen in de database")
     public void generateRandomPeople(int nrOfPeople) {
         runner.plsql(sqlBuilder -> sqlBuilder.dataSource(dataSource).statement("DELETE FROM persoon"));
         createRandomPersonen(nrOfPeople);
         ExecuteSQLQueryAction query = runner.query(action -> action.dataSource(dataSource).statement("SELECT PERSOONNR FROM public.persoon LIMIT 1").extract("PERSOONNR", "selectPersoonnr"));
-        persoonnr = runner.variable("selectPersoonnr", "${selectPersoonnr}");
-    }
+    persoonnr = runner.variable("selectPersoonnr", "${selectPersoonnr}");
+}
 
     @Als("de client een GETbyID request maakt naar {string} met persoonnr")
     public void callUrl(String url) {

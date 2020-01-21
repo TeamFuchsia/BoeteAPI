@@ -3,7 +3,7 @@
 Functionaliteit: IT-updatePersoonById
 
   Achtergrond:
-    Gegeven er zit 2 persoon in de database.
+    Gegeven er zitten 2 personen in de database!
 
   Scenario: Update een persoon door het BSN nummer te wijzigen
     Als de client een PutbyID request maakt naar "/personen/" met persoonnr

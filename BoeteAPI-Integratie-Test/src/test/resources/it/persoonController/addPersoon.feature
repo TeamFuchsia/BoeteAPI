@@ -3,7 +3,7 @@
 Functionaliteit: IT-addPersoon
 
   Achtergrond:
-    Gegeven er zit 2 personen in de database.
+    Gegeven er zitten 2 personen in de database.
 
   Scenario: Voeg een persoon toe aan de database.
     Als de client een POST maakt naar "/personen" met

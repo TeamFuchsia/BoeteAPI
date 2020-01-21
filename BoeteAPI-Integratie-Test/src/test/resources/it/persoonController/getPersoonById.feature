@@ -3,7 +3,7 @@
 Functionaliteit: IT-getPersoonById
 
     Achtergrond:
-        Gegeven er zitten 3 personen in de database.
+        Gegeven er zitten 3 personen in de database
 
     Scenario: Vraag een persoon op uit de database
         Als de client een GETbyID request maakt naar "/personen/" met persoonnr

@@ -1,13 +1,19 @@
 package nl.fuchsia.controller;
 
+import javax.validation.Valid;
+
 import nl.fuchsia.model.Payload;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.services.PersoonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/personen")
@@ -55,9 +61,9 @@ public class PersoonController {
     /**
      * Wijzigt de persoon op bassis van de meegegeven ID nummer in Json object.
      */
-    @PutMapping
-    public ResponseEntity<Persoon> updatePersoonById(@Valid @RequestBody Persoon persoon) {
+    @PutMapping(value = "/{persoonnr}")
+    public ResponseEntity<Persoon> updatePersoonById(@Valid @PathVariable("persoonnr") Integer persoonnr, @RequestBody Persoon persoon) {
 
-        return ResponseEntity.ok(persoonService.updatePersoonById(persoon));
+        return ResponseEntity.ok(persoonService.updatePersoonById(persoonnr, persoon));
     }
 }

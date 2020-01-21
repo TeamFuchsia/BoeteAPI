@@ -1,6 +1,7 @@
 package nl.fuchsia.services;
 
-import nl.fuchsia.exceptionhandlers.MissingIdExeption;
+import java.util.List;
+
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -8,8 +9,6 @@ import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
-
-import java.util.List;
 
 @Component
 public class PersoonService {
@@ -63,15 +62,14 @@ public class PersoonService {
      * @param persoon zijn de gegevens waarin de persoon gewijzigd moet worden
      * @return de nieuwe persoon in de database
      */
-    public Persoon updatePersoonById(Persoon persoon) {
+    public Persoon updatePersoonById(Integer persoonnr, Persoon persoon) {
 
         try {
-            if (persoon.getPersoonnr() == null) {
-                throw new MissingIdExeption("Geen Persoonnummer ingevoerd");
+            System.out.println(persoonnr);
+            if (persoonRepository.getPersoonById(persoonnr) == null) {
+                throw new NotFoundException("Persoonnummer: " + persoonnr + " bestaat niet!");
             }
-            if (persoonRepository.getPersoonById(persoon.getPersoonnr()) == null) {
-                throw new NotFoundException("Persoonnummer: " + persoon.getPersoonnr() + " bestaat niet!");
-            }
+            persoon.setPersoonnr(persoonnr);
             persoonRepository.updatePersoonById(persoon);
 
         } catch (TransactionSystemException e) {

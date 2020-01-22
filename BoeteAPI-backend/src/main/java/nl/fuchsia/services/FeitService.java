@@ -31,24 +31,23 @@ public class FeitService {
         return feitRepository.getFeiten();
     }
 
-    public Feit updateFeitById(Feit feit) {
+    public Feit updateFeitById(int feitnr, Feit feit) {
 
         try {
-            Feit feitOpgehaald = feitRepository.getFeitById(feit.getFeitNr());
-
-            if (feitOpgehaald == null) {
-                throw new NotFoundException("Feitnummer: " + feit.getFeitNr() + " bestaat niet!");
+            if (feitRepository.getFeitById(feitnr) == null) {
+                throw new NotFoundException("Feitnummer: " + feitnr + " bestaat niet!");
             }
-            if (!(feitOpgehaald.getFeitcode().equals(feit.getFeitcode()))) {
-                throw new UniekVeldException("Feitcode: " + feitOpgehaald.getFeitcode() + " mag niet gewijzigd worden in " + feit.getFeitcode());
+            if (!(feitRepository.getFeitById(feitnr).getFeitcode().equals(feit.getFeitcode()))) {
+                throw new UniekVeldException("Feitcode: " + feitRepository.getFeitById(feitnr).getFeitcode() + " mag niet gewijzigd worden in " + feit.getFeitcode());
             }
-
+            feit.setFeitNr(feitnr);
             feitRepository.updateFeitById(feit);
 
         } catch (TransactionSystemException e) {
             throw new UniekVeldException("Feitcode: " + feit.getFeitcode() + " bestaat reeds.");
         }
-
         return feit;
+
     }
 }
+

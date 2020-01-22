@@ -3,12 +3,15 @@ package nl.fuchsia.services;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Feit;
+import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.FeitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.transaction.TransactionSystemException;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,25 +58,26 @@ public class FeitServiceTest {
      */
     @Test
     public void testUpdateFeitById() {
-        Feit feit = new Feit(2, "VBF-002", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
-        Feit updatedfeit = new Feit(2, "VBF-002", "Test", 5000);
+        Feit feit = new Feit("VBF-004", "Test", 500);
+        int feitnr = 10;
 
-        feitService.updateFeitById(updatedfeit);
+        when(feitRepository.getFeitById(feitnr)).thenReturn(feit);
 
-        verify(feitRepository).getFeitById(feit.getFeitNr());
-        verify(feitRepository).updateFeitById(updatedfeit);
+        feitService.updateFeitById(feitnr, feit);
+
+        verify(feitRepository).updateFeitById(feit);
     }
 
     /**
      * Test controleert of het BSN bij het updaten/toevoegen al bestaat in de database.
-     */
+//     */
     @Test
     public void testFeitcodeUpdateExeption() {
-        Feit feit = new Feit(3, "VBF-003", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        Feit feit = new Feit("VBF-003", "Test", 500);
+        int feitnr = 3;
+        when(feitRepository.getFeitById(feitnr)).thenReturn(feit);
 
-        assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-004", "Test", 500))).isInstanceOf(UniekVeldException.class)
+        assertThatThrownBy(() -> feitService.updateFeitById(feitnr, new Feit( feitnr,"VBF-004", "Test", 500))).isInstanceOf(UniekVeldException.class)
                 .hasMessage("Feitcode: VBF-003 mag niet gewijzigd worden in VBF-004");
     }
 
@@ -84,6 +88,7 @@ public class FeitServiceTest {
     public void testBestaanPersoonnr() {
         when(feitRepository.updateFeitById(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-003", "Test", 500))).isInstanceOf(NotFoundException.class).hasMessage("Feitnummer: 3 bestaat niet!");
+        assertThatThrownBy(() -> feitService.updateFeitById(3, new Feit(3,"VBF-003", "Test", 500)))
+                .isInstanceOf(NotFoundException.class).hasMessage("Feitnummer: 3 bestaat niet!");
     }
 }

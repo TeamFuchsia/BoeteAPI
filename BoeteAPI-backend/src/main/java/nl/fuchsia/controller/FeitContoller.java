@@ -44,9 +44,9 @@ public class FeitContoller {
     /**
      * Wijzigt het feit op bassis van de meegegeven ID nummer in Json object.
      */
-    @PutMapping
-    public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
+    @PutMapping (value = "/{feitnr}")
+    public ResponseEntity<Feit> updateFeitById(@Valid @PathVariable("feitnr") int feitnr, @RequestBody Feit feit) {
 
-        return ResponseEntity.ok(feitService.updateFeitById(feit));
+        return ResponseEntity.ok(feitService.updateFeitById(feitnr, feit));
     }
 }

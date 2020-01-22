@@ -34,7 +34,7 @@ public class FeitRepository {
      * @return het opgehaalde feit.
      */
     @Transactional
-    public Feit getFeitById(Integer feitnr) {
+    public Feit getFeitById(int feitnr) {
         return entityManager.find(Feit.class, feitnr);
     }
 

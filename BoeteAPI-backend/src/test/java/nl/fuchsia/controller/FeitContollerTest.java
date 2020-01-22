@@ -40,9 +40,10 @@ public class FeitContollerTest {
     @Test
     public void testUpdateFeitById() {
         Feit feit = new Feit();
+        int feitnr = 1;
 
-        feitContoller.updateFeitById(feit);
+        feitContoller.updateFeitById(feitnr, feit);
 
-        verify(feitService).updateFeitById(feit);
+        verify(feitService).updateFeitById(feitnr, feit);
     }
 }

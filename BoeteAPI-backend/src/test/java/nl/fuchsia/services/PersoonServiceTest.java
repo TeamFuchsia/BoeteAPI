@@ -1,7 +1,5 @@
 package nl.fuchsia.services;
 
-import java.time.LocalDate;
-
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.transaction.TransactionSystemException;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

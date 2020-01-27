@@ -26,7 +26,7 @@ public class ListFeitRepositoryTest {
 
         assertThat(feitList.get(0)).isNotEqualTo(tweedeFeit);
 
-        eersteFeit.setFeitNr(2);
+        eersteFeit.setFeitnr(2);
 
         assertThat(feitList.get(1)).isEqualTo(eersteFeit);
     }

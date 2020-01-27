@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -87,7 +88,7 @@ public class PersoonServiceTest {
      */
     @Test
     public void testNonUniekBsnExeptionAddPersoon() {
-        when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new DataIntegrityViolationException("TestException"));
 
         assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
@@ -109,7 +110,7 @@ public class PersoonServiceTest {
         Persoon persoon = new Persoon("Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
         int persoonnr = 1;
 
-        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new DataIntegrityViolationException("TestException"));
         when(persoonRepository.getPersoonById(persoonnr)).thenReturn(persoon);
 
         assertThatThrownBy(() -> persoonService.updatePersoonById(persoonnr, persoon)).isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");

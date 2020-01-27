@@ -30,7 +30,7 @@ class ZaakDtoServiceTest {
         ZaakStatus zaakStatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
         zaakStatussen.add(zaakStatus);
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
 
         assertThat(zaakDtoService.setZaakDto(zaak).getPersoonnr()).isEqualTo(persoon.getPersoonnr());
     }

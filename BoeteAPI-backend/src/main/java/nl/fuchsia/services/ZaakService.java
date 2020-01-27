@@ -66,7 +66,7 @@ public class ZaakService {
         ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
         zaakStatussen.add(zaakStatus);
 
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
         Zaak savedZaak = zaakRepository.addZaak(zaak);
 
         zaakDto = zaakDtoService.setZaakDto(savedZaak);
@@ -101,9 +101,9 @@ public class ZaakService {
 
         ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), status, zaak);
 
-        List<ZaakStatus> zaakStatussen = zaak.getZaakStatus();
+        List<ZaakStatus> zaakStatussen = zaak.getZaakstatus();
         zaakStatussen.add(zaakStatus);
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
         zaakRepository.addZaak(zaak);
 
         ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);
@@ -177,7 +177,7 @@ public class ZaakService {
         for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
             int feitNrDto = zaakAddFeitDto.getFeitNr();
             for (Feit feit : zaakFeiten) {
-                if (feit.getFeitNr() == feitNrDto) {
+                if (feit.getFeitnr() == feitNrDto) {
                     uniekVeldExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " is reeds toegevoegd aan deze zaak");
                 }
             }

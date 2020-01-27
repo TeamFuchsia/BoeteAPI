@@ -16,7 +16,7 @@ public class Feit {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feitNr;
+    private int feitnr;
 
     /*
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
@@ -52,9 +52,9 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public Feit(int feitNr, String feitcode, String omschrijving, double bedrag) {
+    public Feit(int feitnr, String feitcode, String omschrijving, double bedrag) {
         this(feitcode, omschrijving, bedrag);
-        this.feitNr = feitNr;
+        this.feitnr = feitnr;
     }
 
     public String getFeitcode() {
@@ -81,17 +81,17 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public int getFeitNr() {
-        return feitNr;
+    public int getFeitnr() {
+        return feitnr;
     }
 
-    public void setFeitNr(int feitNr) {
-        this.feitNr = feitNr;
+    public void setFeitnr(int feitnr) {
+        this.feitnr = feitnr;
     }
 
     @Override
     public String toString() {
-        return "Feit{" + "feitNr=" + feitNr + ", feitcode=" + feitcode + ", omschrijving=" + omschrijving + ", bedrag=" + bedrag + '}';
+        return "Feit{" + "feitNr=" + feitnr + ", feitcode=" + feitcode + ", omschrijving=" + omschrijving + ", bedrag=" + bedrag + '}';
     }
 
     @Override
@@ -101,11 +101,11 @@ public class Feit {
         if (o == null || getClass() != o.getClass())
             return false;
         Feit feit = (Feit) o;
-        return feitNr == feit.feitNr && Double.compare(feit.bedrag, bedrag) == 0 && Objects.equals(feitcode, feit.feitcode) && Objects.equals(omschrijving, feit.omschrijving);
+        return feitnr == feit.feitnr && Double.compare(feit.bedrag, bedrag) == 0 && Objects.equals(feitcode, feit.feitcode) && Objects.equals(omschrijving, feit.omschrijving);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feitNr, feitcode, omschrijving, bedrag);
+        return Objects.hash(feitnr, feitcode, omschrijving, bedrag);
     }
 }

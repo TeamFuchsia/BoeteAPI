@@ -68,11 +68,11 @@ public class ZaakServiceTest {
         ZaakStatus zaakStatus = new ZaakStatus(null, LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
         zaakStatussen.add(zaakStatus);
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
 
         //Maakt lijsten van feitnrs en zaakStatusnrs, om deze toe te kunnen voegen aan de in te voeren zaakDto
         List<Integer> feitnrs = new ArrayList<>();
-        feitnrs.add(feit.getFeitNr());
+        feitnrs.add(feit.getFeitnr());
         List<Integer> zaakStatusnrs = new ArrayList<>();
         zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
 
@@ -84,16 +84,16 @@ public class ZaakServiceTest {
         List<ZaakStatus> savedZaakStatussen = new ArrayList<>();
         ZaakStatus savedZaakStatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
         savedZaakStatussen.add(savedZaakStatus);
-        savedZaak.setZaakStatus(savedZaakStatussen);
+        savedZaak.setZaakstatus(savedZaakStatussen);
 
         when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
         when(zaakRepository.addZaak(any())).thenReturn(savedZaak);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
 
         zaakService.addZaak(zaakDto);
 
         verify(persoonRepository).getPersoonById(persoon.getPersoonnr());
-        verify(feitRepository).getFeitById(feit.getFeitNr());
+        verify(feitRepository).getFeitById(feit.getFeitnr());
         verify(zaakRepository).addZaak(zaak);
     }
 
@@ -168,11 +168,11 @@ public class ZaakServiceTest {
         ZaakStatus zaakStatus = new ZaakStatus(null, LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
         zaakStatussen.add(zaakStatus);
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
 
         //Maakt een lijst van feitnrs, om deze toe te kunnen voegen aan de te vekrijgen zaakDto
         List<Integer> feitnrs = new ArrayList<>();
-        feitnrs.add(feit.getFeitNr());
+        feitnrs.add(feit.getFeitnr());
 
         //Maakt een lijst van zaakStatusnrs, om deze toe te kunnen voegen aan de te vekrijgen zaakDto
         List<Integer> zaakStatusnrs = new ArrayList<>();
@@ -186,7 +186,7 @@ public class ZaakServiceTest {
         ZaakDto zaakDto = new ZaakDto(savedZaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
         List<ZaakStatus> savedZaakStatussen = new ArrayList<>();
         savedZaakStatussen.add(savedZaakStatus);
-        savedZaak.setZaakStatus(savedZaakStatussen);
+        savedZaak.setZaakstatus(savedZaakStatussen);
 
         //Maakt de extra toe te voegen status aan
         Status status = new Status(2, "In Behandeling");
@@ -224,7 +224,7 @@ public class ZaakServiceTest {
         ZaakStatus zaakStatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> zaakStatussen = new ArrayList<>();
         zaakStatussen.add(zaakStatus);
-        zaak.setZaakStatus(zaakStatussen);
+        zaak.setZaakstatus(zaakStatussen);
 
         ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto(1);
 
@@ -253,7 +253,7 @@ public class ZaakServiceTest {
         ZaakStatus zaakstatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> listZaakStatus = new ArrayList<>();
         listZaakStatus.add(zaakstatus);
-        zaak.setZaakStatus(listZaakStatus);
+        zaak.setZaakstatus(listZaakStatus);
 
         // Maakt een zaakAddFeitDto, voegt deze aan de lijst toe
         ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
@@ -264,10 +264,10 @@ public class ZaakServiceTest {
         Feit nieuwFeit = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
 
         // Maakt eem zaakDto, deze is de returnwaarde van setZaakDto
-        ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), Arrays.asList(feit.getFeitNr(), nieuwFeit.getFeitNr()));
+        ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), Arrays.asList(feit.getFeitnr(), nieuwFeit.getFeitnr()));
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(nieuwFeit.getFeitNr())).thenReturn(nieuwFeit);
+        when(feitRepository.getFeitById(nieuwFeit.getFeitnr())).thenReturn(nieuwFeit);
         when(zaakDtoService.setZaakDto(zaak)).thenReturn(zaakDto);
 
         assertThat(zaak.getFeiten()).hasSize(1);
@@ -277,7 +277,7 @@ public class ZaakServiceTest {
         assertThat(zaakDtoReturn.getFeitnrs()).hasSize(2);
 
         verify(zaakRepository).getZaakById(zaak.getZaaknr());
-        verify(feitRepository, times(2)).getFeitById(nieuwFeit.getFeitNr());
+        verify(feitRepository, times(2)).getFeitById(nieuwFeit.getFeitnr());
         verify(zaakDtoService).setZaakDto(zaak);
     }
 
@@ -294,7 +294,7 @@ public class ZaakServiceTest {
         ZaakStatus zaakstatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
         List<ZaakStatus> listZaakStatus = new ArrayList<>();
         listZaakStatus.add(zaakstatus);
-        zaak.setZaakStatus(listZaakStatus);
+        zaak.setZaakstatus(listZaakStatus);
 
         ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
         List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
@@ -303,7 +303,7 @@ public class ZaakServiceTest {
         Feit feitTwee = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feitTwee.getFeitNr())).thenReturn(feitTwee);
+        when(feitRepository.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
 
         assertThat(zaak.getFeiten()).hasSize(1);
         assertThatThrownBy(() -> zaakService.updZaakFeit(5, listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[zaakNummer: 5 bestaat niet, geen feit(en) toegevoegd]");
@@ -322,7 +322,7 @@ public class ZaakServiceTest {
         List<ZaakStatus> listZaakStatus = new ArrayList<>();
         ZaakStatus zaakstatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
         listZaakStatus.add(zaakstatus);
-        zaak.setZaakStatus(listZaakStatus);
+        zaak.setZaakstatus(listZaakStatus);
 
         ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(2);
         List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
@@ -331,7 +331,7 @@ public class ZaakServiceTest {
         Feit feitTwee = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feitTwee.getFeitNr())).thenReturn(feitTwee);
+        when(feitRepository.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
 
         assertThat(zaak.getFeiten()).hasSize(1);
 
@@ -354,14 +354,14 @@ public class ZaakServiceTest {
         List<ZaakStatus> listZaakStatus = new ArrayList<>();
         ZaakStatus zaakstatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
         listZaakStatus.add(zaakstatus);
-        zaak.setZaakStatus(listZaakStatus);
+        zaak.setZaakstatus(listZaakStatus);
 
         ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto(1);
         List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
         listZaakAddFeitDto.add(zaakAddFeitDto);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
 
         assertThat(zaak.getFeiten()).hasSize(1);
         assertThatThrownBy(() -> zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto)).isInstanceOf(UniekVeldException.class)

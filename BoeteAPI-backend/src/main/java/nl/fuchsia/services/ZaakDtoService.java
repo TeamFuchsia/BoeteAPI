@@ -26,13 +26,13 @@ public class ZaakDtoService {
 
         List<Integer> feitnrs = new ArrayList<>();
         for (Feit feiten : zaak.getFeiten()) {
-            int dtoFeitnr = feiten.getFeitNr();
+            int dtoFeitnr = feiten.getFeitnr();
             feitnrs.add(dtoFeitnr);
         }
         zaakDto.setFeitnrs(feitnrs);
 
         List<Integer> zaakStatusnrs = new ArrayList<>();
-        for (ZaakStatus zaakStatusNr : zaak.getZaakStatus()) {
+        for (ZaakStatus zaakStatusNr : zaak.getZaakstatus()) {
 
             int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
             zaakStatusnrs.add(dtoZaakStatusnr);

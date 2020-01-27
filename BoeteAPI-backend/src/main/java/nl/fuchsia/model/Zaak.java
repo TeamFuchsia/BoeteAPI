@@ -29,7 +29,7 @@ public class Zaak {
     private List<Feit> feiten;
 
     @OneToMany(mappedBy = "zaak", cascade = {CascadeType.PERSIST})
-    private List<ZaakStatus> zaakStatus;
+    private List<ZaakStatus> zaakstatus;
 
     public Zaak() {
     }
@@ -57,24 +57,24 @@ public class Zaak {
         this.feiten = feiten;
     }
 
-    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
+    public Zaak(LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakstatus) {
         this(overtredingsdatum, pleeglocatie);
         this.persoon = persoon;
         this.feiten = feiten;
-        this.zaakStatus = zaakStatus;
+        this.zaakstatus = zaakstatus;
     }
 
-    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakStatus) {
-        this(overtredingsdatum, pleeglocatie, persoon, feiten, zaakStatus);
+    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakstatus) {
+        this(overtredingsdatum, pleeglocatie, persoon, feiten, zaakstatus);
         this.zaaknr = zaaknr;
     }
 
-    public List<ZaakStatus> getZaakStatus() {
-        return zaakStatus;
+    public List<ZaakStatus> getZaakstatus() {
+        return zaakstatus;
     }
 
-    public void setZaakStatus(List<ZaakStatus> zaakStatus) {
-        this.zaakStatus = zaakStatus;
+    public void setZaakstatus(List<ZaakStatus> zaakStatus) {
+        this.zaakstatus = zaakStatus;
     }
 
     public int getZaaknr() {
@@ -120,7 +120,7 @@ public class Zaak {
     @Override
     public String toString() {
         return "Zaak{" + "zaaknr=" + zaaknr + ", overtredingsdatum=" + overtredingsdatum + ", pleeglocatie='" + pleeglocatie + '\'' + ", persoon=" + persoon + ", feiten=" + feiten + ", zaakStatus="
-                + zaakStatus + '}';
+                + zaakstatus + '}';
     }
 
     @Override
@@ -131,11 +131,11 @@ public class Zaak {
             return false;
         Zaak zaak = (Zaak) o;
         return zaaknr == zaak.zaaknr && Objects.equals(overtredingsdatum, zaak.overtredingsdatum) && Objects.equals(pleeglocatie, zaak.pleeglocatie) && Objects.equals(persoon, zaak.persoon) && Objects
-                .equals(feiten, zaak.feiten) && Objects.equals(zaakStatus, zaak.zaakStatus);
+                .equals(feiten, zaak.feiten) && Objects.equals(zaakstatus, zaak.zaakstatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zaaknr, overtredingsdatum, pleeglocatie, persoon, feiten, zaakStatus);
+        return Objects.hash(zaaknr, overtredingsdatum, pleeglocatie, persoon, feiten, zaakstatus);
     }
 }

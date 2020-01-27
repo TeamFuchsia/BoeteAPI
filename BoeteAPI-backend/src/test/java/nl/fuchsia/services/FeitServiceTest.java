@@ -56,12 +56,12 @@ public class FeitServiceTest {
     @Test
     public void testUpdateFeitById() {
         Feit feit = new Feit(2, "VBF-002", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
         Feit updatedfeit = new Feit(2, "VBF-002", "Test", 5000);
 
         feitService.updateFeitById(updatedfeit);
 
-        verify(feitRepository).getFeitById(feit.getFeitNr());
+        verify(feitRepository).getFeitById(feit.getFeitnr());
         verify(feitRepository).updateFeitById(updatedfeit);
     }
 
@@ -71,7 +71,7 @@ public class FeitServiceTest {
     @Test
     public void testFeitcodeUpdateExeption() {
         Feit feit = new Feit(3, "VBF-003", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitNr())).thenReturn(feit);
+        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
 
         assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-004", "Test", 500))).isInstanceOf(UniekVeldException.class)
                 .hasMessage("Feitcode: VBF-003 mag niet gewijzigd worden in VBF-004");

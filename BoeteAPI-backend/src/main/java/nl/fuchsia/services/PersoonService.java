@@ -7,6 +7,7 @@ import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -36,7 +37,7 @@ public class PersoonService {
     public Persoon addPersoon(Persoon persoon) {
         try {
             return persoonRepository.addPersoon(persoon);
-        } catch (TransactionSystemException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
     }
@@ -72,7 +73,7 @@ public class PersoonService {
             persoon.setPersoonnr(persoonnr);
             persoonRepository.updatePersoonById(persoon);
 
-        } catch (TransactionSystemException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
 

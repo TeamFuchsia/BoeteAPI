@@ -34,7 +34,7 @@ public class ZaakDtoService {
         List<Integer> zaakStatusnrs = new ArrayList<>();
         for (ZaakStatus zaakStatusNr : zaak.getZaakstatus()) {
 
-            int dtoZaakStatusnr = zaakStatusNr.getZaakstatusnr();
+            int dtoZaakStatusnr = zaakStatusNr.getZaakStatusnr();
             zaakStatusnrs.add(dtoZaakStatusnr);
         }
         zaakDto.setZaakstatusnr(zaakStatusnrs);

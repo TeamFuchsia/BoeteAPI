@@ -74,7 +74,7 @@ public class ZaakServiceTest {
         List<Integer> feitnrs = new ArrayList<>();
         feitnrs.add(feit.getFeitnr());
         List<Integer> zaakStatusnrs = new ArrayList<>();
-        zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
+        zaakStatusnrs.add(zaakStatus.getZaakStatusnr());
 
         //Maakt een zaakDto voor de invoer van de functie
         ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), feitnrs, zaakStatusnrs);
@@ -177,7 +177,7 @@ public class ZaakServiceTest {
         //Maakt een lijst van zaakStatusnrs, om deze toe te kunnen voegen aan de te vekrijgen zaakDto
         List<Integer> zaakStatusnrs = new ArrayList<>();
         ZaakStatus savedZaakStatus = new ZaakStatus(1, LocalDate.now(), new Status(1, "Open"), zaak);
-        zaakStatusnrs.add(zaakStatus.getZaakstatusnr());
+        zaakStatusnrs.add(zaakStatus.getZaakStatusnr());
 
         //Maakt een zaak aan zoals die in de database is gewijzigd
         Zaak savedZaak = new Zaak(1, LocalDate.now(), "Leeuwarden", persoon, feiten);

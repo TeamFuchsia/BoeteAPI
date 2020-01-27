@@ -2,16 +2,18 @@ package nl.fuchsia.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.naming.Name;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "zaakstatus")
 public class ZaakStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer zaakstatusnr;
+    private Integer zaakStatusnr;
 
     @Column
     @JsonProperty("veranderdatum")
@@ -34,17 +36,17 @@ public class ZaakStatus {
         this.zaak = zaak;
     }
 
-    public ZaakStatus(Integer zaakstatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
+    public ZaakStatus(Integer zaakStatusnr, LocalDate veranderdatum, Status status, Zaak zaak) {
         this(veranderdatum, status, zaak);
-        this.zaakstatusnr = zaakstatusnr;
+        this.zaakStatusnr = zaakStatusnr;
     }
 
-    public Integer getZaakstatusnr() {
-        return zaakstatusnr;
+    public Integer getZaakStatusnr() {
+        return zaakStatusnr;
     }
 
-    public void setZaakstatusnr(Integer zaakstatusnr) {
-        this.zaakstatusnr = zaakstatusnr;
+    public void setZaakStatusnr(Integer zaakstatusnr) {
+        this.zaakStatusnr = zaakstatusnr;
     }
 
     public LocalDate getVeranderdatum() {
@@ -73,7 +75,7 @@ public class ZaakStatus {
 
     @Override
     public String toString() {
-        return "ZaakStatus{" + "zaakstatusnr=" + zaakstatusnr + ", veranderdatum=" + veranderdatum + ", status=" + status + ", zaak=" + zaak.getZaaknr() + '}';
+        return "ZaakStatus{" + "zaakstatusnr=" + zaakStatusnr + ", veranderdatum=" + veranderdatum + ", status=" + status + ", zaak=" + zaak.getZaaknr() + '}';
     }
 
     @Override
@@ -83,12 +85,12 @@ public class ZaakStatus {
         if (o == null || getClass() != o.getClass())
             return false;
         ZaakStatus that = (ZaakStatus) o;
-        return Objects.equals(zaakstatusnr, that.zaakstatusnr) && Objects.equals(veranderdatum, that.veranderdatum) && Objects.equals(status, that.status) && Objects
+        return Objects.equals(zaakStatusnr, that.zaakStatusnr) && Objects.equals(veranderdatum, that.veranderdatum) && Objects.equals(status, that.status) && Objects
                 .equals(zaak.getZaaknr(), that.zaak.getZaaknr());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zaakstatusnr, veranderdatum, status, zaak);
+        return Objects.hash(zaakStatusnr, veranderdatum, status, zaak);
     }
 }

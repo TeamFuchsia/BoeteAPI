@@ -1,10 +1,5 @@
 package nl.fuchsia.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +11,15 @@ import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
-public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
+public class EclipseLinkJpaConfigurationTest extends JpaBaseConfiguration {
 
     @Autowired
-	protected EclipseLinkJpaConfiguration(@Qualifier("dataSource") DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
+	protected EclipseLinkJpaConfigurationTest(@Qualifier("dataSource") DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
         super(dataSource, properties, jtaTransactionManager);
     }
 
@@ -33,7 +32,7 @@ public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
     protected Map<String, Object> getVendorProperties() {
         HashMap<String, Object> map = new HashMap<>();
         map.put(PersistenceUnitProperties.WEAVING, "true");
-        map.put(PersistenceUnitProperties.DDL_GENERATION, "none");
+        map.put(PersistenceUnitProperties.DDL_GENERATION, "drop-and-create-tables");
         return map;
     }
 }

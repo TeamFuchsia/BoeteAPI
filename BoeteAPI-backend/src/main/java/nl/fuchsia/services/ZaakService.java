@@ -10,6 +10,7 @@ import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
+import nl.fuchsia.repository.ZaakRepositoryInt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,15 @@ import java.util.List;
 @Service
 public class ZaakService {
 
+    private ZaakRepositoryInt zaakRepositoryInt;
     private ZaakRepository zaakRepository;
     private PersoonRepository persoonRepository;
     private FeitRepository feitRepository;
     private StatusRepository statusRepository;
     private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+    public ZaakService(ZaakRepositoryInt zaakRepositoryInt,ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+        this.zaakRepositoryInt = zaakRepositoryInt;
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
         this.feitRepository = feitRepository;
@@ -112,7 +115,7 @@ public class ZaakService {
     }
 
     public List<ZaakDto> getZaken() {
-        List<Zaak> zaken = zaakRepository.getZaken();
+        List<Zaak> zaken = zaakRepositoryInt.findAll();
         List<ZaakDto> zaakDtos = new ArrayList<>();
         for (Zaak zaak : zaken) {
             zaakDtos.add(zaakDtoService.setZaakDto(zaak));

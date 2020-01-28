@@ -2,6 +2,7 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.Application;
 import nl.fuchsia.model.Persoon;
+import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class PersoonRepositoryTest {
     private EntityManager entityManager;
 
     @Autowired
-    private PersoonRepository persoonRepository;
+    private PersoonRepositoryOrm persoonRepository;
 
     @BeforeEach
     public void setup() {

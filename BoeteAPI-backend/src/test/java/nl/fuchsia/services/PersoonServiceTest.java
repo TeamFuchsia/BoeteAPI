@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
-import nl.fuchsia.repository.PersoonRepository;
+import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class PersoonServiceTest {
 
     @Mock
-    PersoonRepository persoonRepository;
+	PersoonRepositoryOrm persoonRepository;
     @InjectMocks
     PersoonService persoonService;
 

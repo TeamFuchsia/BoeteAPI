@@ -7,7 +7,7 @@ import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
-import nl.fuchsia.repository.PersoonRepository;
+import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ import java.util.List;
 public class ZaakService {
 
     private ZaakRepository zaakRepository;
-    private PersoonRepository persoonRepository;
+    private PersoonRepositoryOrm persoonRepository;
     private FeitRepository feitRepository;
     private StatusRepository statusRepository;
     private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepositoryOrm persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
         this.feitRepository = feitRepository;

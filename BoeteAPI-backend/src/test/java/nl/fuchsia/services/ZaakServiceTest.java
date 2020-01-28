@@ -7,7 +7,7 @@ import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
-import nl.fuchsia.repository.PersoonRepository;
+import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +35,7 @@ public class ZaakServiceTest {
     private StatusRepository statusRepository;
 
     @Mock
-    private PersoonRepository persoonRepository;
+    private PersoonRepositoryOrm persoonRepository;
 
     @Mock
     private FeitRepository feitRepository;

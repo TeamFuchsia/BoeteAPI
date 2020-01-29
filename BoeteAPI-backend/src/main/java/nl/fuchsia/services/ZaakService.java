@@ -100,13 +100,12 @@ public class ZaakService {
 			throw new NotFoundException(notFoundExceptions.toString());
 		}
 
-		ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), status.get(), zaak.get());
+		ZaakStatus zaakStatus = new ZaakStatus(0,LocalDate.now(), status.get(), zaak.get());
 
 		List<ZaakStatus> zaakStatussen = zaak.get().getZaakstatus();
 		zaakStatussen.add(zaakStatus);
 		zaak.get().setZaakstatus(zaakStatussen);
 		zaakRepository.save(zaak.get());
-
 		ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak.get());
 
 		return zaakDto;
@@ -198,6 +197,7 @@ public class ZaakService {
 			zaakFeiten.add(feitOpgehaald.get());
 			zaak.get().setFeiten(zaakFeiten);
 		}
+
 		ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak.get());
 		return zaakDto;
 	}

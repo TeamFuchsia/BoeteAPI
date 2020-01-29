@@ -61,7 +61,7 @@ public class ZaakService {
 			throw new NotFoundException(exceptions.toString());
 		}
 
-		Zaak zaak = new Zaak(zaakDto.getOvertredingsdatum(), zaakDto.getPleeglocatie(), persoon.get(), feiten);
+		Zaak zaak = new Zaak(0,zaakDto.getOvertredingsdatum(), zaakDto.getPleeglocatie(), persoon.get(), feiten);
 		List<ZaakStatus> zaakStatussen = new ArrayList<>();
 		ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
 		zaakStatussen.add(zaakStatus);

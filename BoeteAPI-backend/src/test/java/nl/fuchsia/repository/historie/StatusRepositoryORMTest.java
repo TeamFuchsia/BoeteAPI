@@ -1,7 +1,8 @@
-package nl.fuchsia.repository;
+package nl.fuchsia.repository.historie;
 
 import nl.fuchsia.Application;
 import nl.fuchsia.model.Status;
+import nl.fuchsia.repository.historie.StatusRepositoryORM;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @SpringBootTest(classes = Application.class)
-class StatusRepositoryTest {
+class StatusRepositoryORMTest {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
     @Autowired
-    private StatusRepository statusRepository;
+    private StatusRepositoryORM statusRepository;
 
     @BeforeEach
     public void setup() {

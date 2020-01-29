@@ -9,7 +9,7 @@ public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int statusnr;
+    private Integer statusnr;
 
     @Column
     private String omschrijving;
@@ -26,11 +26,11 @@ public class Status {
         this.omschrijving = omschrijving;
     }
 
-    public int getStatusnr() {
+    public Integer getStatusnr() {
         return statusnr;
     }
 
-    public void setStatusnr(int statusnr) {
+    public void setStatusnr(Integer statusnr) {
         this.statusnr = statusnr;
     }
 

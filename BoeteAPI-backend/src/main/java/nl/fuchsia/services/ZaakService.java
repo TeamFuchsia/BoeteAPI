@@ -6,10 +6,11 @@ import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.*;
-import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
+import nl.fuchsia.repository.historie.FeitRepositoryORM;
+import nl.fuchsia.repository.historie.StatusRepositoryORM;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,15 +23,15 @@ public class ZaakService {
 
     private ZaakRepository zaakRepository;
     private PersoonRepository persoonRepository;
-    private FeitRepository feitRepository;
-    private StatusRepository statusRepository;
+    private FeitRepositoryORM feitRepositoryORM;
+    private StatusRepositoryORM statusRepositoryORM;
     private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepositoryORM feitRepositoryORM, StatusRepositoryORM statusRepositoryORM, ZaakDtoService zaakDtoService) {
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
-        this.feitRepository = feitRepository;
-        this.statusRepository = statusRepository;
+        this.feitRepositoryORM = feitRepositoryORM;
+        this.statusRepositoryORM = statusRepositoryORM;
         this.zaakDtoService = zaakDtoService;
     }
 
@@ -51,7 +52,7 @@ public class ZaakService {
         }
         List<Feit> feiten = new ArrayList<>();
         for (int feitNr : zaakDto.getFeitnrs()) {
-            Feit feit = feitRepository.getFeitById(feitNr);
+            Feit feit = feitRepositoryORM.getFeitById(feitNr);
             if (feit == null) {
                 exceptions.add("Feitnr " + feitNr + " bestaat niet");
             } else
@@ -84,7 +85,7 @@ public class ZaakService {
     @Transactional
     public ZaakDto updZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
         List<String> notFoundExceptions = new ArrayList<>();
-        Status status = statusRepository.getStatusById(zaakAddStatusDto.getStatusNr());
+        Status status = statusRepositoryORM.getStatusById(zaakAddStatusDto.getStatusNr());
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
         if (zaak == null) {
@@ -164,7 +165,7 @@ public class ZaakService {
             notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
         }
         for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-            if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+            if (feitRepositoryORM.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
                 notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
             }
         }
@@ -187,7 +188,7 @@ public class ZaakService {
             throw new UniekVeldException(uniekVeldExceptions.toString());
         }
         for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-            zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+            zaakFeiten.add(feitRepositoryORM.getFeitById(zaakAddFeitDto.getFeitNr()));
             zaak.setFeiten(zaakFeiten);
         }
         ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);

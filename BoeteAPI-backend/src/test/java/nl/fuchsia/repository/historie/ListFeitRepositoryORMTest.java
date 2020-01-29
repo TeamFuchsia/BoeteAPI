@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ListFeitRepositoryTest {
+public class ListFeitRepositoryORMTest {
     @Test
     public void testAddFeit() {
         ListFeitRepository listFeitRepository = new ListFeitRepository();

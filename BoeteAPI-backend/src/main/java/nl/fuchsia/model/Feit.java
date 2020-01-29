@@ -16,7 +16,7 @@ public class Feit {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feitnr;
+    private Integer feitnr;
 
     /*
      * Feitcode is de unieke code van een strafbaar feit, deze heeft het patroon VBF-000, hierbij zijn de cijfers variabel.
@@ -81,11 +81,11 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public int getFeitnr() {
+    public Integer getFeitnr() {
         return feitnr;
     }
 
-    public void setFeitnr(int feitnr) {
+    public void setFeitnr(Integer feitnr) {
         this.feitnr = feitnr;
     }
 

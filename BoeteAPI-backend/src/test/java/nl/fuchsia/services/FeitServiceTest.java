@@ -33,12 +33,12 @@ public class FeitServiceTest {
 
         feitService.addFeit(feit);
 
-        verify(feitRepository).addFeit(feit);
+        verify(feitRepository).save(feit);
     }
 
     @Test
     public void testNonUniekFeitcodeExeption() {
-        when(feitRepository.addFeit(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(feitRepository.save(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> feitService.addFeit(new Feit(1, "VBF-001", "Test", 500))).isInstanceOf(UniekVeldException.class).hasMessage("Feitcode: VBF-001 bestaat al in de database.");
     }
@@ -47,7 +47,7 @@ public class FeitServiceTest {
     public void testGetFeiten() {
         feitService.getFeiten();
 
-        verify(feitRepository).getFeiten();
+        verify(feitRepository).findAll();
     }
 
     /**
@@ -56,13 +56,13 @@ public class FeitServiceTest {
     @Test
     public void testUpdateFeitById() {
         Feit feit = new Feit(2, "VBF-002", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
+        when(feitRepository.findById(feit.getFeitnr())).thenReturn(java.util.Optional.of(feit));
         Feit updatedfeit = new Feit(2, "VBF-002", "Test", 5000);
 
         feitService.updateFeitById(updatedfeit);
 
-        verify(feitRepository).getFeitById(feit.getFeitnr());
-        verify(feitRepository).updateFeitById(updatedfeit);
+        verify(feitRepository).findById(feit.getFeitnr());
+        verify(feitRepository).save(updatedfeit);
     }
 
     /**
@@ -71,7 +71,7 @@ public class FeitServiceTest {
     @Test
     public void testFeitcodeUpdateExeption() {
         Feit feit = new Feit(3, "VBF-003", "Test", 500);
-        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
+        when(feitRepository.findById(feit.getFeitnr())).thenReturn(java.util.Optional.of(feit));
 
         assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-004", "Test", 500))).isInstanceOf(UniekVeldException.class)
                 .hasMessage("Feitcode: VBF-003 mag niet gewijzigd worden in VBF-004");
@@ -82,7 +82,7 @@ public class FeitServiceTest {
      */
     @Test
     public void testBestaanPersoonnr() {
-        when(feitRepository.updateFeitById(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(feitRepository.save(any(Feit.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> feitService.updateFeitById(new Feit(3, "VBF-003", "Test", 500))).isInstanceOf(NotFoundException.class).hasMessage("Feitnummer: 3 bestaat niet!");
     }

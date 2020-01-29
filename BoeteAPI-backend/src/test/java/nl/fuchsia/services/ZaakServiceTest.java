@@ -6,9 +6,9 @@ import nl.fuchsia.dto.ZaakDto;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.*;
-import nl.fuchsia.repository.FeitRepository;
+import nl.fuchsia.repository.historie.FeitRepositoryORM;
 import nl.fuchsia.repository.PersoonRepository;
-import nl.fuchsia.repository.StatusRepository;
+import nl.fuchsia.repository.historie.StatusRepositoryORM;
 import nl.fuchsia.repository.ZaakRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,13 +32,13 @@ public class ZaakServiceTest {
     private ZaakRepository zaakRepository;
 
     @Mock
-    private StatusRepository statusRepository;
+    private StatusRepositoryORM statusRepository;
 
     @Mock
     private PersoonRepository persoonRepository;
 
     @Mock
-    private FeitRepository feitRepository;
+    private FeitRepositoryORM feitRepositoryORM;
 
     @Mock
     private ZaakDtoService zaakDtoService;
@@ -88,12 +88,12 @@ public class ZaakServiceTest {
 
         when(persoonRepository.getPersoonById(persoon.getPersoonnr())).thenReturn(persoon);
         when(zaakRepository.addZaak(any())).thenReturn(savedZaak);
-        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
+        when(feitRepositoryORM.getFeitById(feit.getFeitnr())).thenReturn(feit);
 
         zaakService.addZaak(zaakDto);
 
         verify(persoonRepository).getPersoonById(persoon.getPersoonnr());
-        verify(feitRepository).getFeitById(feit.getFeitnr());
+        verify(feitRepositoryORM).getFeitById(feit.getFeitnr());
         verify(zaakRepository).addZaak(zaak);
     }
 
@@ -101,7 +101,7 @@ public class ZaakServiceTest {
     public void testAddZaakPersoonDoesNotExist() {
         ZaakDto zaakAddDto = new ZaakDto(1, LocalDate.now(), "Leeuwarden", 1, new ArrayList<>(Arrays.asList(1)));
         Feit feit = new Feit(zaakAddDto.getFeitnrs().indexOf(0), "VBF-001", "Test", 4.00);
-        when(feitRepository.getFeitById(1)).thenReturn(feit);
+        when(feitRepositoryORM.getFeitById(1)).thenReturn(feit);
 
         assertThatThrownBy(() -> zaakService.addZaak(zaakAddDto)).isInstanceOf(NotFoundException.class).hasMessage("[ Persoonnr 1 bestaat niet]");
     }
@@ -114,7 +114,7 @@ public class ZaakServiceTest {
 
         assertThatThrownBy(() -> zaakService.addZaak(zaakDto)).isInstanceOf(NotFoundException.class).hasMessage("[Feitnr 1 bestaat niet, Feitnr 2 bestaat niet]");
 
-        when(feitRepository.getFeitById(1)).thenReturn(new Feit(1, "VBF-001", "Test", 4.00));
+        when(feitRepositoryORM.getFeitById(1)).thenReturn(new Feit(1, "VBF-001", "Test", 4.00));
 
         assertThatThrownBy(() -> zaakService.addZaak(zaakDto)).isInstanceOf(NotFoundException.class).hasMessage("[Feitnr 2 bestaat niet]");
     }
@@ -267,7 +267,7 @@ public class ZaakServiceTest {
         ZaakDto zaakDto = new ZaakDto(zaak.getZaaknr(), zaak.getOvertredingsdatum(), zaak.getPleeglocatie(), persoon.getPersoonnr(), Arrays.asList(feit.getFeitnr(), nieuwFeit.getFeitnr()));
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(nieuwFeit.getFeitnr())).thenReturn(nieuwFeit);
+        when(feitRepositoryORM.getFeitById(nieuwFeit.getFeitnr())).thenReturn(nieuwFeit);
         when(zaakDtoService.setZaakDto(zaak)).thenReturn(zaakDto);
 
         assertThat(zaak.getFeiten()).hasSize(1);
@@ -277,7 +277,7 @@ public class ZaakServiceTest {
         assertThat(zaakDtoReturn.getFeitnrs()).hasSize(2);
 
         verify(zaakRepository).getZaakById(zaak.getZaaknr());
-        verify(feitRepository, times(2)).getFeitById(nieuwFeit.getFeitnr());
+        verify(feitRepositoryORM, times(2)).getFeitById(nieuwFeit.getFeitnr());
         verify(zaakDtoService).setZaakDto(zaak);
     }
 
@@ -303,7 +303,7 @@ public class ZaakServiceTest {
         Feit feitTwee = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
+        when(feitRepositoryORM.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
 
         assertThat(zaak.getFeiten()).hasSize(1);
         assertThatThrownBy(() -> zaakService.updZaakFeit(5, listZaakAddFeitDto)).isInstanceOf(NotFoundException.class).hasMessage("[zaakNummer: 5 bestaat niet, geen feit(en) toegevoegd]");
@@ -331,7 +331,7 @@ public class ZaakServiceTest {
         Feit feitTwee = new Feit(2, "VBF-002", "Echt te hard gereden", 95.0);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
+        when(feitRepositoryORM.getFeitById(feitTwee.getFeitnr())).thenReturn(feitTwee);
 
         assertThat(zaak.getFeiten()).hasSize(1);
 
@@ -361,7 +361,7 @@ public class ZaakServiceTest {
         listZaakAddFeitDto.add(zaakAddFeitDto);
 
         when(zaakRepository.getZaakById(zaak.getZaaknr())).thenReturn(zaak);
-        when(feitRepository.getFeitById(feit.getFeitnr())).thenReturn(feit);
+        when(feitRepositoryORM.getFeitById(feit.getFeitnr())).thenReturn(feit);
 
         assertThat(zaak.getFeiten()).hasSize(1);
         assertThatThrownBy(() -> zaakService.updZaakFeit(zaak.getZaaknr(), listZaakAddFeitDto)).isInstanceOf(UniekVeldException.class)

@@ -11,7 +11,7 @@ public class Zaak {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int zaaknr;
+    private Integer zaaknr;
 
     @Column
     private LocalDate overtredingsdatum;
@@ -39,12 +39,12 @@ public class Zaak {
         this.pleeglocatie = pleeglocatie;
     }
 
-    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie) {
+    public Zaak(Integer zaaknr, LocalDate overtredingsdatum, String pleeglocatie) {
         this(overtredingsdatum, pleeglocatie);
         this.zaaknr = zaaknr;
     }
 
-    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
+    public Zaak(Integer zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten) {
         this(overtredingsdatum, pleeglocatie);
         this.feiten = feiten;
         this.zaaknr = zaaknr;
@@ -64,7 +64,7 @@ public class Zaak {
         this.zaakstatus = zaakstatus;
     }
 
-    public Zaak(int zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakstatus) {
+    public Zaak(Integer zaaknr, LocalDate overtredingsdatum, String pleeglocatie, Persoon persoon, List<Feit> feiten, List<ZaakStatus> zaakstatus) {
         this(overtredingsdatum, pleeglocatie, persoon, feiten, zaakstatus);
         this.zaaknr = zaaknr;
     }

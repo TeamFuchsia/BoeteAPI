@@ -2,6 +2,7 @@ package nl.fuchsia.repository;
 
 import nl.fuchsia.Application;
 import nl.fuchsia.model.Zaak;
+import nl.fuchsia.repository.historie.ZaakRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

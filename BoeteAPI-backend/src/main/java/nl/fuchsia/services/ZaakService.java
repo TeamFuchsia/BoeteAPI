@@ -7,26 +7,27 @@ import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
-import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
+import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
-import nl.fuchsia.repository.ZaakRepository;
+import nl.fuchsia.repository.historie.ZaakRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ZaakService {
 
     private ZaakRepository zaakRepository;
-    private PersoonRepositoryOrm persoonRepository;
+    private PersoonRepository persoonRepository;
     private FeitRepository feitRepository;
     private StatusRepository statusRepository;
     private ZaakDtoService zaakDtoService;
 
-    public ZaakService(ZaakRepository zaakRepository, PersoonRepositoryOrm persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
+    public ZaakService(ZaakRepository zaakRepository, PersoonRepository persoonRepository, FeitRepository feitRepository, StatusRepository statusRepository, ZaakDtoService zaakDtoService) {
         this.zaakRepository = zaakRepository;
         this.persoonRepository = persoonRepository;
         this.feitRepository = feitRepository;
@@ -44,14 +45,14 @@ public class ZaakService {
 
         List<String> exceptions = new ArrayList<>();
 
-        Persoon persoon = persoonRepository.getPersoonById(zaakDto.getPersoonnr());
+        Optional<Persoon> persoon = persoonRepository.findById(zaakDto.getPersoonnr());
 
         if (persoon == null) {
             exceptions.add(" Persoonnr " + zaakDto.getPersoonnr() + " bestaat niet");
         }
         List<Feit> feiten = new ArrayList<>();
         for (int feitNr : zaakDto.getFeitnrs()) {
-            Feit feit = feitRepository.getFeitById(feitNr);
+            Optional<Feit> feit = feitRepository.findById(feitNr);
             if (feit == null) {
                 exceptions.add("Feitnr " + feitNr + " bestaat niet");
             } else
@@ -84,7 +85,7 @@ public class ZaakService {
     @Transactional
     public ZaakDto updZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
         List<String> notFoundExceptions = new ArrayList<>();
-        Status status = statusRepository.getStatusById(zaakAddStatusDto.getStatusNr());
+        Optional<Status> status = statusRepository.findById(zaakAddStatusDto.getStatusNr());
         Zaak zaak = zaakRepository.getZaakById(zaakNr);
 
         if (zaak == null) {
@@ -133,7 +134,7 @@ public class ZaakService {
 
     public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
 
-        Persoon persoon = persoonRepository.getPersoonById(persoonnr);
+        Optional<Persoon> persoon = persoonRepository.findById(persoonnr);
 
         if (persoon == null) {
             throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
@@ -164,7 +165,7 @@ public class ZaakService {
             notFoundExceptions.add("zaakNummer: " + zaakNr + " bestaat niet");
         }
         for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-            if (feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()) == null) {
+            if (feitRepository.findById(zaakAddFeitDto.getFeitNr()) == null) {
                 notFoundExceptions.add("feitNummer: " + zaakAddFeitDto.getFeitNr() + " bestaat niet");
             }
         }
@@ -187,7 +188,7 @@ public class ZaakService {
             throw new UniekVeldException(uniekVeldExceptions.toString());
         }
         for (ZaakAddFeitDto zaakAddFeitDto : listZaakAddFeitDto) {
-            zaakFeiten.add(feitRepository.getFeitById(zaakAddFeitDto.getFeitNr()));
+            zaakFeiten.add(feitRepository.findById(zaakAddFeitDto.getFeitNr()));
             zaak.setFeiten(zaakFeiten);
         }
         ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak);

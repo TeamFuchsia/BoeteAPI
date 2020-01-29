@@ -9,7 +9,7 @@ import nl.fuchsia.model.*;
 import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
 import nl.fuchsia.repository.StatusRepository;
-import nl.fuchsia.repository.ZaakRepository;
+import nl.fuchsia.repository.historie.ZaakRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

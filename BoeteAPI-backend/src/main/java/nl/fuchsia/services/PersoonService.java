@@ -61,17 +61,10 @@ public class PersoonService {
      * @return de nieuwe persoon in de database
      */
     public Persoon updatePersoonById(Integer persoonnr, Persoon persoon) {
-
         try {
-            System.out.println(persoonnr);
-			Optional<Persoon> persoon2 = persoonRepository.findById(persoonnr);
-
-			persoon2.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
-
-//			if (persoonRepositoryInt.findById(persoonnr) == null) {
-//                throw new NotFoundException("Persoonnummer: " + persoonnr + " bestaat niet!");
-//            }
-            persoon.setPersoonnr(persoonnr);
+			Optional<Persoon> persoonOpgehaald = persoonRepository.findById(persoonnr);
+			persoonOpgehaald.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
+			persoon.setPersoonnr(persoonnr);
             persoonRepository.save(persoon);
 
         } catch (TransactionSystemException e) {

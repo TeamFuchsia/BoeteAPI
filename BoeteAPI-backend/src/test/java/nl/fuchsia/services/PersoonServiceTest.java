@@ -1,17 +1,21 @@
 package nl.fuchsia.services;
 
-import java.time.LocalDate;
-
+import nl.fuchsia.Application;
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
-import nl.fuchsia.repository.historie.PersoonRepositoryOrm;
+import nl.fuchsia.repository.PersoonRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,10 +23,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+@SpringBootTest(classes = Application.class)
 public class PersoonServiceTest {
 
     @Mock
-	PersoonRepositoryOrm persoonRepository;
+	PersoonRepository persoonRepository;
+
     @InjectMocks
     PersoonService persoonService;
 
@@ -38,9 +45,9 @@ public class PersoonServiceTest {
     public void testAddPersoon() {
         Persoon persoon = new Persoon();
 
-        persoonService.addPersoon(persoon);
+		persoonService.addPersoon(persoon);
 
-        verify(persoonRepository).addPersoon(persoon);
+        verify(persoonRepository).save(persoon);
     }
 
     /**
@@ -50,7 +57,7 @@ public class PersoonServiceTest {
     public void testGetPersonen() {
         persoonService.getPersonen();
 
-        verify(persoonRepository).getPersonen();
+        verify(persoonRepository).findAll();
     }
 
     /**
@@ -60,11 +67,11 @@ public class PersoonServiceTest {
     public void testGetPersoonById() {
         Persoon persoon = new Persoon(1, "Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
 
-        when(persoonRepository.getPersoonById(1)).thenReturn(persoon);
+        when(persoonRepository.findById(1)).thenReturn(Optional.of(persoon));
 
         persoonService.getPersoonById(persoon.getPersoonnr());
 
-        verify(persoonRepository).getPersoonById(1);
+        verify(persoonRepository).findById(1);
     }
 
     /**
@@ -75,12 +82,12 @@ public class PersoonServiceTest {
         Persoon persoon = new Persoon("Henk", "V", "straat", "1", "9999 AA", "Sneek", "123456789", LocalDate.of(1990, 1, 1));
         int persoonnr = 1;
 
-        when(persoonRepository.getPersoonById(persoonnr)).thenReturn(persoon);
+        when(persoonRepository.findById(persoonnr)).thenReturn(Optional.of(persoon));
 
         persoonService.updatePersoonById(persoonnr, persoon);
 
-        verify(persoonRepository).getPersoonById(1);
-        verify(persoonRepository).updatePersoonById(persoon);
+        verify(persoonRepository).findById(1);
+        verify(persoonRepository).save(persoon);
     }
 
     /**
@@ -88,9 +95,10 @@ public class PersoonServiceTest {
      */
     @Test
     public void testNonUniekBsnExeptionAddPersoon() {
-        when(persoonRepository.addPersoon(any(Persoon.class))).thenThrow(new DataIntegrityViolationException("TestException"));
+        when(persoonRepository.save(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
-        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
+        assertThatThrownBy(() -> persoonService.addPersoon(new Persoon("Rense", "Houwing", "De buren", "10",
+			"8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
                 .isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }
 
@@ -99,10 +107,10 @@ public class PersoonServiceTest {
      */
     @Test
     public void testBestaanPersoonnr() {
-        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.save(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
 
         assertThatThrownBy(() -> persoonService.updatePersoonById(1, new Persoon("Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12))))
-                .isInstanceOf(NotFoundException.class).hasMessage("Persoonnummer: 1 bestaat niet!");
+                .isInstanceOf(NotFoundException.class).hasMessage("PersoonNummer: 1 bestaat niet");
     }
 
     @Test
@@ -110,8 +118,8 @@ public class PersoonServiceTest {
         Persoon persoon = new Persoon("Geert", "Houwing", "De buren", "10", "8402 GH", "Drachten", "123456789", LocalDate.of(1990, 10, 12));
         int persoonnr = 1;
 
-        when(persoonRepository.updatePersoonById(any(Persoon.class))).thenThrow(new DataIntegrityViolationException("TestException"));
-        when(persoonRepository.getPersoonById(persoonnr)).thenReturn(persoon);
+        when(persoonRepository.save(any(Persoon.class))).thenThrow(new TransactionSystemException("TestException"));
+        when(persoonRepository.findById(persoonnr)).thenReturn(Optional.of(persoon));
 
         assertThatThrownBy(() -> persoonService.updatePersoonById(persoonnr, persoon)).isInstanceOf(UniekVeldException.class).hasMessage("BSN nummer: 123456789 bestaat reeds.");
     }

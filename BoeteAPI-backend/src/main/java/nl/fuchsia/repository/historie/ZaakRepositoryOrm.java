@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class ZaakRepository {
+public class ZaakRepositoryOrm {
 
     private static final String GET_ZAKEN = "SELECT zaak FROM Zaak zaak ";
     private static final String GET_ZAKEN_BY_PERSOON = GET_ZAKEN + "where zaak.persoon=:persoon";

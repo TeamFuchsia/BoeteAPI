@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ZaakDto {
 
-    private int zaaknr;
+    private Integer zaaknr;
 
     @JsonProperty("overtredingsDatum")
     @NotNull(message = ("Overtredingsdatum dient te zijn gevuld!"))
@@ -23,7 +23,7 @@ public class ZaakDto {
     @Size(max = 100, message = "Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten")
     private String pleeglocatie;
 
-    private int persoonnr;
+    private Integer persoonnr;
 
     @NotNull(message = "Voeg minimaal 1 feit toe.")
     @Size(min = 1, message = "Voeg minimaal 1 feit toe.")
@@ -47,11 +47,11 @@ public class ZaakDto {
         this.zaakstatusnr = zaakstatusnr;
     }
 
-    public int getZaaknr() {
+    public Integer getZaaknr() {
         return zaaknr;
     }
 
-    public void setZaaknr(int zaaknr) {
+    public void setZaaknr(Integer zaaknr) {
         this.zaaknr = zaaknr;
     }
 
@@ -71,11 +71,11 @@ public class ZaakDto {
         this.pleeglocatie = pleeglocatie;
     }
 
-    public int getPersoonnr() {
+    public Integer getPersoonnr() {
         return persoonnr;
     }
 
-    public void setPersoonnr(int persoonnr) {
+    public void setPersoonnr(Integer persoonnr) {
         this.persoonnr = persoonnr;
     }
 

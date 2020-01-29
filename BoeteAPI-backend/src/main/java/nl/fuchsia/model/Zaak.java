@@ -81,8 +81,8 @@ public class Zaak {
         return zaaknr;
     }
 
-    public void setZaaknr(int zaakNr) {
-        this.zaaknr = zaakNr;
+    public void setZaaknr(int zaaknr) {
+        this.zaaknr = zaaknr;
     }
 
     public LocalDate getOvertredingsdatum() {

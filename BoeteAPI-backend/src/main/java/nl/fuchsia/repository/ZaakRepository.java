@@ -30,10 +30,11 @@ public class ZaakRepository {
         return zaak;
     }
 
-    @Transactional
+//    @Transactional
     public List<Zaak> getZaken() {
         TypedQuery<Zaak> getAllZaken = entityManager.createQuery(GET_ZAKEN, Zaak.class);
-        return getAllZaken.getResultList();
+        List<Zaak> resultList = getAllZaken.getResultList();
+        return resultList;
     }
 
     @Transactional

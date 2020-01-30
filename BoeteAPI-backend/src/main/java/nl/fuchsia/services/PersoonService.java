@@ -1,23 +1,26 @@
 package nl.fuchsia.services;
 
-import java.util.List;
-
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionSystemException;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class PersoonService {
     private PersoonRepository persoonRepository;
+    private JmsTemplate jmsTemplate;
 
     @Autowired
-    public PersoonService(PersoonRepository persoonRepository) {
+    public PersoonService(PersoonRepository persoonRepository, JmsTemplate jmsTemplate) {
         this.persoonRepository = persoonRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     /**
@@ -26,6 +29,7 @@ public class PersoonService {
      * @return - Roept de methode getOrmPersonen aan in ormPersoonRepository.
      */
     public List<Persoon> getPersonen() {
+        jmsTemplate.send(session -> session.createTextMessage("Retrieved all people at: " + LocalDateTime.now()));
         return persoonRepository.getPersonen();
     }
 

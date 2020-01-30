@@ -10,7 +10,6 @@ import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

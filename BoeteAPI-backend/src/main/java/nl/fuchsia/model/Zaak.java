@@ -77,7 +77,7 @@ public class Zaak {
         this.zaakstatus = zaakStatus;
     }
 
-    public int getZaaknr() {
+    public Integer getZaaknr() {
         return zaaknr;
     }
 

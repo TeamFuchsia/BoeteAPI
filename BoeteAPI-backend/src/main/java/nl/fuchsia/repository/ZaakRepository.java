@@ -12,6 +12,5 @@ import java.util.List;
 @Repository
 public interface ZaakRepository extends JpaRepository <Zaak,Integer>{
 
-	@Query(value = "FROM Zaak zaak WHERE zaak.persoon = :nummer")
-	List<Zaak> getAllZakenByPersoon(@Param("nummer") Persoon persoon);
+	List<Zaak> getAllByPersoon(Persoon persoon);
 }

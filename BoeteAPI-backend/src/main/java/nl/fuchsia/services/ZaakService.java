@@ -136,7 +136,7 @@ public class ZaakService {
 		if (!persoon.isPresent()) {
 			throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
 		}
-		List<Zaak> zaken = zaakRepository.getAllZakenByPersoon(persoon.get());
+		List<Zaak> zaken = zaakRepository.getAllByPersoon(persoon.get());
 
 		List<ZaakDto> zaakDtos = new ArrayList<>();
 		for (Zaak zaak : zaken) {

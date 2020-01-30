@@ -10,6 +10,7 @@ import nl.fuchsia.repository.FeitRepository;
 import nl.fuchsia.repository.PersoonRepository;
 import nl.fuchsia.repository.StatusRepository;
 import nl.fuchsia.repository.ZaakRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +68,7 @@ public class ZaakService {
 		zaakStatussen.add(zaakStatus);
 
 		zaak.setZaakstatus(zaakStatussen);
-		Zaak savedZaak = zaakRepository.save(zaak);
+		Zaak savedZaak = zaakRepository.saveAndFlush(zaak);
 
 		zaakDto = zaakDtoService.setZaakDto(savedZaak);
 
@@ -100,12 +101,12 @@ public class ZaakService {
 			throw new NotFoundException(notFoundExceptions.toString());
 		}
 
-		ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), status.get(), zaak.get());
+		ZaakStatus zaakStatus = new ZaakStatus(0,LocalDate.now(), status.get(), zaak.get());
 
 		List<ZaakStatus> zaakStatussen = zaak.get().getZaakstatus();
 		zaakStatussen.add(zaakStatus);
-		zaak.get().setZaakstatus(zaakStatussen);
-		zaakRepository.save(zaak.get());
+		//zaak.get().setZaakstatus(zaakStatussen);
+		zaakRepository.saveAndFlush(zaak.get());
 
 		ZaakDto zaakDto = zaakDtoService.setZaakDto(zaak.get());
 
@@ -131,18 +132,13 @@ public class ZaakService {
 	}
 
 	public List<ZaakDto> getZakenByPersoon(Integer persoonnr) {
-//        Optional<Persoon> persoonOpgehaald = persoonRepository.findById(persoonnr);
-//		persoonOpgehaald.orElseThrow(() -> new NotFoundException("Persoonnr " + persoonnr + " bestaat niet"));
-//
-//        //TODO we willen alle zaken van 1 persoon....
-//		Optional<Zaak> zaken = zaakRepository.findById(persoonnr);
-//
-//		//List<Zaak> zaken = zaakRepository.getZakenByPersoon(persoon);
-//		List<ZaakDto> zaakDtos = new ArrayList<>();
-//        for (Zaak zaak : zaken) {
-//            zaakDtos.add(zaakDtoService.setZaakDto(zaak));
-//        }
-		List<Zaak> zaken = zaakRepository.findAll();
+
+		Optional<Persoon> persoon = persoonRepository.findById(persoonnr);
+		if (!persoon.isPresent()) {
+			throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
+		}
+		List<Zaak> zaken = zaakRepository.getAllZakenByPersoon(persoon.get());
+
 		List<ZaakDto> zaakDtos = new ArrayList<>();
 		for (Zaak zaak : zaken) {
 			zaakDtos.add(zaakDtoService.setZaakDto(zaak));

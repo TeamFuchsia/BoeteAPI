@@ -7,7 +7,6 @@ Functionaliteit: IT-updatePersoonById
 
   Scenario: Update een persoon door het BSN nummer te wijzigen
     Als de client een PutbyID request maakt naar "/personen/" met persoonnr
-    #Als een persoonnr wordt bijgewerkt op een persoon
           """
         {
                 "voornaam": "Hans",

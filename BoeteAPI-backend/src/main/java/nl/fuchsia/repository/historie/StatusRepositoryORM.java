@@ -24,4 +24,3 @@ public class StatusRepositoryORM {
 		return entityManager.find(Status.class, statusnr);
 	}
 }
-

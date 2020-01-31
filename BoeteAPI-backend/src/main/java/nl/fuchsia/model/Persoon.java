@@ -143,20 +143,24 @@ public class Persoon {
         this.geboortedatum = geboortedatum;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Persoon persoon = (Persoon) o;
-        return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) && Objects.equals(getVoornaam(), persoon.getVoornaam()) && Objects.equals(getAchternaam(), persoon.getAchternaam()) && Objects
-                .equals(getStraat(), persoon.getStraat()) && Objects.equals(getHuisnummer(), persoon.getHuisnummer()) && Objects.equals(getPostcode(), persoon.getPostcode()) && Objects
-                .equals(getWoonplaats(), persoon.getWoonplaats()) && Objects.equals(getBsn(), persoon.getBsn()) && Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Persoon persoon = (Persoon) o;
+		return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) &&
+			Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
+			Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
+			Objects.equals(getStraat(), persoon.getStraat()) &&
+			Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
+			Objects.equals(getPostcode(), persoon.getPostcode()) &&
+			Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
+			Objects.equals(getBsn(), persoon.getBsn()) &&
+			Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPersoonnr(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(getPersoonnr(), getVoornaam(), getAchternaam(), getStraat(), getHuisnummer(), getPostcode(), getWoonplaats(), getBsn(), getGeboortedatum());
+	}
 }

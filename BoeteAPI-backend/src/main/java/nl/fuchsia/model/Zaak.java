@@ -77,7 +77,7 @@ public class Zaak {
         this.zaakstatus = zaakStatus;
     }
 
-    public int getZaaknr() {
+    public Integer getZaaknr() {
         return zaaknr;
     }
 
@@ -123,19 +123,21 @@ public class Zaak {
                 + zaakstatus + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Zaak zaak = (Zaak) o;
-        return zaaknr == zaak.zaaknr && Objects.equals(overtredingsdatum, zaak.overtredingsdatum) && Objects.equals(pleeglocatie, zaak.pleeglocatie) && Objects.equals(persoon, zaak.persoon) && Objects
-                .equals(feiten, zaak.feiten) && Objects.equals(zaakstatus, zaak.zaakstatus);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Zaak zaak = (Zaak) o;
+		return Objects.equals(getZaaknr(), zaak.getZaaknr()) &&
+			Objects.equals(getOvertredingsdatum(), zaak.getOvertredingsdatum()) &&
+			Objects.equals(getPleeglocatie(), zaak.getPleeglocatie()) &&
+			Objects.equals(getPersoon(), zaak.getPersoon()) &&
+			Objects.equals(getFeiten(), zaak.getFeiten()) &&
+			Objects.equals(getZaakstatus(), zaak.getZaakstatus());
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(zaaknr, overtredingsdatum, pleeglocatie, persoon, feiten, zaakstatus);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(getZaaknr(), getOvertredingsdatum(), getPleeglocatie(), getPersoon(), getFeiten(), getZaakstatus());
+	}
 }

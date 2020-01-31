@@ -61,7 +61,7 @@ public class ZaakService {
 			throw new NotFoundException(exceptions.toString());
 		}
 
-		Zaak zaak = new Zaak(0,zaakDto.getOvertredingsdatum(), zaakDto.getPleeglocatie(), persoon.get(), feiten);
+		Zaak zaak = new Zaak(zaakDto.getOvertredingsdatum(), zaakDto.getPleeglocatie(), persoon.get(), feiten);
 		List<ZaakStatus> zaakStatussen = new ArrayList<>();
 		ZaakStatus zaakStatus = new ZaakStatus(LocalDate.now(), new Status(1, "Open"), zaak);
 		zaakStatussen.add(zaakStatus);
@@ -83,7 +83,7 @@ public class ZaakService {
 	 * @return de geupdate zaak.
 	 */
 	@Transactional
-	public ZaakDto updZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
+	public ZaakDto updateZaakStatus(Integer zaakNr, ZaakAddStatusDto zaakAddStatusDto) {
 		List<String> notFoundExceptions = new ArrayList<>();
 		Optional<Status> status = statusRepository.findById(zaakAddStatusDto.getStatusNr());
 		Optional<Zaak> zaak = zaakRepository.findById(zaakNr);
@@ -136,7 +136,7 @@ public class ZaakService {
 		if (!persoon.isPresent()) {
 			throw new NotFoundException("Persoonnr " + persoonnr + " bestaat niet");
 		}
-		List<Zaak> zaken = zaakRepository.getAllZakenByPersoon(persoon.get());
+		List<Zaak> zaken = zaakRepository.findAllByPersoon(persoon.get());
 
 		List<ZaakDto> zaakDtos = new ArrayList<>();
 		for (Zaak zaak : zaken) {

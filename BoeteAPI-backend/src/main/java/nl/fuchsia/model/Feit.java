@@ -94,18 +94,20 @@ public class Feit {
         return "Feit{" + "feitNr=" + feitnr + ", feitcode=" + feitcode + ", omschrijving=" + omschrijving + ", bedrag=" + bedrag + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Feit feit = (Feit) o;
-        return feitnr == feit.feitnr && Double.compare(feit.bedrag, bedrag) == 0 && Objects.equals(feitcode, feit.feitcode) && Objects.equals(omschrijving, feit.omschrijving);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Feit feit = (Feit) o;
+		return Double.compare(feit.bedrag, bedrag) == 0 &&
+			Objects.equals(feitnr, feit.feitnr) &&
+			Objects.equals(feitcode, feit.feitcode) &&
+			Objects.equals(omschrijving, feit.omschrijving);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(feitnr, feitcode, omschrijving, bedrag);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(feitnr, feitcode, omschrijving, bedrag);
+	}
+
 }

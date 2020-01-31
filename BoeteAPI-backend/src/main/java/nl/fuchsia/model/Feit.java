@@ -81,7 +81,7 @@ public class Feit {
         this.bedrag = bedrag;
     }
 
-    public int getFeitnr() {
+    public Integer getFeitnr() {
         return feitnr;
     }
 

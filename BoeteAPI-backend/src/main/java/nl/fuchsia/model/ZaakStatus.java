@@ -66,7 +66,7 @@ public class ZaakStatus {
         this.status = status;
     }
 
-    public int getZaak() {
+    public Integer getZaak() {
         return zaak.getZaaknr();
     }
 

@@ -16,39 +16,39 @@ import java.util.Map;
 
 public class GeneriekIntegratieTest {
 
-    @CitrusResource
-    private TestRunner runner;
+	@CitrusResource
+	private TestRunner runner;
 
-    @CitrusEndpoint
-    private HttpClient boeteApiClient;
+	@CitrusEndpoint
+	private HttpClient boeteApiClient;
 
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private DataSource dataSource;
 
-    @Gegeven("er zitten {int} personen in de database.")
-    public void generateRandomPeople(int nrOfPeople) {
-        runner.plsql(sqlBuilder -> sqlBuilder.dataSource(dataSource).statement("DELETE FROM persoon"));
-        createRandomPersonenAdd(nrOfPeople);
-    }
+	@Gegeven("er zitten {int} personen in de database.")
+	public void generateRandomPeople(int nrOfPeople) {
+		runner.plsql(sqlBuilder -> sqlBuilder.dataSource(dataSource).statement("DELETE FROM persoon"));
+		createRandomPersonenAdd(nrOfPeople);
+	}
 
-    @Dan("moet de HTTP status code {int} zijn en bevat:")
-    public void verifyFlow(int httpStatusCode, DataTable table) {
-        runner.http(httpActionBuilder -> {
-            HttpClientResponseActionBuilder response = httpActionBuilder.client(boeteApiClient).receive().response(HttpStatus.valueOf(httpStatusCode));
+	@Dan("moet de HTTP status code {int} zijn en bevat:")
+	public void verifyFlow(int httpStatusCode, DataTable table) {
+		runner.http(httpActionBuilder -> {
+			HttpClientResponseActionBuilder response = httpActionBuilder.client(boeteApiClient).receive().response(HttpStatus.valueOf(httpStatusCode));
 
-            Map<String, String> keyValuePairs = table.asMap(String.class, String.class);
+			Map<String, String> keyValuePairs = table.asMap(String.class, String.class);
 
-            keyValuePairs.forEach((key, value) -> response.validate("$." + key, value));
-        });
-    }
+			keyValuePairs.forEach((key, value) -> response.validate("$." + key, value));
+		});
+	}
 
-    private void createRandomPersonenAdd(int nrOfPeople) {
-        for (int i = 0; i < nrOfPeople; i++) {
-            String bsn = String.valueOf(899999999 + i);
-            int huisnummer = 50 + i;
-            runner.plsql(sqlBuilder -> sqlBuilder.dataSource(dataSource).statement(
-                    "INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) " + "VALUES ('Karel', 'Derf', 'Fredstraat', " + huisnummer
-                            + ", '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
-        }
-    }
+	private void createRandomPersonenAdd(int nrOfPeople) {
+		for (int i = 0; i < nrOfPeople; i++) {
+			String bsn = String.valueOf(899999999 + i);
+			int huisnummer = 50 + i;
+			runner.plsql(sqlBuilder -> sqlBuilder.dataSource(dataSource).statement(
+				"INSERT INTO persoon (voornaam, achternaam, straat, huisnummer, postcode, woonplaats, bsn, geboortedatum) " + "VALUES ('Karel', 'Derf', 'Fredstraat', " + huisnummer
+					+ ", '1234 KL', 'Groningen', " + bsn + ", '01-01-2000')"));
+		}
+	}
 }

@@ -11,42 +11,42 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/feiten")
 public class FeitContoller {
-    private final FeitService feitService;
+	private final FeitService feitService;
 
-    public FeitContoller(FeitService feitService) {
-        this.feitService = feitService;
-    }
+	public FeitContoller(FeitService feitService) {
+		this.feitService = feitService;
+	}
 
-    /**
-     * Deze methode voegt een feit aan de database toe
-     *
-     * @param feit wordt uit een Json post opgehaald
-     *             Dit feit word daarna doorgezet naar de service
-     */
+	/**
+	 * Deze methode voegt een feit aan de database toe
+	 *
+	 * @param feit wordt uit een Json post opgehaald
+	 *             Dit feit word daarna doorgezet naar de service
+	 */
 
-    // Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
-    @PostMapping
-    public ResponseEntity<Feit> addFeit(@Valid @RequestBody Feit feit) {
-        return ResponseEntity.ok(feitService.addFeit(feit));
-    }
+	// Daarnaast vangt de Valid annotatie de valliditeit op van de velden van class Feit
+	@PostMapping
+	public ResponseEntity<Feit> addFeit(@Valid @RequestBody Feit feit) {
+		return ResponseEntity.ok(feitService.addFeit(feit));
+	}
 
-    /**
-     * Haalt alle Feiten uit de database
-     *
-     * @return een lijst met alle feiten
-     */
-    @GetMapping
-    public ResponseEntity<Payload<Feit>> getFeiten() {
-        Payload<Feit> payload = new Payload<>(feitService.getFeiten());
-        return ResponseEntity.ok().body(payload);
-    }
+	/**
+	 * Haalt alle Feiten uit de database
+	 *
+	 * @return een lijst met alle feiten
+	 */
+	@GetMapping
+	public ResponseEntity<Payload<Feit>> getFeiten() {
+		Payload<Feit> payload = new Payload<>(feitService.getFeiten());
+		return ResponseEntity.ok().body(payload);
+	}
 
-    /**
-     * Wijzigt het feit op bassis van de meegegeven ID nummer in Json object.
-     */
-    @PutMapping
-    public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
+	/**
+	 * Wijzigt het feit op bassis van de meegegeven ID nummer in Json object.
+	 */
+	@PutMapping
+	public ResponseEntity<Feit> updateFeitById(@Valid @RequestBody Feit feit) {
 
-        return ResponseEntity.ok(feitService.updateFeitById(feit));
-    }
+		return ResponseEntity.ok(feitService.updateFeitById(feit));
+	}
 }

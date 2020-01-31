@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Payload<T> {
 
-    private List<T> payload;
+	private List<T> payload;
 
-    public Payload(List<T> payload) {
-        this.payload = payload;
-    }
+	public Payload(List<T> payload) {
+		this.payload = payload;
+	}
 
-    public List<T> getPayload() {
-        return payload;
-    }
+	public List<T> getPayload() {
+		return payload;
+	}
 
-    public void setPayload(List<T> payload) {
-        this.payload = payload;
-    }
+	public void setPayload(List<T> payload) {
+		this.payload = payload;
+	}
 }

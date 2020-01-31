@@ -17,66 +17,66 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ZaakControllerTest {
 
-    @Mock
-    ZaakService zaakService;
-    @InjectMocks
-    ZaakController zaakController;
+	@Mock
+	ZaakService zaakService;
+	@InjectMocks
+	ZaakController zaakController;
 
-    @BeforeEach
-    public void setup() {
-        initMocks(this);
-    }
+	@BeforeEach
+	public void setup() {
+		initMocks(this);
+	}
 
-    @Test
-    public void testGetZaken() {
-        zaakController.getZaken(null);
+	@Test
+	public void testGetZaken() {
+		zaakController.getZaken(null);
 
-        verify(zaakService).getZaken();
-    }
+		verify(zaakService).getZaken();
+	}
 
-    @Test
-    public void testAddZaak() {
-        ZaakDto zaakDto = new ZaakDto();
+	@Test
+	public void testAddZaak() {
+		ZaakDto zaakDto = new ZaakDto();
 
-        zaakController.addZaak(zaakDto);
+		zaakController.addZaak(zaakDto);
 
-        verify(zaakService).addZaak(zaakDto);
-    }
+		verify(zaakService).addZaak(zaakDto);
+	}
 
-    @Test
-    void testGetZakenByPersoon() {
-        int persoonnr = 1;
+	@Test
+	void testGetZakenByPersoon() {
+		int persoonnr = 1;
 
-        zaakController.getZaken(persoonnr);
+		zaakController.getZaken(persoonnr);
 
-        verify(zaakService).getZakenByPersoon(persoonnr);
-    }
+		verify(zaakService).getZakenByPersoon(persoonnr);
+	}
 
-    @Test
-    void testAddFeitToZaak() {
-        List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
-        ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto();
-        listZaakAddFeitDto.add(zaakAddFeitDto);
-        Integer zaakNr = 4;
+	@Test
+	void testAddFeitToZaak() {
+		List<ZaakAddFeitDto> listZaakAddFeitDto = new ArrayList<>();
+		ZaakAddFeitDto zaakAddFeitDto = new ZaakAddFeitDto();
+		listZaakAddFeitDto.add(zaakAddFeitDto);
+		Integer zaakNr = 4;
 
-        zaakController.updZaakFeit(zaakNr, listZaakAddFeitDto);
+		zaakController.updateZaakFeit(zaakNr, listZaakAddFeitDto);
 
-        verify(zaakService).updZaakFeit(zaakNr, listZaakAddFeitDto);
-    }
+		verify(zaakService).updateZaakFeit(zaakNr, listZaakAddFeitDto);
+	}
 
-    @Test
-    void testGetZaakById() {
-        zaakService.getZaakById(1);
+	@Test
+	void testGetZaakById() {
+		zaakService.getZaakById(1);
 
-        verify(zaakService).getZaakById(1);
-    }
+		verify(zaakService).getZaakById(1);
+	}
 
-    @Test
-    void addZaakStatus() {
-        ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto();
+	@Test
+	void addZaakStatus() {
+		ZaakAddStatusDto zaakAddStatusDto = new ZaakAddStatusDto();
 
-        zaakController.updZaakStatus(1, zaakAddStatusDto);
+		zaakController.updZaakStatus(1, zaakAddStatusDto);
 
-        verify(zaakService).updateZaakStatus(1, zaakAddStatusDto);
-    }
+		verify(zaakService).updateZaakStatus(1, zaakAddStatusDto);
+	}
 }

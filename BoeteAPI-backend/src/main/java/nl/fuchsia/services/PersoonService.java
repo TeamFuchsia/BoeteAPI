@@ -1,8 +1,5 @@
 package nl.fuchsia.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -10,6 +7,9 @@ import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersoonService {

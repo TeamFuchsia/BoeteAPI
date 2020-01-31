@@ -100,7 +100,7 @@ public class ZaakService {
 			throw new NotFoundException(notFoundExceptions.toString());
 		}
 
-		ZaakStatus zaakStatus = new ZaakStatus(0,LocalDate.now(), status.get(), zaak.get());
+		ZaakStatus zaakStatus = new ZaakStatus(0, LocalDate.now(), status.get(), zaak.get());
 
 		List<ZaakStatus> zaakStatussen = zaak.get().getZaakstatus();
 		zaakStatussen.add(zaakStatus);
@@ -153,7 +153,7 @@ public class ZaakService {
 	 * @return de geupdate zaak.
 	 */
 	@Transactional
-	public ZaakDto updZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
+	public ZaakDto updateZaakFeit(Integer zaakNr, List<ZaakAddFeitDto> listZaakAddFeitDto) {
 		List<String> notFoundExceptions = new ArrayList<>();
 		List<String> uniekVeldExceptions = new ArrayList<>();
 		Optional<Zaak> zaak = zaakRepository.findById(zaakNr);

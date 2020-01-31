@@ -10,7 +10,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 @Configuration
 public class CitrusConfig {
 	@Bean
-	public HttpClient boeteApiClient(){
+	public HttpClient boeteApiClient() {
 		return CitrusEndpoints
 			.http()
 			.client()
@@ -19,7 +19,7 @@ public class CitrusConfig {
 	}
 
 	@Bean
-	public SingleConnectionDataSource dataSource(){
+	public SingleConnectionDataSource dataSource() {
 		SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
 		dataSource.setDriverClassName(Driver.class.getName());
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/boeteapi_it");

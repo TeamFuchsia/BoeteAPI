@@ -19,15 +19,15 @@ import java.time.temporal.ChronoField;
  */
 public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
 
-    private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
-            .appendPattern("dd-MM-yyyy") // Dit is het patroon wat we willen parsen
-            .parseDefaulting(ChronoField.ERA, 1) // Omdat we strict zijn, moeten we de default ERA instellen. 1 staat voor Na Christus.
-            .toFormatter() // Maak de formatter
-            .withResolverStyle(ResolverStyle.STRICT); // En maak de formatter strict
+	private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
+		.appendPattern("dd-MM-yyyy") // Dit is het patroon wat we willen parsen
+		.parseDefaulting(ChronoField.ERA, 1) // Omdat we strict zijn, moeten we de default ERA instellen. 1 staat voor Na Christus.
+		.toFormatter() // Maak de formatter
+		.withResolverStyle(ResolverStyle.STRICT); // En maak de formatter strict
 
-    @Override
-    public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        String value = p.getValueAsString();
-        return LocalDate.parse(value, FORMATTER);
-    }
+	@Override
+	public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+		String value = p.getValueAsString();
+		return LocalDate.parse(value, FORMATTER);
+	}
 }

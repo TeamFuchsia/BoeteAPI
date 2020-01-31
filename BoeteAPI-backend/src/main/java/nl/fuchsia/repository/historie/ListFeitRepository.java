@@ -24,7 +24,7 @@ public class ListFeitRepository {
      * Als laatste voegt de methode @param feit toe aan de database(list)
      */
     public void addFeit(Feit feit) {
-        feit.setFeitNr(eersteNieuweFeitnummer);
+        feit.setFeitnr(eersteNieuweFeitnummer);
         eersteNieuweFeitnummer += 1;
         feitList.add(feit);
     }

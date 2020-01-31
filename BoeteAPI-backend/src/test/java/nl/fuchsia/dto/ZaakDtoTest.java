@@ -17,52 +17,52 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ZaakDtoTest {
 
-    private static Validator validator;
-    private static ZaakDto zaakDto;
+	private static Validator validator;
+	private static ZaakDto zaakDto;
 
-    @BeforeAll
-    public static void setupAll() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
+	@BeforeAll
+	public static void setupAll() {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
+	}
 
-    @Test
-    public void pleegLocatieHasToManyCharacters() {
-        zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[101]), 1, new ArrayList<>(Arrays.asList(1, 2)));
+	@Test
+	public void pleegLocatieHasToManyCharacters() {
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[101]), 1, new ArrayList<>(Arrays.asList(1, 2)));
 
-        Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
 
-        assertThat(constraintViolations.size()).isEqualTo(1);
-        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten");
-    }
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Meer dan 100 tekens in pleeglocatie! Pleeglocatie mag maximaal 100 tekens bevatten");
+	}
 
-    @Test
-    public void testOvertredingsdatumIsNull() {
-        zaakDto = new ZaakDto(1, null, new String(new byte[10]), 1, new ArrayList<>(Arrays.asList(1, 2)));
+	@Test
+	public void testOvertredingsdatumIsNull() {
+		zaakDto = new ZaakDto(1, null, new String(new byte[10]), 1, new ArrayList<>(Arrays.asList(1, 2)));
 
-        Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
 
-        assertThat(constraintViolations).hasSize(1);
-        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Overtredingsdatum dient te zijn gevuld!");
-    }
+		assertThat(constraintViolations).hasSize(1);
+		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Overtredingsdatum dient te zijn gevuld!");
+	}
 
-    @Test
-    public void testFeitListNotNull() {
-        zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, null);
+	@Test
+	public void testFeitListNotNull() {
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, null);
 
-        Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
 
-        assertThat(constraintViolations).hasSize(1);
-        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");
-    }
+		assertThat(constraintViolations).hasSize(1);
+		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");
+	}
 
-    @Test
-    public void testFeitListIsEmpty() {
-        zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, new ArrayList<>(Collections.emptyList()));
+	@Test
+	public void testFeitListIsEmpty() {
+		zaakDto = new ZaakDto(1, LocalDate.of(2019, 2, 18), new String(new byte[10]), 1, new ArrayList<>(Collections.emptyList()));
 
-        Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
+		Set<ConstraintViolation<ZaakDto>> constraintViolations = validator.validate(zaakDto);
 
-        assertThat(constraintViolations).hasSize(1);
-        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");
-    }
+		assertThat(constraintViolations).hasSize(1);
+		assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("Voeg minimaal 1 feit toe.");
+	}
 }

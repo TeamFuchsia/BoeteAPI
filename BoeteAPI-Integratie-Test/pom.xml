@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>BoeteAPI-Integratie-Test</artifactId>
+    <artifactId>BoeteAPI-Integratie-</artifactId>
 
     <build>
         <plugins>
@@ -54,7 +54,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

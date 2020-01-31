@@ -14,21 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ZaakTest {
 
-    private static Validator validator;
-    private static Zaak zaak;
+	private static Validator validator;
+	private static Zaak zaak;
 
-    @BeforeAll
-    public static void setupAll() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
+	@BeforeAll
+	public static void setupAll() {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
+	}
 
-    @Test
-    public void testAddZaak() {
-        zaak = new Zaak(1, LocalDate.of(2019, 2, 18), "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
+	@Test
+	public void testAddZaak() {
+		zaak = new Zaak(1, LocalDate.of(2019, 2, 18), "A32 Richting Leeuwarden t.h.v. hectometerpaal 14.2");
 
-        Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
+		Set<ConstraintViolation<Zaak>> constraintViolations = validator.validate(zaak);
 
-        assertThat(constraintViolations.size()).isEqualTo(0);
-    }
+		assertThat(constraintViolations.size()).isEqualTo(0);
+	}
 }

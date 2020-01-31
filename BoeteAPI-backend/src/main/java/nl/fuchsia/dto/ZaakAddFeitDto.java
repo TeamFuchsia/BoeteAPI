@@ -2,20 +2,20 @@ package nl.fuchsia.dto;
 
 public class ZaakAddFeitDto {
 
-    private int feitNr;
+	private int feitnr;
 
-    public ZaakAddFeitDto() {
-    }
+	public ZaakAddFeitDto() {
+	}
 
-    public ZaakAddFeitDto(int feitNr) {
-        this.feitNr = feitNr;
-    }
+	public ZaakAddFeitDto(int feitnr) {
+		this.feitnr = feitnr;
+	}
 
-    public int getFeitNr() {
-        return feitNr;
-    }
+	public int getFeitNr() {
+		return feitnr;
+	}
 
-    public void setFeitNr(int feitNr) {
-        this.feitNr = feitNr;
-    }
+	public void setFeitNr(int feitnr) {
+		this.feitnr = feitnr;
+	}
 }

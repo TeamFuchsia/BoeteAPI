@@ -1,6 +1,7 @@
 package nl.fuchsia.config;
 
 import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,27 +21,39 @@ public class JMSConfig {
 	public ActiveMQConnectionFactory connectionFactory(@Value("${jms.url}") String jmsUrl) {
 		ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
 		activeMQConnectionFactory.setBrokerURL(jmsUrl);
-		activeMQConnectionFactory.setTrustAllPackages(true);
+		//activeMQConnectionFactory.setTrustAllPackages(true);
 		return activeMQConnectionFactory;
 	}
 
 	@Bean
 	public ActiveMQQueue queue() {
-		return new ActiveMQQueue("cjib.mq.example");
+		return new ActiveMQQueue("cjib.mq.queue");
 	}
 
 	@Bean
-	public JmsTemplate jmsTemplate(ActiveMQConnectionFactory connectionFactory, ActiveMQQueue queue) {
+	public ActiveMQTopic topic() {
+		return new ActiveMQTopic("cjib.mq.topic");
+	}
+
+	@Bean
+	public JmsTemplate jmsTemplate(ActiveMQConnectionFactory connectionFactory, ActiveMQTopic topic) {
 		JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-		jmsTemplate.setDefaultDestination(queue);
+		jmsTemplate.setDefaultDestination(topic);
 		return jmsTemplate;
 	}
+
+//	@Bean
+//	public JmsTemplate jmsTemplate(ActiveMQConnectionFactory connectionFactory, ActiveMQQueue queue) {
+//		JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
+//		jmsTemplate.setDefaultDestination(queue);
+//		return jmsTemplate;
+//	}
 
 	@Bean
 	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
 		DefaultJmsListenerContainerFactory jmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
 		jmsListenerContainerFactory.setConnectionFactory(connectionFactory);
+		jmsListenerContainerFactory.setPubSubDomain(true);
 		return jmsListenerContainerFactory;
 	}
-
 }

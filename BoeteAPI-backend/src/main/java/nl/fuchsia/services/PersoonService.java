@@ -5,19 +5,23 @@ import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
 import nl.fuchsia.repository.PersoonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class PersoonService {
     private PersoonRepository persoonRepository;
+    private JmsTemplate jmsTemplate;
 
     @Autowired
-    public PersoonService(PersoonRepository persoonRepository) {
+    public PersoonService(PersoonRepository persoonRepository, JmsTemplate jmsTemplate) {
         this.persoonRepository = persoonRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     /**
@@ -36,10 +40,12 @@ public class PersoonService {
      */
     public Persoon addPersoon(Persoon persoon) {
         try {
+			jmsTemplate.send(session -> session.createTextMessage("Persoon GOED toegevoegd" + LocalDateTime.now()));
             return persoonRepository.save(persoon);
         } catch (TransactionSystemException e) {
-            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
+			throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
+
     }
 
     /**
@@ -50,6 +56,7 @@ public class PersoonService {
 	 */
     public Persoon getPersoonById(Integer persoonnr) {
         Optional<Persoon> persoon = persoonRepository.findById(persoonnr);
+		jmsTemplate.send(session -> session.createTextMessage("Persoon met persoonnr : "+ persoonnr +" opgevraagd " + LocalDateTime.now()));
 
         return persoon.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
     }

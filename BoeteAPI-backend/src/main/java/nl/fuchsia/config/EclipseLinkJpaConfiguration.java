@@ -18,21 +18,21 @@ import java.util.Map;
 @Configuration
 public class EclipseLinkJpaConfiguration extends JpaBaseConfiguration {
 
-	@Autowired
-	protected EclipseLinkJpaConfiguration(@Qualifier("dataSource") DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
-		super(dataSource, properties, jtaTransactionManager);
-	}
+    @Autowired
+    protected EclipseLinkJpaConfiguration(@Qualifier("dataSource") DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
+        super(dataSource, properties, jtaTransactionManager);
+    }
 
-	@Override
-	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
-		return new EclipseLinkJpaVendorAdapter();
-	}
+    @Override
+    protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
+        return new EclipseLinkJpaVendorAdapter();
+    }
 
-	@Override
-	protected Map<String, Object> getVendorProperties() {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put(PersistenceUnitProperties.WEAVING, "true");
-		map.put(PersistenceUnitProperties.DDL_GENERATION, "none");
-		return map;
-	}
+    @Override
+    protected Map<String, Object> getVendorProperties() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(PersistenceUnitProperties.WEAVING, "true");
+        map.put(PersistenceUnitProperties.DDL_GENERATION, "none");
+        return map;
+    }
 }

@@ -1,9 +1,9 @@
 package nl.fuchsia.controller;
 
+import nl.fuchsia.dto.Payload;
 import nl.fuchsia.dto.ZaakAddFeitDto;
 import nl.fuchsia.dto.ZaakAddStatusDto;
 import nl.fuchsia.dto.ZaakDto;
-import nl.fuchsia.model.Payload;
 import nl.fuchsia.services.ZaakService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

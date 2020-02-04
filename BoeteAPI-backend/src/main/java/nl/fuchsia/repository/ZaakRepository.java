@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ZaakRepository extends JpaRepository<Zaak, Integer> {
 
-	List<Zaak> findAllByPersoon(Persoon persoon);
+    List<Zaak> findAllByPersoon(Persoon persoon);
 }

@@ -149,14 +149,14 @@ public class Persoon {
 		if (o == null || getClass() != o.getClass()) return false;
 		Persoon persoon = (Persoon) o;
 		return Objects.equals(getPersoonnr(), persoon.getPersoonnr()) &&
-			Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
-			Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
-			Objects.equals(getStraat(), persoon.getStraat()) &&
-			Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
-			Objects.equals(getPostcode(), persoon.getPostcode()) &&
-			Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
-			Objects.equals(getBsn(), persoon.getBsn()) &&
-			Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
+				Objects.equals(getVoornaam(), persoon.getVoornaam()) &&
+				Objects.equals(getAchternaam(), persoon.getAchternaam()) &&
+				Objects.equals(getStraat(), persoon.getStraat()) &&
+				Objects.equals(getHuisnummer(), persoon.getHuisnummer()) &&
+				Objects.equals(getPostcode(), persoon.getPostcode()) &&
+				Objects.equals(getWoonplaats(), persoon.getWoonplaats()) &&
+				Objects.equals(getBsn(), persoon.getBsn()) &&
+				Objects.equals(getGeboortedatum(), persoon.getGeboortedatum());
 	}
 
 	@Override

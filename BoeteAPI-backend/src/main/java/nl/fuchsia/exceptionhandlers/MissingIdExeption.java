@@ -1,7 +1,7 @@
 package nl.fuchsia.exceptionhandlers;
 
 public class MissingIdExeption extends NullPointerException {
-	public MissingIdExeption(String msg) {
-		super(msg);
-	}
+    public MissingIdExeption(String msg) {
+        super(msg);
+    }
 }

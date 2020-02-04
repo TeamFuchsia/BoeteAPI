@@ -123,21 +123,21 @@ public class Zaak {
                 + zaakstatus + '}';
     }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Zaak zaak = (Zaak) o;
-		return Objects.equals(getZaaknr(), zaak.getZaaknr()) &&
-			Objects.equals(getOvertredingsdatum(), zaak.getOvertredingsdatum()) &&
-			Objects.equals(getPleeglocatie(), zaak.getPleeglocatie()) &&
-			Objects.equals(getPersoon(), zaak.getPersoon()) &&
-			Objects.equals(getFeiten(), zaak.getFeiten()) &&
-			Objects.equals(getZaakstatus(), zaak.getZaakstatus());
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Zaak zaak = (Zaak) o;
+        return Objects.equals(getZaaknr(), zaak.getZaaknr()) &&
+                Objects.equals(getOvertredingsdatum(), zaak.getOvertredingsdatum()) &&
+                Objects.equals(getPleeglocatie(), zaak.getPleeglocatie()) &&
+                Objects.equals(getPersoon(), zaak.getPersoon()) &&
+                Objects.equals(getFeiten(), zaak.getFeiten()) &&
+                Objects.equals(getZaakstatus(), zaak.getZaakstatus());
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(getZaaknr(), getOvertredingsdatum(), getPleeglocatie(), getPersoon(), getFeiten(), getZaakstatus());
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(getZaaknr(), getOvertredingsdatum(), getPleeglocatie(), getPersoon(), getFeiten(), getZaakstatus());
+    }
 }

@@ -100,9 +100,9 @@ public class Feit {
 		if (o == null || getClass() != o.getClass()) return false;
 		Feit feit = (Feit) o;
 		return Double.compare(feit.bedrag, bedrag) == 0 &&
-			Objects.equals(feitnr, feit.feitnr) &&
-			Objects.equals(feitcode, feit.feitcode) &&
-			Objects.equals(omschrijving, feit.omschrijving);
+				Objects.equals(feitnr, feit.feitnr) &&
+				Objects.equals(feitcode, feit.feitcode) &&
+				Objects.equals(omschrijving, feit.omschrijving);
 	}
 
 	@Override

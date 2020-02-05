@@ -18,7 +18,7 @@ import org.springframework.jms.core.JmsTemplate;
 @EnableJms
 public class JMSConfig {
 
-    private Boolean isTopic;
+    private boolean isTopic;
 
     @Bean
     public ActiveMQConnectionFactory connectionFactory(@Value("${jms.url}") String jmsUrl) {

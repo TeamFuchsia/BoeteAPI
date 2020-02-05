@@ -34,7 +34,7 @@ public class JMSConfig {
             return new ActiveMQQueue(destination);
         } else if (destination.endsWith("topic")) {
             this.isTopic = true;
-            return new ActiveMQQueue(destination);
+            return new ActiveMQTopic(destination);
         }
         throw new IllegalArgumentException("invaliade destination gevonden:destination is geen topic of queue");
     }

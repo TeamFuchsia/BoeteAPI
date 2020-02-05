@@ -1,5 +1,9 @@
 package nl.fuchsia.services;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import nl.fuchsia.exceptionhandlers.NotFoundException;
 import nl.fuchsia.exceptionhandlers.UniekVeldException;
 import nl.fuchsia.model.Persoon;
@@ -9,14 +13,13 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 @Component
 public class PersoonService {
     private PersoonRepository persoonRepository;
     private JmsTemplate jmsTemplate;
+
+    public PersoonService() {
+    }
 
     @Autowired
     public PersoonService(PersoonRepository persoonRepository, JmsTemplate jmsTemplate) {
@@ -40,23 +43,22 @@ public class PersoonService {
      */
     public Persoon addPersoon(Persoon persoon) {
         try {
-			jmsTemplate.send(session -> session.createTextMessage("Persoon GOED toegevoegd" + LocalDateTime.now()));
+            jmsTemplate.send(session -> session.createTextMessage("Persoon GOED toegevoegd" + LocalDateTime.now()));
             return persoonRepository.save(persoon);
         } catch (TransactionSystemException e) {
-			throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
+            throw new UniekVeldException("BSN nummer: " + persoon.getBsn() + " bestaat reeds.");
         }
-
     }
 
     /**
      * haalt de persoon per ID (persoonnr) via de OrmPersoonRepository.
      *
-	 * @param persoonnr - ID de op te halen persoon.
-	 * @return
-	 */
+     * @param persoonnr - ID de op te halen persoon.
+     * @return
+     */
     public Persoon getPersoonById(Integer persoonnr) {
         Optional<Persoon> persoon = persoonRepository.findById(persoonnr);
-		jmsTemplate.send(session -> session.createTextMessage("Persoon met persoonnr : "+ persoonnr +" opgevraagd " + LocalDateTime.now()));
+        jmsTemplate.send(session -> session.createTextMessage("Persoon met persoonnr : " + persoonnr + " opgevraagd " + LocalDateTime.now()));
 
         return persoon.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
     }
@@ -69,9 +71,9 @@ public class PersoonService {
      */
     public Persoon updatePersoonById(Integer persoonnr, Persoon persoon) {
         try {
-			Optional<Persoon> persoonOpgehaald = persoonRepository.findById(persoonnr);
-			persoonOpgehaald.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
-			persoon.setPersoonnr(persoonnr);
+            Optional<Persoon> persoonOpgehaald = persoonRepository.findById(persoonnr);
+            persoonOpgehaald.orElseThrow(() -> new NotFoundException("PersoonNummer: " + persoonnr + " bestaat niet"));
+            persoon.setPersoonnr(persoonnr);
             persoonRepository.save(persoon);
 
         } catch (TransactionSystemException e) {

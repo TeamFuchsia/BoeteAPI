@@ -31,7 +31,7 @@
         <jetty-maven-plugin.version>9.4.20.v20190813</jetty-maven-plugin.version>
         <postgresql.version>42.2.8</postgresql.version>
         <cargo-maven2-plugin>1.7.9</cargo-maven2-plugin>
-        <jackson>2.10.1</jackson>
+        <jackson>2.12.7.1</jackson>
     </properties>
     <dependencyManagement>
         <dependencies>
